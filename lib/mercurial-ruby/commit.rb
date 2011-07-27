@@ -6,22 +6,32 @@ module Mercurial
                 :date, :message, :files_changed, :files_added,
                 :files_deleted, :branches_names, :tags_names
     
-    def initialize(repository, options={})
+    def initialize(repository, opts={})
       @repository     = repository
-      @hash_id        = options[:hash_id]
-      @author         = options[:author]
-      @author_email   = options[:author_email]
-      @date           = Time.parse options[:date]
-      @message        = options[:message]
-      @files_changed  = options[:files_changed]
-      @files_added    = options[:files_added]
-      @files_deleted  = options[:files_deleted]
-      @branches_names = options[:branches_names]
-      @tags_names     = options[:tags_names]
+      @hash_id        = opts[:hash_id]
+      @author         = opts[:author]
+      @author_email   = opts[:author_email]
+      @date           = Time.parse opts[:date]
+      @message        = opts[:message]
+      @files_changed  = to_files_array(opts[:files_changed])
+      @files_added    = to_files_array(opts[:files_added])
+      @files_deleted  = to_files_array(opts[:files_deleted])
+      @branches_names = opts[:branches_names]
+      @tags_names     = opts[:tags_names]
     end
     
     def diff
       Mercurial::Shell.hg("diff -c#{ hash_id }", :in => repository.path)
+    end
+    
+  protected
+  
+    def to_files_array(string)
+      if string
+        string.split(';')
+      else
+        []
+      end
     end
     
   end

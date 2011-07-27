@@ -10,6 +10,7 @@ require 'mercurial-ruby/config_file'
 require 'mercurial-ruby/hook'
 require 'mercurial-ruby/branch'
 require 'mercurial-ruby/commit'
+require 'mercurial-ruby/style'
 
 require 'mercurial-ruby/factories/hook_factory'
 require 'mercurial-ruby/factories/branch_factory'

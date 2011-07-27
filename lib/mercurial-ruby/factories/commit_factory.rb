@@ -2,8 +2,6 @@ module Mercurial
   
   class CommitFactory
     
-    TEMPLATE_SEPARATOR = '|><|'
-    
     attr_reader :repository
     
     def initialize(repository)
@@ -12,7 +10,7 @@ module Mercurial
     
     def all
       [].tap do |returning|
-        hg("log --template \"#{ template }\n\"").split("\n").each do |data|
+        hg("log --style #{ style }").split("\n").each do |data|
           returning << build_from_cl_data(data)
         end
       end
@@ -20,14 +18,14 @@ module Mercurial
     
     def by_branch(branch)
       [].tap do |returning|
-        hg("log -b #{ branch} --template \"#{ template }\n\"").split("\n").each do |data|
+        hg("log -b #{ branch} --style #{ style }").split("\n").each do |data|
           returning << build_from_cl_data(data)
         end
       end
     end
     
     def by_hash_id(hash)
-      data = hg("log -r#{ hash } --template \"#{ template }\"")
+      data = hg("log -r#{ hash } --style #{ style }")
       unless data.empty?
         build_from_cl_data(data)
       end
@@ -36,7 +34,7 @@ module Mercurial
   protected
   
     def build_from_cl_data(data)
-      data = data.split(TEMPLATE_SEPARATOR)
+      data = data.split(Mercurial::Style::TEMPLATE_SEPARATOR)
       Mercurial::Commit.new(
         repository,
         :hash_id         => data[0],
@@ -52,13 +50,8 @@ module Mercurial
       )
     end
   
-    def template
-      # DO NOT REORDER
-      [
-        'node', 'author|person', 'author|email',
-        'date|date', 'desc', 'files', 'files_adds',
-        'files_dels', 'branches', 'tags'
-      ].map{|t| "{#{ t }}"}.join(TEMPLATE_SEPARATOR)
+    def style
+      Mercurial::Style.changeset
     end
   
     def hg(cmd)
