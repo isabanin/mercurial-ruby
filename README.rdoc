@@ -1,6 +1,29 @@
 = mercurial-ruby
 
-Description goes here.
+Ruby API for Mercurial DVCS. Implemented via a command line interface.
+
+== Installation
+
+ gem install mercurial-ruby
+ 
+== Usage
+
+ repository = Mercurial::Repository.create("/path/to/new_repository")
+
+or
+
+ repository = Mercurial::Repository.open("/path/to/existing_repository")
+
+== Config File (hgrc)
+
+ repository.config
+ 
+== Hooks
+
+ repository.hooks.all
+ repository.hooks.by_name('commit')
+ reository.hooks.destroy!('commit')
+ repository.hooks.create('changegroup', 'hg update')
 
 == Contributing to mercurial-ruby
  
