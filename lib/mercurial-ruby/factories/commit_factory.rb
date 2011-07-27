@@ -25,15 +25,17 @@ module Mercurial
     end
     
     def by_hash_id(hash)
-      data = hg("log -r#{ hash } --style #{ style }")
-      unless data.empty?
-        build_from_cl_data(data)
-      end
+      build_from_cl_data(hg("log -r#{ hash } --style #{ style }"))
+    end
+    
+    def tip
+      build_from_cl_data(hg("tip --style #{ style }"))
     end
     
   protected
   
     def build_from_cl_data(data)
+      return if data.empty?
       data = data.split(Mercurial::Style::TEMPLATE_SEPARATOR)
       Mercurial::Commit.new(
         repository,
@@ -46,7 +48,8 @@ module Mercurial
         :files_added     => data[6],
         :files_deleted   => data[7],
         :branches_names  => data[8],
-        :tags_names      => data[9]
+        :tags_names      => data[9],
+        :parents         => data[10]
       )
     end
   

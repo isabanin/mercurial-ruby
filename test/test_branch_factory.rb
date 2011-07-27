@@ -33,4 +33,8 @@ describe Mercurial::BranchFactory do
     branch.status.must_equal 'active'
   end
   
+  it "should not find a branch by inexistent name" do
+    @repository.branches.by_name('bla-branch-f').must_equal nil
+  end
+  
 end

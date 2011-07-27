@@ -10,7 +10,7 @@ module Mercurial
     
     def all
       [].tap do |returning|
-        hg('branches -c').split("\n").each do |data|          
+        Mercurial::Shell.hg('branches -c', :in => repository.path).split("\n").each do |data|          
           returning << new_from_cl_data(data)
         end
       end
@@ -44,10 +44,6 @@ module Mercurial
         :commit => last_commit,
         :status => status
       )
-    end
-  
-    def hg(cmd)
-      Mercurial::Shell.hg(cmd, :in => repository.path)
     end
 
   end

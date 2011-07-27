@@ -25,13 +25,17 @@ module Mercurial
       @_hook_factory ||= Mercurial::HookFactory.new(self)
     end
     
+    def commits
+      @_commits ||= Mercurial::CommitFactory.new(self)
+    end
+    
     def branches
       @_branches ||= Mercurial::BranchFactory.new(self)
     end
     
-    def commits
-      @_commits ||= Mercurial::CommitFactory.new(self)
-    end
+    def tags
+      @_tags ||= Mercurial::TagFactory.new(self)
+    end    
     
     def destroy!
       FileUtils.rm_rf(path)

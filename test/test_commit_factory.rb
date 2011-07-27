@@ -20,6 +20,7 @@ describe Mercurial::CommitFactory do
   
   it "should find all commits" do
     commits = @repository.commits.all
+    (commits.size > 5).must_equal true
   end
   
   it "should find commits by branch" do
@@ -30,6 +31,11 @@ describe Mercurial::CommitFactory do
   
   it "should not find commits for inexistent branch" do
     @repository.commits.by_branch("shikaka").must_equal []
+  end
+  
+  it "should find tip commit" do
+    tip = @repository.commits.tip
+    tip.must_be_kind_of Mercurial::Commit
   end
   
 end

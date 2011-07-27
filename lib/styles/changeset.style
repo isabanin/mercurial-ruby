@@ -1,2 +1,2 @@
-changeset = "{node}|><|{author|person}|><|{author|email}|><|{date|date}|><|{desc}|><|{files}|><|{files_adds}|><|{files_dels}|><|{branches}|><|{tags}\n"
+changeset = "{node}|><|{author|person}|><|{author|email}|><|{date|date}|><|{desc}|><|{files}|><|{files_adds}|><|{files_dels}|><|{branches}|><|{tags}|><|{parents}\n"
 file = "{file};"

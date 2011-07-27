@@ -27,6 +27,17 @@ describe Mercurial::Commit do
     @commit.files_deleted.must_equal []
   end
   
+  it "should have parents array" do
+    @commit.parents.must_be_kind_of Array
+    @commit.parents.first.must_equal '25bb5c51fd61'
+  end
+  
+  it "should be detected as merge if has many parents" do
+    commit = @repository.commits.by_hash_id('cd9fa0c59c7f')
+    commit.merge?.must_equal true
+    commit.parents.sort.must_equal ["4474d1ddaf65", "6157254a4423"].sort
+  end
+  
 private
 
   def expected_diff
