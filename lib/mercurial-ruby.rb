@@ -10,6 +10,7 @@ end
 
 require_local 'mercurial-ruby/shell'
 require_local 'mercurial-ruby/helper'
+require_local 'mercurial-ruby/errors'
 require_local 'mercurial-ruby/repository'
 require_local 'mercurial-ruby/config_file'
 require_local 'mercurial-ruby/hook'

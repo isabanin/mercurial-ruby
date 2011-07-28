@@ -2,6 +2,10 @@ require 'helper'
 
 describe Mercurial::Repository do
   
+  it "should raise an error when trying to open a repository that doesn't exist on disk" do
+    lambda{ Mercurial::Repository.open('/shikaka/bambucha') }.must_raise Mercurial::RepositoryNotFound
+  end
+  
   describe "creating" do
     before do
       @repository = Mercurial::Repository.create('/tmp/test-hg-repo')

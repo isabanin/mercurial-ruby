@@ -10,7 +10,11 @@ module Mercurial
     end
     
     def self.open(destination)
-      new(destination)
+      if File.exists?(destination)
+        new(destination)
+      else
+        raise Mercurial::RepositoryNotFound.new(destination)
+      end
     end
     
     def initialize(source)
