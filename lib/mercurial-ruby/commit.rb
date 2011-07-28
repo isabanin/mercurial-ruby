@@ -1,6 +1,7 @@
 module Mercurial
   
   class Commit
+    include Mercurial::Helper
     
     attr_reader :repository, :hash_id, :author, :author_email,
                 :date, :message, :files_changed, :files_added,
@@ -27,7 +28,7 @@ module Mercurial
     end
     
     def diff
-      Mercurial::Shell.hg("diff -c#{ hash_id }", :in => repository.path)
+      hg("diff -c#{ hash_id }")
     end
     
   protected

@@ -1,6 +1,7 @@
 module Mercurial
   
   class TagFactory
+    include Mercurial::Helper
     
     attr_reader :repository
     
@@ -17,11 +18,9 @@ module Mercurial
     end
     
     def all
-      [].tap do |returning|
-        Mercurial::Shell.hg('tags', :in => repository.path).split("\n").each do |data|          
-          returning << new_from_cl_data(data)
-        end
-      end.compact
+      hg_to_array "tags" do |line|
+        build(line)
+      end
     end
     
     def by_name(name)
@@ -32,7 +31,7 @@ module Mercurial
     
   private
   
-    def new_from_cl_data(data)
+    def build(data)
       name, hash_id = *data.scan(/([\w-]+)\s+\d+:(\w+)\s*/).first
       return if name == 'tip' && self.class.skip_tip_tag?
       Mercurial::Tag.new(repository, name, hash_id)

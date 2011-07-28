@@ -1,6 +1,7 @@
 module Mercurial
   
   class BranchFactory
+    include Mercurial::Helper
     
     attr_reader :repository
     
@@ -9,10 +10,8 @@ module Mercurial
     end
     
     def all
-      [].tap do |returning|
-        Mercurial::Shell.hg('branches -c', :in => repository.path).split("\n").each do |data|          
-          returning << new_from_cl_data(data)
-        end
+      hg_to_array "branches -c" do |line|
+        build(line)
       end
     end
     
@@ -36,7 +35,7 @@ module Mercurial
     
   private
   
-    def new_from_cl_data(data)
+    def build(data)
       name, last_commit, status = *data.scan(/([\w-]+)\s+\d+:(\w+)\s*\(*(\w*)\)*/).first
       Mercurial::Branch.new(
         repository,

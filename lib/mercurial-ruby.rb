@@ -5,6 +5,7 @@ module Mercurial
 end
 
 require 'mercurial-ruby/shell'
+require 'mercurial-ruby/helper'
 require 'mercurial-ruby/repository'
 require 'mercurial-ruby/config_file'
 require 'mercurial-ruby/hook'

@@ -1,6 +1,7 @@
 module Mercurial
   
   class CommitFactory
+    include Mercurial::Helper
     
     attr_reader :repository
     
@@ -9,32 +10,33 @@ module Mercurial
     end
     
     def all
-      [].tap do |returning|
-        hg("log --style #{ style }").split("\n").each do |data|
-          returning << build_from_cl_data(data)
-        end
+      hg_to_array "log --style #{ style }" do |line|
+        build(line)
       end
     end
     
     def by_branch(branch)
-      [].tap do |returning|
-        hg("log -b #{ branch} --style #{ style }").split("\n").each do |data|
-          returning << build_from_cl_data(data)
-        end
+      hg_to_array "log -b #{ branch} --style #{ style }" do |line|
+        build(line)
       end
     end
     
     def by_hash_id(hash)
-      build_from_cl_data(hg("log -r#{ hash } --style #{ style }"))
+      build do
+        hg("log -r#{ hash } --style #{ style }")
+      end
     end
     
     def tip
-      build_from_cl_data(hg("tip --style #{ style }"))
+      build do
+        hg("tip --style #{ style }")
+      end
     end
     
   protected
   
-    def build_from_cl_data(data)
+    def build(data=nil, &block)
+      data ||= block.call
       return if data.empty?
       data = data.split(Mercurial::Style::TEMPLATE_SEPARATOR)
       Mercurial::Commit.new(
@@ -55,10 +57,6 @@ module Mercurial
   
     def style
       Mercurial::Style.changeset
-    end
-  
-    def hg(cmd)
-      Mercurial::Shell.hg(cmd, :in => repository.path)
     end
     
   end

@@ -11,7 +11,7 @@ module Mercurial
     def all
       [].tap do |returning|
         repository.config.find_header('hooks').each_pair do |name, value|
-          returning << Mercurial::Hook.new(repository, name, value)
+          returning << build(name, value)
         end
       end
     end
@@ -23,7 +23,7 @@ module Mercurial
     end
     
     def create(name, value)
-      Mercurial::Hook.new(repository, name, value).tap do |hook|
+      build(name, value).tap do |hook|
         hook.save
       end
     end
@@ -32,6 +32,12 @@ module Mercurial
       if hook = by_name(name)
         hook.destroy!
       end
+    end
+    
+  protected
+  
+    def build(name, value)
+      Mercurial::Hook.new(repository, name, value)
     end
     
   end
