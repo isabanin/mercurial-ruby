@@ -18,6 +18,12 @@ describe Mercurial::CommitFactory do
     @repository.commits.by_hash_id('dfio9sdf78sdfh').must_equal nil
   end
   
+  it "should find arrays of commits by their hashes" do
+    commits = @repository.commits.by_hash_ids(['6157254a4423', 'bf6386c0a0cc'])
+    commits.map(&:hash_id).sort.must_equal %w(6157254a442343181939c7af1a744cf2a16afcce bf6386c0a0ccd1282dbbe51888f52fe82b1806e3).sort
+    commits.map(&:author_email).uniq.must_equal %w(ilya.sabanin@gmail.com)
+  end
+  
   it "should find all commits" do
     commits = @repository.commits.all
     (commits.size > 5).must_equal true
@@ -36,6 +42,17 @@ describe Mercurial::CommitFactory do
   it "should find tip commit" do
     tip = @repository.commits.tip
     tip.must_be_kind_of Mercurial::Commit
+  end
+  
+  it "should count commits" do
+    count = @repository.commits.count
+    count.must_equal 20
+  end
+  
+  it "should iterate commits" do
+    @repository.commits.each do |c|
+      c.must_be_kind_of Mercurial::Commit
+    end
   end
   
 end

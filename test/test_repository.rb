@@ -27,8 +27,20 @@ describe Mercurial::Repository do
       @repository.must_respond_to :hooks
     end
     
+    it "should respond to commits" do
+      @repository.must_respond_to :commits
+    end
+    
     it "should respond to branches" do
       @repository.must_respond_to :branches
+    end
+    
+    it "should respond to tags" do
+      @repository.must_respond_to :tags
+    end
+    
+    it "should respond to diffs" do
+      @repository.must_respond_to :diffs
     end
   end
   

@@ -39,7 +39,11 @@ module Mercurial
     
     def tags
       @_tags ||= Mercurial::TagFactory.new(self)
-    end    
+    end
+    
+    def diffs
+      @_diffs ||= Mercurial::DiffFactory.new(self)
+    end
     
     def destroy!
       FileUtils.rm_rf(path)

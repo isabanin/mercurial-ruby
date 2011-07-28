@@ -15,6 +15,18 @@ module Mercurial
       end
     end
     
+    def each(&block)
+      all.each do |commit|
+        block.call(commit)
+      end
+    end
+    
+    def count
+      hg_to_array "log --template \"{node}\n\"" do |line|
+        line
+      end.size
+    end
+    
     def by_branch(branch)
       hg_to_array "log -b #{ branch} --style #{ style }" do |line|
         build(line)
@@ -27,11 +39,20 @@ module Mercurial
       end
     end
     
+    def by_hash_ids(array)
+      return [] if array.empty?
+      args = array.map{|hash| " -r#{ hash }"}
+      hg_to_array "log#{ args } --style #{ style }" do |line|
+        build(line)
+      end
+    end
+    
     def tip
       build do
         hg("tip --style #{ style }")
       end
     end
+    alias :latest :tip
     
   protected
   

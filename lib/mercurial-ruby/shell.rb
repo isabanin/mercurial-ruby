@@ -13,7 +13,8 @@ module Mercurial
         build << "cd #{ options[:in] }"
       end
       build << cmd
-      `#{ build.join('&&') }`
+      to_run = build.join('&&')
+      `#{ to_run }`
     end
     
     def hg(cmd, options={})

@@ -20,7 +20,7 @@ describe Mercurial::ConfigFile do
     @config.contents.size.must_equal 324
   end
   
-  it "should add settings" do
+  it "should add setting" do
     @config.add_setting('hooks', 'incoming', 'hg update')
     @config.contents.must_equal hgrc_with_incoming_hook_added
     @config.find_header('hooks').size.must_equal 3
@@ -35,6 +35,11 @@ describe Mercurial::ConfigFile do
     @config.find_header('hooks').size.must_equal 1
     @config.find_setting('hooks', 'commit').must_equal nil
     @config.find_setting('hooks', 'changegroup').must_equal "changegroup = /Users/ilya/work/beanstalk/script/mercurial/changegroup.rb\n"
+  end
+  
+  it "should add settings with new header" do
+    @config.add_setting('somethingelse', 'shikaka', 'True')
+    @config.contents.must_equal hgrc_with_new_standalone_setting
   end
   
 private
@@ -68,6 +73,26 @@ verbose = True
 
 # [revlog]
 # format=0 for revlog; format=1 for revlogng]
+  end
+  
+  def hgrc_with_new_standalone_setting
+    %q[[paths]
+default = http://selenic.com/hg
+
+[hooks]
+changegroup = /Users/ilya/work/beanstalk/script/mercurial/changegroup.rb
+commit =/Users/ilya/work/beanstalk/script/mercurial/commit.rb
+
+[ui]
+username = Firstname Lastname <firstname.lastname@example.net>
+verbose = True
+
+# [revlog]
+# format=0 for revlog; format=1 for revlogng
+
+[somethingelse]
+shikaka = True
+]
   end
 
 end
