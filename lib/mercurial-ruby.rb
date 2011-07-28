@@ -4,17 +4,21 @@ module Mercurial
     
 end
 
-require 'mercurial-ruby/shell'
-require 'mercurial-ruby/helper'
-require 'mercurial-ruby/repository'
-require 'mercurial-ruby/config_file'
-require 'mercurial-ruby/hook'
-require 'mercurial-ruby/commit'
-require 'mercurial-ruby/branch'
-require 'mercurial-ruby/tag'
-require 'mercurial-ruby/style'
+def require_local(suffix)
+  require(File.expand_path(File.join(File.dirname(__FILE__), suffix)))
+end
 
-require 'mercurial-ruby/factories/hook_factory'
-require 'mercurial-ruby/factories/commit_factory'
-require 'mercurial-ruby/factories/branch_factory'
-require 'mercurial-ruby/factories/tag_factory'
+require_local 'mercurial-ruby/shell'
+require_local 'mercurial-ruby/helper'
+require_local 'mercurial-ruby/repository'
+require_local 'mercurial-ruby/config_file'
+require_local 'mercurial-ruby/hook'
+require_local 'mercurial-ruby/commit'
+require_local 'mercurial-ruby/branch'
+require_local 'mercurial-ruby/tag'
+require_local 'mercurial-ruby/style'
+
+require_local 'mercurial-ruby/factories/hook_factory'
+require_local 'mercurial-ruby/factories/commit_factory'
+require_local 'mercurial-ruby/factories/branch_factory'
+require_local 'mercurial-ruby/factories/tag_factory'
