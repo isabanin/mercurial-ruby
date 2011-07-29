@@ -7,10 +7,10 @@ describe Mercurial::DiffFactory do
   end
   
   it "should find diffs for commit" do
-    commit = @repository.commits.by_hash_id('bbfe40f4a569')
+    commit = @repository.commits.by_hash_id('54d96f4b1a26')
     diffs = @repository.diffs.for_commit(commit)
-    diffs.map(&:hash_a).uniq.must_equal %w(d14b0c16b21d)
-    diffs.map(&:hash_b).uniq.must_equal %w(bbfe40f4a569)
+    diffs.size.must_equal 6
+    diffs.map(&:file_name).sort.must_equal ['LICENSE4.txt', 'README.markup', 'Rakefile', 'Rakefile2', 'Rakefile3', 'superman.txt']
   end
   
 end
