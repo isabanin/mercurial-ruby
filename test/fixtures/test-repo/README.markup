@@ -1,5 +1,7 @@
 # Jeweler: Craft the perfect RubyGem
 
+Changed README file.
+
 Jeweler provides the noble ruby developer with two primary features:
 
  * a library for managing and releasing RubyGem projects
