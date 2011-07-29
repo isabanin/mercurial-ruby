@@ -43,18 +43,17 @@ module Mercurial
         array.each do |files|
           if files
             files.split(';').map do |file_with_mode|
-              mode = mode_letter_to_word(file_with_mode[0..0])
-              source = file_with_mode.split('->').first[2..-1]
-              name = file_with_mode.split('->')[1]
-              returning << [
-                source,
-                mode,
-                name
-              ].compact
+              returning << Mercurial::ChangedFileFactory.new_from_hg(file_with_mode)
             end
           end
         end
+        
+        remove_files_duplicates(returning)
       end
+    end
+    
+    def remove_files_duplicates(files)
+      Mercurial::ChangedFileFactory.delete_hg_artefacts(files)
     end
     
     def parents_to_array(string)
@@ -64,26 +63,13 @@ module Mercurial
             returning << hg_hash_to_hash_id(hg_hash)
           end
         end
+      else
+        []
       end
     end
     
     def hg_hash_to_hash_id(hg_hash)
       hg_hash.split(':').last
-    end
-    
-  private
-  
-    def mode_letter_to_word(letter)
-      case letter
-      when 'A'
-        :add
-      when 'D'
-        :delete
-      when 'C'
-        :copy
-      else
-        :edit
-      end
     end
     
   end

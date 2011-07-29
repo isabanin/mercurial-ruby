@@ -11,8 +11,9 @@ describe Mercurial::Commit do
     @commit.date.must_be_kind_of Time
   end
   
-  it "should convert changed files list to array" do
+  it "should convert list of changed files to an array of ChangedFile objects" do
     @commit.changed_files.must_be_kind_of Array
+    @commit.changed_files.first.must_be_kind_of Mercurial::ChangedFile
   end
   
   it "should have parents_ids array" do
@@ -31,27 +32,6 @@ describe Mercurial::Commit do
     commit.parents.each do |parent|
       parent.must_be_kind_of Mercurial::Commit
     end
-  end
-  
-  it "should detect copied files" do
-    commit = @repository.commits.by_hash_id('4e9f11e95ead')
-    file_one = commit.changed_files.first
-    
-    file_one[0].must_equal 'LICENSE.txt'
-    file_one[1].must_equal :copy
-    file_one[2].must_equal 'LICENSE2.txt'
-  end
-  
-  it "should detect modified files" do
-    flunk
-  end
-    
-  it "should detect deleted files" do
-    flunk
-  end
-      
-  it "should detect moved files" do  
-    flunk
   end
   
 end
