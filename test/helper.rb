@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'bundler'
 require 'mocha'
+require 'ruby-debug'
 
 begin
   Bundler.setup(:default, :development)
