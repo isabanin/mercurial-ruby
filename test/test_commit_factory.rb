@@ -46,7 +46,7 @@ describe Mercurial::CommitFactory do
   
   it "should count commits" do
     count = @repository.commits.count
-    count.must_equal 20
+    count.must_equal 21
   end
   
   it "should iterate commits" do

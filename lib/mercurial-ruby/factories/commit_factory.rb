@@ -67,12 +67,10 @@ module Mercurial
         :author_email    => data[2],
         :date            => data[3],
         :message         => data[4],
-        :files_changed   => data[5],
-        :files_added     => data[6],
-        :files_deleted   => data[7],
-        :branches_names  => data[8],
-        :tags_names      => data[9],
-        :parents         => data[10]
+        :changed_files   => [data[5], data[6], data[7], data[8]],
+        :branches_names  => data[9],
+        :tags_names      => data[10],
+        :parents         => data[11]
       )
     end
   

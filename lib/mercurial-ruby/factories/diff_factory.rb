@@ -11,10 +11,8 @@ module Mercurial
     
     def for_commit(commit)
       [].tap do |returning|
-        commit.files_changed.each do |file|
-          data = hg("diff -r#{ commit.parent_id } -r#{ commit.hash_id } \"#{ file.first }\"")
-          returning << build(commit, data)
-        end
+        data = hg("diff -c#{ commit.hash_id }")
+        returning << build(commit, data)
       end
     end
     

@@ -1,4 +1,5 @@
-changeset = "{node}|><|{author|person}|><|{author|email}|><|{date|date}|><|{desc}|><|{file_mods}|><|{files_adds}|><|{files_dels}|><|{branches}|><|{tags}|><|{parents}\n"
+changeset = "{node}|><|{author|person}|><|{author|email}|><|{date|date}|><|{desc}|><|{file_mods}|><|{files_adds}|><|{files_dels}|><|{file_copies}|><|{branches}|><|{tags}|><|{parents}\n"
 file_add  = "A {file_add};"
 file_mod  = "M {file_mod};"
 file_del  = "D {file_del};"
+file_copy = "C {source}->{name};"

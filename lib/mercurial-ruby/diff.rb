@@ -13,6 +13,10 @@ module Mercurial
       @body   = opts[:body]
     end
     
+    def file_name
+      file_b || file_a
+    end
+    
   end
   
 end
