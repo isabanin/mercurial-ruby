@@ -19,6 +19,8 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 require 'mercurial-ruby'
 require 'fixtures'
 
+$stderr.reopen('/dev/null')
+
 class MiniTest::Unit::TestCase
   
 private
