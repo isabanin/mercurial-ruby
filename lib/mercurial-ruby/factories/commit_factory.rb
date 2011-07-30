@@ -47,6 +47,12 @@ module Mercurial
       end
     end
     
+    def for_range(hash_a, hash_b)
+      hg_to_array "log -r #{ hash_a }:#{ hash_b } --style #{ style }" do |line|
+        build(line)
+      end
+    end
+    
     def tip
       build do
         hg("tip --style #{ style }")
