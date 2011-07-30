@@ -54,6 +54,7 @@ module Mercurial
     def self.init_repository(destination)
       Mercurial::Shell.run("mkdir -p #{ destination }")
       Mercurial::Shell.hg('init', :in => destination)
+      Mercurial::Shell.hg('update null', :in => destination)
     end
     
   end
