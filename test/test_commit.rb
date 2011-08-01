@@ -11,6 +11,14 @@ describe Mercurial::Commit do
     @commit.date.must_be_kind_of Time
   end
   
+  it "should represent branches as Array" do
+    @commit.branches_names.must_be_kind_of Array
+  end
+  
+  it "should represent tags as Array" do
+    @commit.tags_names.must_be_kind_of Array
+  end
+  
   it "should convert list of changed files to an array of ChangedFile objects" do
     @commit.changed_files.must_be_kind_of Array
     @commit.changed_files.first.must_be_kind_of Mercurial::ChangedFile

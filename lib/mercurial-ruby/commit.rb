@@ -17,8 +17,8 @@ module Mercurial
       @date           = Time.iso8601(opts[:date])
       @message        = opts[:message]
       @changed_files  = files_to_array(opts[:changed_files])
-      @branches_names = opts[:branches_names]
-      @tags_names     = opts[:tags_names]
+      @branches_names = [opts[:branches_names]]
+      @tags_names     = [opts[:tags_names]]
       @parents_ids    = parents_to_array(opts[:parents])
     end
     
