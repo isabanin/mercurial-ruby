@@ -26,6 +26,10 @@ module Mercurial
       parents.size > 1
     end
     
+    def blank?
+      hash_id == '0'*40
+    end
+    
     def diffs
       repository.diffs.for_commit(self)
     end

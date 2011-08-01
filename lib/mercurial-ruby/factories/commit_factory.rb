@@ -66,7 +66,7 @@ module Mercurial
       data ||= block.call
       return if data.empty?
       data = data.split(Mercurial::Style::TEMPLATE_SEPARATOR)
-      Mercurial::Commit.new(
+      commit = Mercurial::Commit.new(
         repository,
         :hash_id         => data[0],
         :author          => data[1],
@@ -78,6 +78,12 @@ module Mercurial
         :tags_names      => data[10],
         :parents         => data[11]
       )
+      
+      if commit.blank?
+        nil
+      else
+        commit
+      end
     end
   
     def style

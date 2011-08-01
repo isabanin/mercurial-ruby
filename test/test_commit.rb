@@ -39,4 +39,10 @@ describe Mercurial::Commit do
     commit.to_hash.must_be_kind_of Hash
   end
   
+  it "should be considered blank if hash is all zeroes" do
+    commit = @repository.commits.by_hash_id('cd9fa0c59c7f')
+    commit.stubs(:hash_id).returns('0000000000000000000000000000000000000000')
+    commit.blank?.must_equal true
+  end
+  
 end
