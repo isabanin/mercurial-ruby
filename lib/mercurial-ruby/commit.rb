@@ -7,6 +7,8 @@ module Mercurial
                 :date, :message, :changed_files,
                 :branches_names, :tags_names, :parents_ids
     
+    alias :id :hash_id
+    
     def initialize(repository, opts={})
       @repository     = repository
       @hash_id        = opts[:hash_id]
@@ -34,6 +36,21 @@ module Mercurial
     
     def parent_id
       parents_ids.first
+    end
+    
+    def to_hash
+      {
+        'id'       => hash_id,
+        'parents'  => parents_ids.map { |p| { 'id' => p.id } },
+        'branches' => branches_names,
+        'tags'     => tags_names,
+        'message'  => message,
+        'date'     => date,
+        'author'   => {
+          'name'  => author,
+          'email' => author_email
+        }
+      }
     end
     
   protected

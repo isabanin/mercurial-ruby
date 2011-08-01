@@ -34,4 +34,9 @@ describe Mercurial::Commit do
     end
   end
   
+  it "should convert commit to hash" do
+    commit = @repository.commits.by_hash_id('cd9fa0c59c7f')
+    commit.to_hash.must_be_kind_of Hash
+  end
+  
 end
