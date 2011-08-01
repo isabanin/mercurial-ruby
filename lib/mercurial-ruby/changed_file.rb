@@ -39,7 +39,7 @@ module Mercurial
         :delete
       when 'C'
         :copy
-      when 'V'
+      when 'R'
         :move
       else
         :edit

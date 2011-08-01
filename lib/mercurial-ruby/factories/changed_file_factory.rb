@@ -33,7 +33,7 @@ module Mercurial
           delete = files.find{|f| f.deleted? && f.name == file.initial_name}
 
           if add && delete
-            file.mode_letter = 'V'
+            file.mode_letter = 'R'
             files.delete_at(files.index(add))
             files.delete_at(files.index(delete))
 
