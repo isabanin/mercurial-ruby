@@ -14,7 +14,7 @@ module Mercurial
       @hash_id        = opts[:hash_id]
       @author         = opts[:author]
       @author_email   = opts[:author_email]
-      @date           = Time.parse(opts[:date])
+      @date           = Time.iso8601(opts[:date])
       @message        = opts[:message]
       @changed_files  = files_to_array(opts[:changed_files])
       @branches_names = opts[:branches_names]
