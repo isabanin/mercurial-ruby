@@ -42,6 +42,13 @@ describe Mercurial::ConfigFile do
     @config.contents.must_equal hgrc_with_new_standalone_setting
   end
   
+  it "should add settings even if config is missing" do
+    FileUtils.rm_rf('/tmp/another-repo')
+    repository = Mercurial::Repository.create('/tmp/another-repo')
+    repository.config.add_setting("something", "super", "True")
+    repository.config.contents.must_equal "[something]\nsuper = True\n"
+  end
+  
 private
 
   def hgrc_with_incoming_hook_added

@@ -30,7 +30,9 @@ module Mercurial
     def add_setting(header, name, value)
       new_setting = %Q{[#{ header }]\n#{ name } = #{ value }\n}
       write do
-        if contents.scan(header_regexp(header)).empty?
+        if contents.nil?
+          new_setting
+        elsif contents.scan(header_regexp(header)).empty?
           contents << "\n\n#{ new_setting }"
         else
           contents.gsub(header_regexp(header), new_setting)
