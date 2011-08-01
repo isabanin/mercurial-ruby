@@ -22,8 +22,8 @@ or
 
  repository.hooks.all
  repository.hooks.by_name('commit')
- reository.hooks.destroy!('commit')
- repository.hooks.create('changegroup', 'hg update')
+ reository.hooks.remove('commit')
+ repository.hooks.add('changegroup', 'hg update')
 
 == Contributing to mercurial-ruby
  

@@ -22,13 +22,13 @@ module Mercurial
       end
     end
     
-    def create(name, value)
+    def add(name, value)
       build(name, value).tap do |hook|
         hook.save
       end
     end
     
-    def destroy!(name)
+    def remove(name)
       if hook = by_name(name)
         hook.destroy!
       end

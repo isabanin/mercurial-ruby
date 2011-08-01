@@ -27,14 +27,14 @@ describe Mercurial::HookFactory do
   end
   
   it "should create hooks" do
-    hook = @repository.hooks.create('incoming', 'hg update')
+    hook = @repository.hooks.add('incoming', 'hg update')
     hook.name.must_equal 'incoming'
     hook.value.must_equal 'hg update'
   end
   
   it "should destroy hooks" do
     Mercurial::Hook.any_instance.expects(:destroy!).once
-    @repository.hooks.destroy!('commit')
+    @repository.hooks.remove('commit')
   end
   
 end
