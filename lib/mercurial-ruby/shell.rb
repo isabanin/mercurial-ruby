@@ -4,7 +4,7 @@ module Mercurial
     extend self
     
     def binary_path
-      'hg'
+      Mercurial.configuration.hg_binary_path
     end
     
     def run(cmd, options={})

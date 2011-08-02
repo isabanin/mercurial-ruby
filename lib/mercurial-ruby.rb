@@ -1,13 +1,26 @@
 module Mercurial
   
   VERSION = '0.1.0'
+  
+  class << self
+    attr_accessor :configuration
     
+    def configuration
+      @_configuration ||= Mercurial::Configuration.new
+    end
+    
+    def configure      
+      yield(configuration)
+    end
+  end
+
 end
 
 def require_local(suffix)
   require(File.expand_path(File.join(File.dirname(__FILE__), suffix)))
 end
 
+require_local 'mercurial-ruby/configuration'
 require_local 'mercurial-ruby/shell'
 require_local 'mercurial-ruby/helper'
 require_local 'mercurial-ruby/errors'
