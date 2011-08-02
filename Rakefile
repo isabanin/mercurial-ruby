@@ -17,8 +17,8 @@ Jeweler::Tasks.new do |gem|
   gem.name = "mercurial-ruby"
   gem.homepage = "http://github.com/iSabanin/mercurial-ruby"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = %Q{Ruby API for Mercurial DVCS.}
+  gem.description = %Q{Ruby API for Mercurial DVCS.}
   gem.email = "ilya.sabanin@gmail.com"
   gem.authors = ["Ilya Sabanin"]
   # dependencies defined in Gemfile
