@@ -20,13 +20,6 @@ module Mercurial
       File.read(path) if exists?
     end
     
-    def write(&block)
-      new_content = block.call
-      File.open(path, 'w') do |f|
-        f << new_content
-      end
-    end
-    
     def add_setting(header, name, value)
       new_setting = %Q{[#{ header }]\n#{ name } = #{ value }\n}
       write do
@@ -60,6 +53,13 @@ module Mercurial
     end
     
   private
+  
+    def write(&block)
+      new_content = block.call
+      File.open(path, 'w') do |f|
+        f << new_content
+      end
+    end
   
     def header_regexp(header)
       /(\[#{ header }\]\s*)/
