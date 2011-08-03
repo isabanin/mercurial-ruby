@@ -45,6 +45,14 @@ module Mercurial
       @_diffs ||= Mercurial::DiffFactory.new(self)
     end
     
+    def nodes
+      @_nodes ||= Mercurial::NodeFactory.new(self)
+    end
+    
+    def node(name, hash_id)
+      nodes.find(name, hash_id)
+    end
+    
     def destroy!
       FileUtils.rm_rf(path)
     end
