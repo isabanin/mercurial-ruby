@@ -13,8 +13,14 @@ Ruby API for Mercurial DVCS. Implemented via a command line interface.
 or
 
  repository = Mercurial::Repository.open("/path/to/existing_repository")
+ 
+== Configuration
 
-== Config File (hgrc)
+ Mercurial.configure do |conf|
+   conf.hg_binary_path = "/usr/bin/hg"
+ end
+
+== Mercurial Config (hgrc)
 
  repository.config
  
