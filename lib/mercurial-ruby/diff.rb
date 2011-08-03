@@ -11,10 +11,15 @@ module Mercurial
       @file_a = opts[:file_a]
       @file_b = opts[:file_b]
       @body   = opts[:body]
+      @binary = opts[:binary]
     end
     
     def file_name
       file_b || file_a
+    end
+    
+    def binary?
+      !! @binary
     end
     
   end

@@ -24,15 +24,23 @@ module Mercurial
     def build(commit, data)
       return if data.empty?      
       hash_a, hash_b = *data.scan(/^diff -r (\w+) -r (\w+)/).first
-      file_a = data.scan(/^--- (?:a\/(.+)|\/dev\/null)\t/).flatten.first
-      file_b = data.scan(/^\+\+\+ (?:b\/(.+)|\/dev\/null)\t/).flatten.first
-      body = data[data.index("\n")+1..-1]
+
+      if binary_file = data.scan(/^Binary file (.+) has changed/).flatten.first
+        file_a = binary_file
+        body = 'Binary files differ'
+      else
+        file_a = data.scan(/^--- (?:a\/(.+)|\/dev\/null)\t/).flatten.first
+        file_b = data.scan(/^\+\+\+ (?:b\/(.+)|\/dev\/null)\t/).flatten.first
+        body = data[data.index("\n")+1..-1]
+      end
+
       Mercurial::Diff.new(commit,
         :hash_a => hash_a,
         :hash_b => hash_b,
         :file_a => file_a,
         :file_b => file_b,
-        :body   => body
+        :body   => body,
+        :binary => !!binary_file
       )
     end
     

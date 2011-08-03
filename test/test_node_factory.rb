@@ -13,7 +13,7 @@ describe Mercurial::NodeFactory do
   
   it "should set revision to tip if not specified" do
     node = @repository.nodes.find('new-directory/')
-    node.hash_id.must_equal 'a8b39838302fc5aad12bb6b043331b9ef50149ed'
+    node.hash_id.must_equal 'c2b3e46b986e99220e3d2fdb6e44aedbc94b3a85'
   end
   
   it "should find entries for node" do
