@@ -5,14 +5,6 @@ module Mercurial
     
     attr_reader :repository
     
-    def self.skip_tip_tag?
-      # 
-      # "hg tags" command usually return "tip" together with all the tags
-      # Since it's not really a tag we prefer ignoring it.
-      #
-      true
-    end
-    
     def initialize(repository)
       @repository = repository
     end
@@ -33,7 +25,7 @@ module Mercurial
   
     def build(data)
       name, hash_id = *data.scan(/([\w-]+)\s+\d+:(\w+)\s*/).first
-      return if name == 'tip' && self.class.skip_tip_tag?
+      return if name == 'tip'
       Mercurial::Tag.new(repository, name, hash_id)
     end
 
