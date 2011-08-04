@@ -9,12 +9,16 @@ module Mercurial
       @repository = repository
     end    
     
-    def find(name, hash_id=nil)
-      Mercurial::Node.new(repository, name, :hash_id => hash_id)
+    def find(path, hash_id=nil)
+      Mercurial::Node.new(
+        :repository => repository,
+        :path       => path,
+        :commit_id  => hash_id
+      )
     end
     
     def entries_for(node)
-      entries = hg_to_array "locate -r #{ node.hash_id } --include '#{ node.name }'" do |line|
+      entries = hg_to_array "locate -r #{ node.commit_id } --include '#{ node.name }'" do |line|
         build(line, node)
       end
       
@@ -29,10 +33,17 @@ module Mercurial
   private
   
     def build(data, parent)
-      path_array = data.strip.gsub(/^#{ parent.name }/, '').split('/')
+      path_array = data.strip.gsub(/^#{ parent.path }/, '').split('/')
+      path = "#{parent.path}#{path_array.first}"
       name = path_array.first
       name << '/' if path_array.size > 1
-      Mercurial::Node.new(repository, name, :parent => parent, :hash_id => parent.hash_id)
+      Mercurial::Node.new(
+        :repository => repository,
+        :path       => path,
+        :name       => name,
+        :parent     => parent,
+        :commit_id  => parent.commit_id
+      )
     end
     
   end
