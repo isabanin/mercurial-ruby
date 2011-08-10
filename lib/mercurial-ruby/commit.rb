@@ -17,8 +17,8 @@ module Mercurial
       @date           = Time.iso8601(opts[:date])
       @message        = opts[:message]
       @changed_files  = files_to_array(opts[:changed_files])
-      @branches_names = [opts[:branches_names]]
-      @tags_names     = [opts[:tags_names]]
+      @branches_names = branches_or_tags_to_array(opts[:branches_names])
+      @tags_names     = branches_or_tags_to_array(opts[:tags_names])
       @parents_ids    = parents_to_array(opts[:parents])
     end
     
@@ -77,12 +77,24 @@ module Mercurial
       Mercurial::ChangedFileFactory.delete_hg_artefacts(files)
     end
     
+    def branches_or_tags_to_array(branches_str)
+      string_to_array(branches_str) do |returning|
+        returning << branches_str
+      end
+    end
+    
     def parents_to_array(string)
+      string_to_array(string) do |returning|
+        string.split(' ').map do |hg_hash|
+          returning << hg_hash_to_hash_id(hg_hash)
+        end
+      end
+    end
+    
+    def string_to_array(string, &block)
       if string && !string.empty?
         [].tap do |returning|
-          string.split(' ').map do |hg_hash|
-            returning << hg_hash_to_hash_id(hg_hash)
-          end
+          block.call(returning)
         end
       else
         []

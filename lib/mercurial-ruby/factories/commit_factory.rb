@@ -39,8 +39,14 @@ module Mercurial
       end
     end
     
-    def by_hash_ids(array)
+    def by_hash_ids(*args)
+      if args.size == 1 && args.first.kind_of?(Array)
+        array = args.first
+      else
+        array = args
+      end      
       return [] if array.empty?
+
       args = array.map{|hash| " -r#{ hash }"}
       hg_to_array "log#{ args } --style #{ style }" do |line|
         build(line)

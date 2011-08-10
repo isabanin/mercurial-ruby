@@ -7,12 +7,17 @@ describe Mercurial::Commit do
     @commit = @repository.commits.by_hash_id('34f85a44acf1')
   end
   
-  it "should parse date to Ruby format" do    
+  it "should parse date to Ruby format" do 
     @commit.date.must_be_kind_of Time
   end
   
   it "should represent branches as Array" do
     @commit.branches_names.must_be_kind_of Array
+  end
+  
+  it "branches array should be empty if there are no branches" do
+    @commit = @repository.commits.by_hash_id('4474d1ddaf65')
+    @commit.branches_names.must_equal []
   end
   
   it "should represent tags as Array" do

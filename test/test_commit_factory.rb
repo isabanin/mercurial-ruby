@@ -24,6 +24,12 @@ describe Mercurial::CommitFactory do
     commits.map(&:author_email).uniq.must_equal %w(ilya.sabanin@gmail.com)
   end
   
+  it "should find many commits with multiple arguments instead of array" do
+    commits = @repository.commits.by_hash_ids('6157254a4423', 'bf6386c0a0cc')
+    commits.map(&:hash_id).sort.must_equal %w(6157254a442343181939c7af1a744cf2a16afcce bf6386c0a0ccd1282dbbe51888f52fe82b1806e3).sort
+    commits.map(&:author_email).uniq.must_equal %w(ilya.sabanin@gmail.com)
+  end
+  
   it "should find all commits" do
     commits = @repository.commits.all
     (commits.size > 5).must_equal true
