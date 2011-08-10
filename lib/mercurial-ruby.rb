@@ -1,3 +1,7 @@
+#
+# Wrapper module. Nothing interesting here except that you can 
+# specify global configs with the +configure+ method.
+#
 module Mercurial
   
   VERSION = '0.1.0'
@@ -5,10 +9,21 @@ module Mercurial
   class << self
     attr_accessor :configuration
     
+    # Access instance of Mercurial::Configuration.
+    #
+    #  config = Mercurial.configuration
+    #  config.hg_binary_path # => "/usr/local/bin/hg"
+    #
     def configuration
       @_configuration ||= Mercurial::Configuration.new
     end
     
+    # Change gem's global settings.
+    #
+    #  Mercurial.configure do |conf|
+    #    conf.hg_binary_path = "/usr/bin/hg"
+    #  end
+    #
     def configure      
       yield(configuration)
     end
@@ -34,7 +49,6 @@ require_local 'mercurial-ruby/diff'
 require_local 'mercurial-ruby/branch'
 require_local 'mercurial-ruby/tag'
 require_local 'mercurial-ruby/node'
-
 
 require_local 'mercurial-ruby/factories/hook_factory'
 require_local 'mercurial-ruby/factories/commit_factory'
