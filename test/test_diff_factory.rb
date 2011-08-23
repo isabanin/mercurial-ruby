@@ -31,7 +31,8 @@ describe Mercurial::DiffFactory do
   end
   
   it "should handle empty files properly" do
-    flunk
+    commit = @repository.commits.by_hash_id('8173f122b0d0')
+    commit.diffs.size.must_equal 0
   end
   
 end

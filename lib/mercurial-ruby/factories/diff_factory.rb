@@ -12,9 +12,12 @@ module Mercurial
     def for_commit(commit)
       [].tap do |returning|
         data = hg("diff -c#{ commit.hash_id }")
-        data.split(/^diff/)[1..-1].map do |piece| 
-          piece = "diff" << piece
-          returning << build(commit, piece)
+        chunks = data.split(/^diff/)[1..-1]
+        unless chunks.nil?
+          chunks.map do |piece| 
+            piece = "diff" << piece
+            returning << build(commit, piece)
+          end
         end
       end
     end

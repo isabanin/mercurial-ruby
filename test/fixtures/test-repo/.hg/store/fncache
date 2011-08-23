@@ -1,39 +1,39 @@
-data/new-directory/subdirectory/EULA5seat_Chin_Sim02.03.04.pdf.i
 data/directory two/templates/LICENSE.txt.i
-data/old-directory/shindo_mixin.rb.i
+data/directory two/templates/.gitignore.i
 data/testspec_mixin_new.rb.i
 data/directory two/templates/Gemfile.i
 data/directory two/templates/testspec/helper.rb.i
 data/directory two/templates/testunit/flunking.rb.i
-data/README.markdown.i
+data/old-directory/minitest_mixin.rb.i
 data/directory two/shindo_mixin.rb.i
 data/old-directory/options.rb.i
-data/old-directory/rspec_mixin.rb.i
 data/directory two/templates/rspec/helper.rb.i
-data/.hgtags.i
+data/directory two/templates/rspec/.rspec.i
 data/directory two/templates/testunit/helper.rb.i
-data/directory two/templates/shoulda/flunking.rb.i
+data/directory two/templates/shoulda/helper.rb.i
 data/old-directory/yard_mixin.rb.i
+data/directory two/templates/jeweler_tasks.erb.i
 data/riot_mixin.rb.i
 data/style.i
-data/directory two/templates/shoulda/helper.rb.i
+data/directory two/templates/bundler_setup.erb.i
 data/directory two/templates/.document.i
-data/directory two/templates/features/support/env.rb.i
+data/directory_1/tasks.rb.i
+data/directory two/rspec_mixin.rb.i
 data/riot_mixin_copy.rb.i
-data/goose.png.i
 data/directory two/minitest_mixin.rb.i
 data/directory two/templates/riot/helper.rb.i
-data/directory two/templates/.gitignore.i
+data/old-directory/shindo_mixin.rb.i
 data/directory two/templates/other_tasks.erb.i
 data/LICENSE.txt.i
 data/directory_1/rubygems_dot_org_tasks.rb.i
 data/new-file.i
 data/directory_1/specification.rb.i
 data/directory two/templates/riot/flunking.rb.i
+data/directory two/templates/shindo/flunking.rb.i
 data/Rakefile3.i
 data/directory two/templates/README.rdoc.i
 data/Rakefile2.i
-data/directory two/rspec_mixin.rb.i
+data/goose.png.i
 data/super-cow.i
 data/directory_1/rubygems_tasks.rb.i
 data/README.markup.i
@@ -45,30 +45,31 @@ data/directory two/templates/bacon/helper.rb.i
 data/testspec_mixin.rb.i
 data/superman.txt.i
 data/Rakefile.i
-data/old-directory/minitest_mixin.rb.i
+data/README.markdown.i
 data/directory_1/.DS_Store.i
-data/directory two/templates/shindo/flunking.rb.i
+data/directory two/templates/shoulda/flunking.rb.i
 data/.DotFile.i
-data/directory_1/tasks.rb.i
+data/directory two/templates/features/support/env.rb.i
 data/directory two/options.rb.i
 data/new-directory/subdirectory/beansprout.png.i
+data/directory two/templates/features/default.feature.i
 data/directory two/templates/bacon/flunking.rb.i
 data/LICENSE4.txt.i
 data/LICENSE2.txt.i
 data/directory two/.DS_Store.i
-data/directory two/templates/bundler_setup.erb.i
+data/old-directory/rspec_mixin.rb.i
 data/.hgignore.i
 data/directory two/shoulda_mixin.rb.i
-data/directory two/rdoc_mixin.rb.i
-data/directory two/templates/rspec/.rspec.i
+data/.hgtags.i
 data/directory two/templates/Rakefile.i
 data/directory two/templates/minitest/flunking.rb.i
-data/directory two/templates/minitest/helper.rb.i
+data/directory two/templates/shindo/helper.rb.i
 data/new-directory/subdirectory/EULA5seat_Chin_Sim02.03.04.pdf.d
 data/directory two/templates/testspec/flunking.rb.i
-data/directory two/templates/jeweler_tasks.erb.i
-data/directory two/templates/shindo/helper.rb.i
+data/new-directory/subdirectory/EULA5seat_Chin_Sim02.03.04.pdf.i
+data/directory two/templates/minitest/helper.rb.i
 data/old-directory/testunit_mixin.rb.i
+data/empty-file.i
 data/LICENSE3.txt.i
-data/directory two/templates/features/default.feature.i
+data/directory two/rdoc_mixin.rb.i
 data/directory two/templates/micronaut/helper.rb.i
