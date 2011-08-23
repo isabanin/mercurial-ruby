@@ -30,4 +30,8 @@ describe Mercurial::DiffFactory do
     diff.binary?.must_equal true
   end
   
+  it "should handle empty files properly" do
+    flunk
+  end
+  
 end
