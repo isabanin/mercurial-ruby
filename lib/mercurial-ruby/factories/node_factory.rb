@@ -9,43 +9,56 @@ module Mercurial
       @repository = repository
     end    
     
-    def find(path, hash_id=nil)
-      Mercurial::Node.new(
-        :repository => repository,
-        :path       => path,
-        :commit_id  => hash_id
-      )
-    end
-    
-    def entries_for(node)
-      entries = hg_to_array "locate -r #{ node.commit_id } --include '#{ node.name }'" do |line|
-        build(line, node)
+    def find(path, revision=nil)
+      parent_dir = path.split('/')[-2]
+
+      if parent_dir.nil?
+        entries = entries_for('/', revision)
+      else
+        entries = entries_for(parent_dir, revision)
       end
       
-      entries = entries.inject({}) do |hash,item|
-        hash[item.name] ||= item
-        hash 
-      end.values
-      
-      entries
+      entries.find do |entry|
+        entry.path == path
+      end
+    end
+
+  def entries_for(path, revision=nil, parent=nil)
+    entries = hg_to_array("manifest -r #{ revision } --debug") do |line|
+      if path == '/' || line.scan(/^\w{40} \d{3} *? (#{ path })/).first != nil
+        build(line, parent)
+      end
     end
     
+    entries = entries.inject({}) do |hash,item|
+      hash[item.name] ||= item
+      hash 
+    end.values
+    
+    entries
+  end
+    
   private
-  
-    def build(data, parent)
-      path_array = data.strip.gsub(/^#{ parent.path }/, '').split('/')
-      path = "#{parent.path}#{path_array.first}"
+
+    def build(data, parent=nil)
+      parent_path = parent ? parent.path : ''
+      revision, fmode, path = *data.strip.scan(/^(\w{40}) (\d{3}) *? (.+)/).first
+      path = path.strip
+      path_array = path.gsub(/^#{ parent_path }/, '').split('/')
+      path = "#{parent_path}#{path_array.first}"
       name = path_array.first
       name << '/' if path_array.size > 1
+      path << '/' if path_array.size > 1
+
       Mercurial::Node.new(
         :repository => repository,
         :path       => path,
         :name       => name,
         :parent     => parent,
-        :commit_id  => parent.commit_id
+        :revision   => revision,
+        :fmode      => fmode
       )
     end
-    
   end
   
 end

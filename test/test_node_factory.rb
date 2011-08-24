@@ -8,12 +8,16 @@ describe Mercurial::NodeFactory do
   
   it "should find any node in the repo" do
     node = @repository.nodes.find('new-directory/', 'a8b39838302f')
+    node.name.must_equal 'new-directory/'
+    node.directory?.must_equal true
     node.must_be_kind_of Mercurial::Node
   end
   
-  it "should set revision to tip if not specified" do
-    node = @repository.nodes.find('new-directory/')
-    node.commit_id.must_equal '8173f122b0d061e8d398862f1eaf601babf156aa'
+  it "should find a directory even if I specified it without trailing slash" do
+    node = @repository.nodes.find('new-directory/subdirectory', 'a8b39838302f')
+    node.name.must_equal 'subdirectory'
+    node.directory?.must_equal true
+    node.must_be_kind_of Mercurial::Node
   end
   
   it "should find entries for node" do
@@ -30,6 +34,12 @@ describe Mercurial::NodeFactory do
 
     entries[2].file?.must_equal true
     entries[2].directory?.must_equal false
+  end
+  
+  it "should find entries for root" do
+    node = @repository.nodes.find('/')
+    entries = node.entries
+    entries.size.must_equal 17
   end
   
 end
