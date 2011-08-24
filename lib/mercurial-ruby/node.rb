@@ -3,14 +3,15 @@ module Mercurial
   class Node
     include Mercurial::Helper
     
-    attr_reader :repository, :path, :commit_id, :parent
+    attr_reader :repository, :path, :fmode, :revision, :parent
     
     def initialize(opts={})
       @repository = opts[:repository]
       @path       = opts[:path]
       @parent     = opts[:parent]
       @name       = opts[:name]
-      @commit_id  = opts[:commit_id] || repository.commits.tip.hash_id      
+      @fmode      = opts[:fmode]
+      @revision   = opts[:revision]
     end
     
     def name
@@ -30,7 +31,7 @@ module Mercurial
     end
     
     def entries
-      @_entries ||= repository.nodes.entries_for(self)
+      @_entries ||= repository.nodes.entries_for(path, revision, self)
     end
     
     def has_entry?(name)
@@ -52,7 +53,11 @@ module Mercurial
     end
     
     def contents
-      hg("cat #{ path } -r #{ commit_id }")
+      hg("cat #{ path } -r #{ revision }")
+    end
+    
+    def size
+      contents.size
     end
     
   end
