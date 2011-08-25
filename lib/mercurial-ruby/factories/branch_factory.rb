@@ -33,6 +33,12 @@ module Mercurial
       end
     end
     
+    def for_commit(hash_id)
+      hg_to_array "log -r 'descendants(#{ hash_id }) and head()' --template '\n{branches}'" do |line|
+        build_with_name_only(line)
+      end.compact.uniq
+    end
+    
   private
   
     def build(data)
@@ -43,6 +49,11 @@ module Mercurial
         :commit => last_commit,
         :status => status
       )
+    end
+    
+    def build_with_name_only(name)
+      name = 'default' if name == ''
+      Mercurial::Branch.new(repository, name)
     end
 
   end

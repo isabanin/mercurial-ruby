@@ -37,4 +37,10 @@ describe Mercurial::BranchFactory do
     @repository.branches.by_name('bla-branch-f').must_equal nil
   end
   
+  it "should return branches for commit" do
+    branches = @repository.branches.for_commit('bf6386c0a0cc')
+    branches.size.must_equal 5
+    branches.map(&:name).sort.must_equal %w(old-branch new-branch branch-from-remote another-branch default).sort
+  end
+  
 end
