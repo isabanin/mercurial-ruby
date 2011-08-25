@@ -58,4 +58,9 @@ describe Mercurial::Commit do
     commit.blank?.must_equal true
   end
   
+  it "should return an array of branches where it exists" do
+    commit = @repository.commits.by_hash_id('cd9fa0c59c7f')
+    commit.exist_in_branches.map(&:name).sort.must_equal %w(default another-branch).sort
+  end
+  
 end

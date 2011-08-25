@@ -42,6 +42,10 @@ module Mercurial
       parents_ids.first
     end
     
+    def exist_in_branches
+      repository.branches.for_commit(hash_id)
+    end
+    
     def to_hash
       {
         'id'       => hash_id,
