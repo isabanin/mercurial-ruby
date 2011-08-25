@@ -89,7 +89,7 @@ describe Mercurial::NodeFactory do
     node.must_be_kind_of Mercurial::RootNode
     entries = node.entries
     entries.size.must_equal 14
-    entries.map(&:name).sort.must_equal %w(.DotFile .hgignore .hgtags LICENSE3.txt LICENSE4.txt README.markup Rakefile3 empty-file goose.png new-directory riot_mixin.rb style superman.txt testspec_mixin_new.rb).sort
+    entries.map(&:name).sort.must_equal %w(.DotFile .hgignore .hgtags LICENSE3.txt LICENSE4.txt README.markup Rakefile3 empty-file goose.png new-directory/ riot_mixin.rb style superman.txt testspec_mixin_new.rb).sort
   end
 
 end

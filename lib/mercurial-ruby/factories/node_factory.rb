@@ -40,7 +40,7 @@ module Mercurial
       manifest_entries.each do |me|
         path_without_source = me[3].gsub(/^#{ path.gsub(/\/$/, '') }\//, '')
         entry_name = path_without_source.split('/').first
-        entry_path = File.join(path, entry_name)
+        entry_path = File.join(path, entry_name).gsub(/^\//, '')
         dir = me[3].scan(/^(#{ entry_path }\/)/).flatten.first ? true : false
         entry_name << '/' if dir
         
