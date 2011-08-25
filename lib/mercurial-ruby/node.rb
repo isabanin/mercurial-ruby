@@ -3,7 +3,7 @@ module Mercurial
   class Node
     include Mercurial::Helper
     
-    attr_reader :repository, :path, :fmode, :revision, :parent
+    attr_reader :repository, :path, :fmode, :executable, :revision, :parent
     
     def initialize(opts={})
       @repository = opts[:repository]
@@ -11,6 +11,7 @@ module Mercurial
       @parent     = opts[:parent]
       @name       = opts[:name]
       @fmode      = opts[:fmode]
+      @executable = opts[:executable] == '*' ? true : false
       @revision   = opts[:revision]
     end
     
@@ -46,6 +47,10 @@ module Mercurial
     
     def file?
       (name =~ /\/$/).nil?
+    end
+    
+    def root?
+      false
     end
     
     def binary?

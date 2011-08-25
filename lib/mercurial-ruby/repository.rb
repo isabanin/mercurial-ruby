@@ -49,6 +49,10 @@ module Mercurial
       @_nodes ||= Mercurial::NodeFactory.new(self)
     end
     
+    def manifest
+      @_manifest ||= Mercurial::Manifest.new(self)
+    end
+    
     def node(name, hash_id)
       nodes.find(name, hash_id)
     end
