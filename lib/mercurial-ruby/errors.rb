@@ -4,4 +4,6 @@ module Mercurial
   
   class RepositoryNotFound < Error; end
   
+  class CommandError < Error; end
+  
 end

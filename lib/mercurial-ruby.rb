@@ -37,6 +37,7 @@ end
 
 require_local 'mercurial-ruby/configuration'
 require_local 'mercurial-ruby/shell'
+require_local 'mercurial-ruby/command'
 require_local 'mercurial-ruby/helper'
 require_local 'mercurial-ruby/errors'
 require_local 'mercurial-ruby/style'

@@ -7,6 +7,10 @@ module Mercurial
       Mercurial.configuration.hg_binary_path
     end
     
+    def hg(cmd, options={})
+      run("#{ binary_path } #{ cmd }", options)
+    end
+    
     def run(cmd, options={})
       build = []
       if options[:in]
@@ -14,11 +18,7 @@ module Mercurial
       end
       build << cmd
       to_run = build.join('&&')
-      `#{ to_run }`
-    end
-    
-    def hg(cmd, options={})
-      run("#{ binary_path } #{ cmd }", options)
+      Mercurial::Command.new(to_run).execute
     end
     
   end
