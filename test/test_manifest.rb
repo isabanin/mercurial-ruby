@@ -16,6 +16,11 @@ describe Mercurial::Manifest do
     paths.map{|p| p[3]}.sort.must_equal %w(new-directory/another-boring-file new-directory/something.csv new-directory/subdirectory/EULA5seat_Chin_Sim02.03.04.pdf new-directory/subdirectory/beansprout.png).sort
   end
   
+  it "should find exact matches for file names" do
+    paths = @manifest.scan_for_path('goose')
+    paths.size.must_equal 1    
+  end
+  
   it "should return nothing for inexisting path" do
     paths = @manifest.scan_for_path('shikaka-path/')
     paths.must_equal []

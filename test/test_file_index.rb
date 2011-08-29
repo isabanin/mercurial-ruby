@@ -24,7 +24,7 @@ describe Mercurial::FileIndex do
   end
   
   it "should count all commits" do
-    @file_index.count_all.must_equal 31
+    @file_index.count_all.must_equal 32
   end
   
   it "should count commits reachable by specific hash id" do
@@ -69,6 +69,12 @@ describe Mercurial::FileIndex do
     
     commits = @file_index.last_commits('207476112e024921b1538a096e5f6812d0698cab', ['doesntexist'])
     commits.must_equal({})
+  end
+  
+  it "should return last commits with regex" do
+    commits = @file_index.last_commits('1b99d0243f8e5542c1b33a013b63130f9009ac52', /^new-directory\/[^\s\/]+\/?$/)
+    commits.size.must_equal 1
+    commits.values.first.must_equal '4474d1ddaf653cb7fbf18bb62ff1e39a4e571969'
   end
   
   it "should update existing index by adding a range of commits to it" do

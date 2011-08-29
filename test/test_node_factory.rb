@@ -88,7 +88,7 @@ describe Mercurial::NodeFactory do
   end
   
   it "should find entries for root node" do
-    node = @repository.nodes.find('/')
+    node = @repository.nodes.find('/', 'f2b8b135f3a6')
     node.must_be_kind_of Mercurial::RootNode
     entries = node.entries
     entries.size.must_equal 14
