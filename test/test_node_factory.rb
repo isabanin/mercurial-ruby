@@ -14,6 +14,7 @@ describe Mercurial::NodeFactory do
     node.fmode.must_equal nil
     node.executable.must_equal false
     node.revision.must_equal 'a8b39838302f'
+    node.nodeid.must_equal nil
     node.must_be_kind_of Mercurial::Node
   end
   
@@ -32,6 +33,7 @@ describe Mercurial::NodeFactory do
     node.fmode.must_equal '644'
     node.executable.must_equal false
     node.revision.must_equal 'a8b39838302f'
+    node.nodeid.must_equal '74dea67fb438acdb2cc103b3d289d4a8856718cc'
     node.must_be_kind_of Mercurial::Node
   end
   
@@ -44,6 +46,7 @@ describe Mercurial::NodeFactory do
     node.fmode.must_equal '644'
     node.executable.must_equal false
     node.revision.must_equal 'a07263ded072'
+    node.nodeid.must_equal '75fe47582b041b66d5ab1606cf3cff140038d7bd'
     node.must_be_kind_of Mercurial::Node
   end
 

@@ -3,7 +3,7 @@ module Mercurial
   class Node
     include Mercurial::Helper
     
-    attr_reader :repository, :path, :fmode, :executable, :revision, :parent
+    attr_reader :repository, :path, :fmode, :executable, :nodeid, :parent
     
     def initialize(opts={})
       @repository = opts[:repository]
@@ -13,6 +13,7 @@ module Mercurial
       @fmode      = opts[:fmode]
       @executable = opts[:executable] == '*' ? true : false
       @revision   = opts[:revision]
+      @nodeid     = opts[:nodeid]
     end
     
     def name
@@ -21,6 +22,10 @@ module Mercurial
         n << '/' if path =~ /\/$/
         n
       end
+    end
+    
+    def revision
+      @revision || (parent ? parent.revision : nil) || 'tip'
     end
     
     def path_without_parent

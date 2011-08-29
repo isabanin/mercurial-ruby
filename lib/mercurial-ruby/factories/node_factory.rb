@@ -27,6 +27,7 @@ module Mercurial
           :path     => entry[3],
           :name     => entry[3].split('/').last,
           :revision => revision,
+          :nodeid   => entry[0],
           :fmode    => entry[1],
           :exec     => entry[2]
         )
@@ -47,7 +48,8 @@ module Mercurial
         entries << build(
           :path     => entry_path,
           :name     => entry_name,
-          :revision => dir ? revision : me[0],
+          :revision => revision,
+          :nodeid   => (me[0] unless dir),
           :fmode    => dir ? nil : me[1],
           :exec     => dir ? nil : me[2],
           :parent   => parent
@@ -68,102 +70,12 @@ module Mercurial
         :path       => opts[:path],
         :name       => opts[:name],
         :revision   => opts[:revision],
+        :nodeid     => opts[:nodeid],
         :fmode      => opts[:fmode],
         :executable => opts[:exec],
         :parent     => opts[:parent]
       )
     end
-
-=begin
-    def find(path, revision=nil)
-      if manifest_line = repository.manifest.find(path, revision)
-        build(
-          :revision => revision, #manifest_line[0],
-          :fmode    => manifest_line[1],
-          :path     => manifest_line[2]
-        )
-      end
-    end
-    
-    def entries_for(path, revision=nil, parent=nil)
-      repository.manifest.each_entry(path, revision) do |entry|
-        build(
-          :revision => entry[0],
-          :fmode    => entry[1],
-          :path     => entry[2],
-          :parent   => parent
-        )
-      end
-    end
-
-   
-    def find(path, revision=nil)
-      parent_dir = path.split('/')[-2]
-
-      if parent_dir.nil?
-        entries = entries_for('/', revision)
-      else
-        entries = entries_for(parent_dir, revision)
-      end
-      
-      entries.find do |entry|
-        entry.path == path
-      end
-    end
-
-    def entries_for(path, revision=nil, parent=nil)
-      [].tap do |entries|
-        repository.manifest.each_file(path, revision) do |line|
-          if path == '/' || line.scan(/^\w{40} \d{3} *? (#{ path })/).first != nil
-            entries << build(line, parent)
-          end
-        end
-    
-        entries = entries.inject({}) do |hash,item|
-          hash[item.name] ||= item
-          hash 
-        end.values
-      end
-    end
-
-  def build(opts={})
-      path_arr = opts[:path].split('/')
-      name = path_arr.last
-      
-      if opts[:path].strip.scan(/\/$/).first
-        name << '/'
-      end
-      
-      Mercurial::Node.new(
-        :repository => repository,
-        :path       => opts[:path],
-        :name       => name,
-        :parent     => opts[:parent],
-        :revision   => opts[:revision],
-        :fmode      => opts[:fmode]
-      )
-    end
-    
-    def build(data, parent=nil)
-      parent_path = parent ? parent.path : ''
-      revision, fmode, path = *data.strip.scan(/^(\w{40}) (\d{3}) *? (.+)/).first
-      path = path.strip
-      path_array = path.gsub(/^#{ parent_path }/, '').split('/')
-      path = "#{parent_path}#{path_array.first}"
-      name = path_array.first
-      name << '/' if path_array.size > 1
-      path << '/' if path_array.size > 1
-
-      Mercurial::Node.new(
-        :repository => repository,
-        :path       => path,
-        :name       => name,
-        :parent     => parent,
-        :revision   => revision,
-        :fmode      => fmode
-      )
-    end
-=end
     
   end
   
