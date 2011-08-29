@@ -37,6 +37,11 @@ describe Mercurial::NodeFactory do
     node.must_be_kind_of Mercurial::Node
   end
   
+  it "should return nil for file that doesn't exist" do
+    node = @repository.nodes.find('shikakablala4', 'a8b39838302f')
+    node.must_equal nil
+  end
+  
   it "should find deleted file" do
     node = @repository.nodes.find('old-directory/options.rb', 'a07263ded072')
     node.name.must_equal 'options.rb'

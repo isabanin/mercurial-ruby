@@ -13,6 +13,7 @@ module Mercurial
       revision ||= 'tip'
       return RootNode.new(:repository => repository, :revision => revision) if path == '/'
       entry = repository.manifest.scan_for_path(path, revision).first
+      return unless entry
       if exact_path = entry[3].scan(/^(#{ path.gsub(/\/$/, '') }\/)/).flatten.first
         name = exact_path.split('/').last + '/'
         build(
