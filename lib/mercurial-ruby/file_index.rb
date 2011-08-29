@@ -29,13 +29,17 @@ module Mercurial
     def initialize(repository)
       @repository = repository      
     end
-
+    
+    def reload
+      @_read_complete = false
+    end
+    
     # updates file index
     def update(oldrev=nil, newrev=nil)
       if index_file_exists? && oldrev != "0"*40
-        hg("log --debug -r #{ oldrev }:#{ newrev } --style #{ Style.file_index } >> #{ index_file_path }")
+        hg("log --debug -r #{ oldrev }:#{ newrev } --style #{ Style.file_index } >> #{ path }")
       else
-        hg("log --debug -r : --style #{ Style.file_index } > #{ index_file_path }")
+        hg("log --debug -r : --style #{ Style.file_index } > #{ path }")
       end
     end
 
@@ -123,21 +127,21 @@ module Mercurial
     end
     
     def destroy!
-      FileUtils.rm_f(index_file_path)
+      FileUtils.rm_f(path)
+    end
+    
+    def path
+      File.join(repository.dothg_path, 'file-index')
     end
 
   private
-  
-    def index_file_path
-      File.join(repository.dothg_path, 'file-index')
-    end
     
     def index_file_exists?
-      FileTest.exists?(index_file_path)
+      FileTest.exists?(path)
     end
     
     def index_file_valid?
-      File.file?(index_file_path) && (File.size(index_file_path) < Mercurial::FileIndex.max_file_size)
+      File.file?(path) && (File.size(path) < Mercurial::FileIndex.max_file_size)
     end
     
     def sort_commits(sha_array)
@@ -148,15 +152,24 @@ module Mercurial
     def read_if_needed
       if @_read_complete
         true
-      elsif index_file_valid?
-        read_index
       else
-        raise IndexFileNotFound
+        begin
+          read_index
+        rescue IndexFileNotFound => e
+          if @_tried_updating
+            raise e
+          else
+            @_tried_updating = true
+            update
+            retry
+          end
+        end
       end
     end
 
-    def read_index      
-      f = File.new(index_file_path)
+    def read_index
+      raise IndexFileNotFound unless index_file_valid?
+      f = File.new(path)
       @sha_count = 0
       @commit_index = {}
       @commit_order = {}
