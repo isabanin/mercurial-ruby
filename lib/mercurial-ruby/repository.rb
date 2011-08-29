@@ -2,8 +2,6 @@ module Mercurial
   
   class Repository
     
-    attr_reader :path
-    
     def self.create(destination)
       init_repository(destination)      
       open(destination)
@@ -53,12 +51,24 @@ module Mercurial
       @_manifest ||= Mercurial::Manifest.new(self)
     end
     
+    def file_index
+      @_file_index ||= Mercurial::FileIndex.new(self)
+    end
+    
     def node(name, hash_id)
       nodes.find(name, hash_id)
     end
     
     def destroy!
       FileUtils.rm_rf(path)
+    end
+    
+    def path
+      File.expand_path(@path)
+    end
+    
+    def dothg_path
+      File.join(path, '.hg')
     end
     
   protected

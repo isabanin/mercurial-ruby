@@ -1,0 +1,3 @@
+changeset = "{node} {parents} {desc|firstline}\n{files}\n"
+file  = "{file}\n"
+parent = "{node} "

@@ -13,6 +13,10 @@ module Mercurial
       File.join(root_path, 'changeset.style')
     end
     
+    def file_index
+      File.join(root_path, 'file_index.style')
+    end
+    
   end
   
 end

@@ -52,6 +52,7 @@ require_local 'mercurial-ruby/tag'
 require_local 'mercurial-ruby/manifest'
 require_local 'mercurial-ruby/node'
 require_local 'mercurial-ruby/root_node'
+require_local 'mercurial-ruby/file_index'
 
 require_local 'mercurial-ruby/factories/hook_factory'
 require_local 'mercurial-ruby/factories/commit_factory'

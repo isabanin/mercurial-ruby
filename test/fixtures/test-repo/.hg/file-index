@@ -1,0 +1,156 @@
+bf6386c0a0ccd1282dbbe51888f52fe82b1806e3 0000000000000000000000000000000000000000 0000000000000000000000000000000000000000  Initial files.
+LICENSE.txt
+README.markdown
+Rakefile
+
+bc729b15e2b556065dd4f32c161f54be5dd92776 bf6386c0a0ccd1282dbbe51888f52fe82b1806e3 0000000000000000000000000000000000000000  Directory added
+directory_1/rubygems_dot_org_tasks.rb
+directory_1/rubygems_tasks.rb
+directory_1/specification.rb
+directory_1/tasks.rb
+
+63f70b2314ede1e12813cae87f6f303ee8d5c09a bc729b15e2b556065dd4f32c161f54be5dd92776 0000000000000000000000000000000000000000  A lot more files added.
+directory two/.DS_Store
+directory two/minitest_mixin.rb
+directory two/options.rb
+directory two/rdoc_mixin.rb
+directory two/rspec_mixin.rb
+directory two/shindo_mixin.rb
+directory two/shoulda_mixin.rb
+directory two/templates/.document
+directory two/templates/.gitignore
+directory two/templates/Gemfile
+directory two/templates/LICENSE.txt
+directory two/templates/README.rdoc
+directory two/templates/Rakefile
+directory two/templates/bacon/flunking.rb
+directory two/templates/bacon/helper.rb
+directory two/templates/bundler_setup.erb
+directory two/templates/features/default.feature
+directory two/templates/features/support/env.rb
+directory two/templates/jeweler_tasks.erb
+directory two/templates/micronaut/flunking.rb
+directory two/templates/micronaut/helper.rb
+directory two/templates/minitest/flunking.rb
+directory two/templates/minitest/helper.rb
+directory two/templates/other_tasks.erb
+directory two/templates/riot/flunking.rb
+directory two/templates/riot/helper.rb
+directory two/templates/rspec/.rspec
+directory two/templates/rspec/flunking.rb
+directory two/templates/rspec/helper.rb
+directory two/templates/shindo/flunking.rb
+directory two/templates/shindo/helper.rb
+directory two/templates/shoulda/flunking.rb
+directory two/templates/shoulda/helper.rb
+directory two/templates/testspec/flunking.rb
+directory two/templates/testspec/helper.rb
+directory two/templates/testunit/flunking.rb
+directory two/templates/testunit/helper.rb
+directory_1/.DS_Store
+
+6157254a442343181939c7af1a744cf2a16afcce bf6386c0a0ccd1282dbbe51888f52fe82b1806e3 0000000000000000000000000000000000000000  Bla bla.
+LICENSE.txt
+riot_mixin.rb
+testspec_mixin.rb
+
+a07263ded0729d146062e6ec076cf1e6af214218 bf6386c0a0ccd1282dbbe51888f52fe82b1806e3 0000000000000000000000000000000000000000  Old files.
+old-directory/minitest_mixin.rb
+old-directory/options.rb
+old-directory/rspec_mixin.rb
+old-directory/shindo_mixin.rb
+old-directory/testunit_mixin.rb
+old-directory/yard_mixin.rb
+
+3cdad3d3ca0054ebfcd2652cc83442bd0d272bbb a07263ded0729d146062e6ec076cf1e6af214218 0000000000000000000000000000000000000000  Closed old branch
+
+25bb5c51fd613b8b58d88ef1caf99da559af51f3 bf6386c0a0ccd1282dbbe51888f52fe82b1806e3 0000000000000000000000000000000000000000  Added tag new-tag for changeset bf6386c0a0cc
+.hgtags
+
+63e18640e83af60196334f16cc31f4f99c419918 63f70b2314ede1e12813cae87f6f303ee8d5c09a 0000000000000000000000000000000000000000  Added tag new-branch-tag for changeset 63f70b2314ed
+.hgtags
+
+8fc3d59965d71a9b83308c53a76f3af0235b6eb6 25bb5c51fd613b8b58d88ef1caf99da559af51f3 0000000000000000000000000000000000000000  License updated
+LICENSE.txt
+
+0f41dd2ec1667518741da599db7264943c9ed472 8fc3d59965d71a9b83308c53a76f3af0235b6eb6 0000000000000000000000000000000000000000  README changed
+README.markdown
+
+16fac694db0a52edfd266576acafb475f7f8420f 0f41dd2ec1667518741da599db7264943c9ed472 0000000000000000000000000000000000000000  New file added
+new-file
+
+34f85a44acf11c3386f771a65445d6c39e5261d6 25bb5c51fd613b8b58d88ef1caf99da559af51f3 0000000000000000000000000000000000000000  Tiny change.
+Rakefile
+
+4474d1ddaf653cb7fbf18bb62ff1e39a4e571969 34f85a44acf11c3386f771a65445d6c39e5261d6 0000000000000000000000000000000000000000  Another directory added.
+new-directory/another-boring-file
+
+cd9fa0c59c7f189fa1d70edea564e534ac9478d0 4474d1ddaf653cb7fbf18bb62ff1e39a4e571969 6157254a442343181939c7af1a744cf2a16afcce  Merged another-branch
+
+611407bf9b369e061eaf0bee1a261c9e62ad713d 6157254a442343181939c7af1a744cf2a16afcce 63e18640e83af60196334f16cc31f4f99c419918  new-branch merged into another-branch
+
+d14b0c16b21d9d3e08101ef264959a7d91a8b5db cd9fa0c59c7f189fa1d70edea564e534ac9478d0 0000000000000000000000000000000000000000  Hgignore created.
+.hgignore
+
+3e1ea66bdd04dbfb8d91e4f2de3baca218cd4cca 611407bf9b369e061eaf0bee1a261c9e62ad713d d14b0c16b21d9d3e08101ef264959a7d91a8b5db  Merge default into another-branch.
+.hgtags
+
+bbfe40f4a56961bdfc6b497a19cc35e18f2d40a3 d14b0c16b21d9d3e08101ef264959a7d91a8b5db 0000000000000000000000000000000000000000  Changed two files, renamed one.
+README.markdown
+README.markup
+riot_mixin.rb
+testspec_mixin.rb
+
+4e9f11e95eade74c55fc785e3159015f8a472f4b bbfe40f4a56961bdfc6b497a19cc35e18f2d40a3 0000000000000000000000000000000000000000  Copied and moved
+LICENSE.txt
+LICENSE2.txt
+riot_mixin_copy.rb
+
+11998206a49ca9a55b4065508ce6ca10945e3e73 4e9f11e95eade74c55fc785e3159015f8a472f4b 0000000000000000000000000000000000000000  Added, deleted.
+riot_mixin_copy.rb
+super-cow
+
+1b99d0243f8e5542c1b33a013b63130f9009ac52 11998206a49ca9a55b4065508ce6ca10945e3e73 0000000000000000000000000000000000000000  Renamed file
+testspec_mixin.rb
+testspec_mixin_new.rb
+
+612af4851a6c483f499cadf1dd28040d7996aa78 1b99d0243f8e5542c1b33a013b63130f9009ac52 0000000000000000000000000000000000000000  Modified, copied, moved and deleted files.
+LICENSE2.txt
+LICENSE3.txt
+Rakefile2
+riot_mixin.rb
+super-cow
+
+54d96f4b1a260dc5614e89c1ed8c2d2edaa4942f 612af4851a6c483f499cadf1dd28040d7996aa78 0000000000000000000000000000000000000000  Added, copied, moved, modified and deleted files.
+LICENSE4.txt
+README.markup
+Rakefile
+Rakefile2
+Rakefile3
+superman.txt
+
+207476112e024921b1538a096e5f6812d0698cab 54d96f4b1a260dc5614e89c1ed8c2d2edaa4942f 0000000000000000000000000000000000000000  Style added
+style
+
+ea1e37a728e989176e9e7b33f0d0e035fd347623 207476112e024921b1538a096e5f6812d0698cab 0000000000000000000000000000000000000000  Another useful file
+new-directory/something.csv
+
+a8b39838302fc5aad12bb6b043331b9ef50149ed ea1e37a728e989176e9e7b33f0d0e035fd347623 0000000000000000000000000000000000000000  Junk
+new-directory/subdirectory/EULA5seat_Chin_Sim02.03.04.pdf
+new-directory/subdirectory/beansprout.png
+
+b66320fa72aac06f7507ec9b66ff6b693e292b11 a8b39838302fc5aad12bb6b043331b9ef50149ed 0000000000000000000000000000000000000000  Dot file that should break the parser.
+.DotFile
+
+c2b3e46b986e99220e3d2fdb6e44aedbc94b3a85 b66320fa72aac06f7507ec9b66ff6b693e292b11 0000000000000000000000000000000000000000  Binary file added.
+goose.png
+
+291a498f04e9bd0712d92df38aa73dc3a7490f3a c2b3e46b986e99220e3d2fdb6e44aedbc94b3a85 0000000000000000000000000000000000000000  Changed CSV file.
+new-directory/something.csv
+
+8173f122b0d061e8d398862f1eaf601babf156aa 291a498f04e9bd0712d92df38aa73dc3a7490f3a 0000000000000000000000000000000000000000  Added empty file
+empty-file
+
+f2b8b135f3a6f254d5ca20e293bffdad03336e57 8173f122b0d061e8d398862f1eaf601babf156aa 0000000000000000000000000000000000000000  Chmod +x
+riot_mixin.rb
+
