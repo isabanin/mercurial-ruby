@@ -11,7 +11,7 @@ module Mercurial
     
     def find(path, revision=nil)
       revision ||= 'tip'
-      return RootNode.new(:repository => repository) if path == '/'
+      return RootNode.new(:repository => repository, :revision => revision) if path == '/'
       entry = repository.manifest.scan_for_path(path, revision).first
       if exact_path = entry[3].scan(/^(#{ path.gsub(/\/$/, '') }\/)/).flatten.first
         name = exact_path.split('/').last + '/'
