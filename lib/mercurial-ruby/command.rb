@@ -1,14 +1,15 @@
 require 'timeout'
+require 'digest/md5'
 
 module Mercurial
   class CommandError < Error; end
   
   class Command
-    attr_accessor :pid, :status, :command, :options
+    attr_accessor :command, :repository
     
     def initialize(cmd, options={})
       @command = cmd
-      @options = options
+      @repository = options[:repository]
     end
 
     def execute
@@ -38,6 +39,10 @@ module Mercurial
       if error && error != ''
         raise CommandError, error
       end
+    end
+    
+    def cache_key
+      "hg.#{ repository.mtime }." + Digest::MD5.hexdigest(command)
     end
     
   end

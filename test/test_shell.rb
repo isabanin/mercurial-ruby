@@ -10,7 +10,7 @@ describe Mercurial::Shell do
   it "should compile commands" do    
     command_mock = MiniTest::Mock.new
     command_mock.expect(:execute, true)
-    Mercurial::Command.expects(:new).with("cd #{ @repository.path } && /usr/local/bin/hg log").returns(command_mock).once
+    Mercurial::Command.expects(:new).with("cd #{ @repository.path } && /usr/local/bin/hg log", :repository => @repository).returns(command_mock).once
     @shell.hg('log')
   end
   

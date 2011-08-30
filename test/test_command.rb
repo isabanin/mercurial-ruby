@@ -24,4 +24,17 @@ describe Mercurial::Command do
     }.must_raise Timeout::Error
   end
   
+  it "should generate cache key for every command" do
+    key = Mercurial::Command.new("cd #{ @repository.path } && hg log", :repository => @repository).send(:cache_key)
+    key.must_be_kind_of String
+    (key.size > 10).must_equal true
+    
+    key2 = Mercurial::Command.new("cd #{ @repository.path } && hg log", :repository => @repository).send(:cache_key)
+    key.must_equal key2
+    
+    key3 = Mercurial::Command.new("cd #{ @repository.path } && hg log -v", :repository => @repository).send(:cache_key)
+    key3.wont_equal key2
+    key3.wont_equal key
+  end
+  
 end

@@ -75,6 +75,10 @@ module Mercurial
       File.join(path, '.hg')
     end
     
+    def mtime
+      File.mtime(dothg_path).to_i
+    end
+    
   protected
   
     def self.init_repository(destination)

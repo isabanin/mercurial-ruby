@@ -11,7 +11,7 @@ module Mercurial
       end
       build << cmd
       to_run = build.join(' && ')
-      Mercurial::Command.new(to_run).execute
+      Mercurial::Command.new(to_run, :repository => options[:repository]).execute
     end
     
     def initialize(repository)
@@ -20,6 +20,7 @@ module Mercurial
     
     def hg(cmd, options={})
       options[:in] ||= repository.path
+      options[:repository] = repository
       run("#{ hg_binary_path } #{ cmd }", options)
     end
     
