@@ -1,6 +1,5 @@
 require 'rubygems'
 require 'bundler'
-require 'mocha'
 require 'ruby-debug'
 
 begin
@@ -11,7 +10,8 @@ rescue Bundler::BundlerError => e
   exit e.status_code
 end
 
-require 'minitest/autorun'
+require "mocha"
+require "minitest/autorun"
 
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
@@ -22,6 +22,10 @@ require 'fixtures'
 $stderr.reopen('/dev/null')
 
 class MiniTest::Unit::TestCase
+  
+  def setup
+    Mocha::Mockery.instance.stubba.unstub_all
+  end
   
 private
 

@@ -1,4 +1,5 @@
 module Mercurial
+  class NodeMissing < Error; end
   
   class NodeFactory
     include Mercurial::Helper
@@ -31,6 +32,10 @@ module Mercurial
           :exec     => entry[2]
         )
       end
+    end
+    
+    def find!(path, revision=nil)
+      find(path, revision) || raise(NodeMissing, "#{ path } at revision #{ revision }")
     end
     
     def entries_for(path, revision=nil, parent=nil)

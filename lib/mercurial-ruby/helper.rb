@@ -3,11 +3,11 @@ module Mercurial
   module Helper
     
     def hg(cmd)
-      Mercurial::Shell.hg(cmd, :in => repository.path)
+      repository.shell.hg(cmd)
     end
     
     def shell(cmd)
-      Mercurial::Shell.run(cmd)
+      repository.shell.run(cmd)
     end
     
     def hg_to_array(cmd, &block)

@@ -1,10 +1,10 @@
-module Mercurial
+module Mercurial  
+  class RepositoryNotFound < Error; end
   
   class Repository
     
     def self.create(destination)
       init_repository(destination)      
-      open(destination)
     end
     
     def self.open(destination)
@@ -17,6 +17,10 @@ module Mercurial
     
     def initialize(source)
       @path = source
+    end
+    
+    def shell
+      @_shell ||= Mercurial::Shell.new(self)
     end
     
     def config
@@ -75,8 +79,10 @@ module Mercurial
   
     def self.init_repository(destination)
       Mercurial::Shell.run("mkdir -p #{ destination }")
-      Mercurial::Shell.hg('init', :in => destination)
-      Mercurial::Shell.hg('update null', :in => destination)
+      open(destination).tap do |repo|
+        repo.shell.hg('init')
+        repo.shell.hg('update null')
+      end
     end
     
   end

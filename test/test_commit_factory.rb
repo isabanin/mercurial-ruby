@@ -15,7 +15,7 @@ describe Mercurial::CommitFactory do
   end
   
   it "should not find inexistent commit by hash" do
-    @repository.commits.by_hash_id('dfio9sdf78sdfh').must_equal nil
+    lambda { @repository.commits.by_hash_id('dfio9sdf78sdfh') }.must_raise Mercurial::CommandError
   end
   
   it "should find arrays of commits by their hashes" do
@@ -42,7 +42,7 @@ describe Mercurial::CommitFactory do
   end
   
   it "should not find commits for inexistent branch" do
-    @repository.commits.by_branch("shikaka").must_equal []
+    lambda { @repository.commits.by_branch("shikaka") }.must_raise Mercurial::CommandError
   end
   
   it "should find tip commit" do

@@ -6,6 +6,11 @@ describe Mercurial::NodeFactory do
     @repository = Mercurial::Repository.open(Fixtures.test_repo)
   end
   
+  it "should raise exception when find used with exclamation point and node missing" do
+    lambda { @repository.nodes.find!('jahdfer') }.must_raise Mercurial::NodeMissing
+    
+  end
+  
   it "should find a directory in the repo" do
     node = @repository.nodes.find('new-directory/', 'a8b39838302f')
     node.name.must_equal 'new-directory/'

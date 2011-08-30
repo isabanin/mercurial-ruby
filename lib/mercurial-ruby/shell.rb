@@ -1,24 +1,36 @@
 module Mercurial
   
-  module Shell
-    extend self
+  class Shell
     
-    def binary_path
-      Mercurial.configuration.hg_binary_path
-    end
+    attr_reader :repository
     
-    def hg(cmd, options={})
-      run("#{ binary_path } #{ cmd }", options)
-    end
-    
-    def run(cmd, options={})
+    def self.run(cmd, options={})
       build = []
       if options[:in]
         build << "cd #{ options[:in] }"
       end
       build << cmd
-      to_run = build.join('&&')
+      to_run = build.join(' && ')
       Mercurial::Command.new(to_run).execute
+    end
+    
+    def initialize(repository)
+      @repository = repository
+    end
+    
+    def hg(cmd, options={})
+      options[:in] ||= repository.path
+      run("#{ hg_binary_path } #{ cmd }", options)
+    end
+    
+    def run(cmd, options={})
+      self.class.run(cmd, options)
+    end
+    
+  private
+  
+    def hg_binary_path
+      Mercurial.configuration.hg_binary_path
     end
     
   end
