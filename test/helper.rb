@@ -22,6 +22,7 @@ require 'fixtures'
 $stderr.reopen('/dev/null')
 
 class MiniTest::Unit::TestCase
+  include Mocha::API
   
   def setup
     Mocha::Mockery.instance.stubba.unstub_all

@@ -13,29 +13,55 @@ module Mercurial
     end
 
     def execute
-      result, error = '', ''
-      Open3.popen3(command) do |_, stdout, stderr|
-        Timeout.timeout(execution_timeout) do
-          while tmp = stdout.read(102400)
-            result += tmp
-          end
-        end
-
-        while tmp = stderr.read(1024)
-          error += tmp
-        end
-      end
-      raise_exception_for_stderr(error)
-      result
+      if cache_commands?
+        execute_with_caching
+      else
+        execute_without_caching
+      end      
     end
     
   private
+  
+    def cache_commands?
+      repository && cache_store
+    end
+    
+    def cache_store
+      Mercurial.configuration.cache_store
+    end
   
     def execution_timeout
       Mercurial.configuration.shell_timeout
     end
     
-    def raise_exception_for_stderr(error)
+    def execute_with_caching
+      cache_store.fetch(cache_key, &execution_proc)
+    end
+    
+    def execute_without_caching
+      execution_proc.call
+    end
+    
+    def execution_proc
+      Proc.new do
+        result, error = '', ''
+        Open3.popen3(command) do |_, stdout, stderr|
+          Timeout.timeout(execution_timeout) do
+            while tmp = stdout.read(102400)
+              result += tmp
+            end
+          end
+
+          while tmp = stderr.read(1024)
+            error += tmp
+          end
+        end
+        raise_error_if_needed(error)
+        result
+      end
+    end
+    
+    def raise_error_if_needed(error)
       if error && error != ''
         raise CommandError, error
       end

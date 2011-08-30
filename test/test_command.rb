@@ -37,4 +37,26 @@ describe Mercurial::Command do
     key3.wont_equal key
   end
   
+  it "should cache commands if cache store is available and command is called for repository" do
+    command = Mercurial::Command.new("cd #{ @repository.path } && hg log -v", :repository => @repository)
+    cache_store = mock('cache_store')
+    cache_store.expects(:fetch).with(command.send(:cache_key)).returns(true).once
+    Mercurial.configuration.stubs(:cache_store).returns(cache_store)
+    command.execute
+  end
+  
+  it "should not use cache store if command is executed outside repository" do
+    command = Mercurial::Command.new("ls -l /")
+    cache_store = mock('cache_store')
+    cache_store.expects(:fetch).never
+    command.execute
+  end
+  
+  it "should not use cache store if it's not available" do
+    command = Mercurial::Command.new("cd #{ @repository.path } && hg log -v", :repository => @repository)
+    cache_store = mock('cache_store')
+    cache_store.expects(:fetch).never
+    command.execute
+  end
+  
 end
