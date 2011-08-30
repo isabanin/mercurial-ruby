@@ -1,1 +1,15 @@
-Goose directory added.
+check-code: disallow use of hasattr()
+
+The hasattr() builtin from Python < 3.2 [1] has slightly surprising
+behavior: it catches all exceptions, even KeyboardInterrupt. This
+causes it to have several surprising side effects, such as hiding
+warnings that occur during attribute load and causing mysterious
+failure modes when ^Cing an application. In later versions of Python
+2.x [0], exception classes which do not inherit from Exception (such
+as SystemExit and KeyboardInterrupt) are not caught, but other types
+of exceptions may still silently cause returning False instead of
+getting a reasonable exception.
+
+[0] http://bugs.python.org/issue2196
+[1] http://docs.python.org/dev/whatsnew/3.2.html
+

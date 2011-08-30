@@ -5,7 +5,7 @@ describe Mercurial::CommitFactory do
   before do
     @repository = Mercurial::Repository.open(Fixtures.test_repo)
   end
-  
+
   it "should find commit by hash" do
     commit = @repository.commits.by_hash_id('bc729b15e2b5')
     commit.author.must_equal 'Ilya Sabanin'
@@ -13,17 +13,25 @@ describe Mercurial::CommitFactory do
     commit.hash_id.must_equal 'bc729b15e2b556065dd4f32c161f54be5dd92776'
     commit.message.must_equal 'Directory added'
   end
-  
+=begin
   it "should not find inexistent commit by hash" do
     lambda { @repository.commits.by_hash_id('dfio9sdf78sdfh') }.must_raise Mercurial::CommandError
   end
-  
+
+  it "should parse commits with big commit messages" do
+    commit = @repository.commits.by_hash_id('825fd6032c3b')
+    commit.author.must_equal 'Ilya Sabanin'
+    commit.author_email.must_equal 'ilya.sabanin@gmail.com'
+    commit.hash_id.must_equal '825fd6032c3bbab3677e1890bf05f134a7331533'
+    commit.message.must_equal really_long_commit_message
+  end
+
   it "should find arrays of commits by their hashes" do
     commits = @repository.commits.by_hash_ids(['6157254a4423', 'bf6386c0a0cc'])
     commits.map(&:hash_id).sort.must_equal %w(6157254a442343181939c7af1a744cf2a16afcce bf6386c0a0ccd1282dbbe51888f52fe82b1806e3).sort
     commits.map(&:author_email).uniq.must_equal %w(ilya.sabanin@gmail.com)
   end
-  
+
   it "should find many commits with multiple arguments instead of array" do
     commits = @repository.commits.by_hash_ids('6157254a4423', 'bf6386c0a0cc')
     commits.map(&:hash_id).sort.must_equal %w(6157254a442343181939c7af1a744cf2a16afcce bf6386c0a0ccd1282dbbe51888f52fe82b1806e3).sort
@@ -52,10 +60,10 @@ describe Mercurial::CommitFactory do
   
   it "should count commits" do
     count = @repository.commits.count
-    count.must_equal 32
+    count.must_equal 33
   end
   
-  it "should iterate commits" do
+  it "should iterate through commits" do
     @repository.commits.each do |c|
       c.must_be_kind_of Mercurial::Commit
     end
@@ -69,6 +77,25 @@ describe Mercurial::CommitFactory do
   it "should return nil instead of latest commit if it's blank" do
     FileUtils.rm_rf('/tmp/new-crazy-repo')
     Mercurial::Repository.create('/tmp/new-crazy-repo').commits.latest.must_equal nil
+  end
+=end
+private
+
+  def really_long_commit_message
+    %q[check-code: disallow use of hasattr()
+
+The hasattr() builtin from Python < 3.2 [1] has slightly surprising
+behavior: it catches all exceptions, even KeyboardInterrupt. This
+causes it to have several surprising side effects, such as hiding
+warnings that occur during attribute load and causing mysterious
+failure modes when ^Cing an application. In later versions of Python
+2.x [0], exception classes which do not inherit from Exception (such
+as SystemExit and KeyboardInterrupt) are not caught, but other types
+of exceptions may still silently cause returning False instead of
+getting a reasonable exception.
+
+[0] http://bugs.python.org/issue2196
+[1] http://docs.python.org/dev/whatsnew/3.2.html]
   end
   
 end

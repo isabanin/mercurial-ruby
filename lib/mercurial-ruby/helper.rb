@@ -10,9 +10,9 @@ module Mercurial
       repository.shell.run(cmd)
     end
     
-    def hg_to_array(cmd, &block)
+    def hg_to_array(cmd, separator="\n", &block)
       [].tap do |returning|
-        hg(cmd).split("\n").each do |line|
+        hg(cmd).split(separator).each do |line|
           returning << block.call(line)
         end
       end.compact

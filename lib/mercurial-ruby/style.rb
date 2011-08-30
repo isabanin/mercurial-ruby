@@ -3,7 +3,8 @@ module Mercurial
   module Style
     extend self
     
-    TEMPLATE_SEPARATOR = '|><|'
+    FIELD_SEPARATOR = '|><|'
+    CHANGESET_SEPARATOR = "||$||\n"
     
     def root_path
       File.expand_path(File.join(File.dirname(__FILE__), '..', 'styles'))
