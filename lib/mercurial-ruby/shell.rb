@@ -11,7 +11,7 @@ module Mercurial
       end
       build << cmd
       to_run = build.join(' && ')
-      Mercurial::Command.new(to_run, :repository => options[:repository]).execute
+      Mercurial::Command.new(to_run, :repository => options[:repository], :cache => options[:cache]).execute
     end
     
     def initialize(repository)

@@ -5,11 +5,12 @@ module Mercurial
   class CommandError < Error; end
   
   class Command
-    attr_accessor :command, :repository
+    attr_accessor :command, :repository, :use_cache
     
     def initialize(cmd, options={})
-      @command = cmd
+      @command    = cmd
       @repository = options[:repository]
+      @use_cache  = options[:cache]
     end
 
     def execute
@@ -23,7 +24,7 @@ module Mercurial
   private
   
     def cache_commands?
-      repository && cache_store
+      repository && use_cache && cache_store
     end
     
     def cache_store
