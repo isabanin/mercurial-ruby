@@ -101,15 +101,15 @@ module Mercurial
     end
   
     def header_regexp(header)
-      /(\[#{ header }\]\s*)/
+      /(\[#{ Regexp.escape(header) }\]\s*)/
     end
     
     def header_with_content_regexp(header)
-      /\[#{ header }\]\s*([^\[\]]*)/i
+      /\[#{ Regexp.escape(header) }\]\s*([^\[\]]*)/i
     end
     
     def setting_regexp(header, setting)
-      /\[#{ header }\]\s*[^\[\]]*(^#{ setting }.+\n*)/i
+      /\[#{ Regexp.escape(header) }\]\s*[^\[\]]*(^#{ Regexp.escape(setting) }.+\n*)/i
     end
     
   end

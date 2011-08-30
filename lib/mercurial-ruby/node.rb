@@ -30,7 +30,7 @@ module Mercurial
     
     def path_without_parent
       if parent
-        path.gsub(/^#{ parent.path }/, '')
+        path.gsub(/^#{ Regexp.escape(parent.path) }/, '')
       else
         path
       end
