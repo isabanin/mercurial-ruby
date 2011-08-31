@@ -22,7 +22,7 @@ module Mercurial
       else
         search_for = "#{ path }$|#{ path }\/.*"
       end
-      hg(manifest_cmd(revision)).scan(/^(\w{40}) (\d{3}) (\*?) +(#{ search_for })/)
+      contents(revision).scan(/^(\w{40}) (\d{3}) (\*?) +(#{ search_for })/)
     end
     
   private
