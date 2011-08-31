@@ -34,7 +34,7 @@ module Mercurial
     end
     
     def for_commit(hash_id)
-      hg_to_array "log -r 'descendants(#{ hash_id }) and head()' --template '\n{branches}'" do |line|
+      hg_to_array ["log -r 'descendants(?) and head()' --template '\n{branches}'", hash_id] do |line|
         build_with_name_only(line)
       end.compact.uniq
     end

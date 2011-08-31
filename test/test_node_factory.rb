@@ -8,7 +8,11 @@ describe Mercurial::NodeFactory do
   
   it "should raise exception when find used with exclamation point and node missing" do
     lambda { @repository.nodes.find!('jahdfer') }.must_raise Mercurial::NodeMissing
-    
+  end
+  
+  it "should return nil for file that doesn't exist" do
+    node = @repository.nodes.find('shikakablala4', 'a8b39838302f')
+    node.must_equal nil
   end
   
   it "should find a directory in the repo" do
@@ -40,11 +44,6 @@ describe Mercurial::NodeFactory do
     node.revision.must_equal 'a8b39838302f'
     node.nodeid.must_equal '74dea67fb438acdb2cc103b3d289d4a8856718cc'
     node.must_be_kind_of Mercurial::Node
-  end
-  
-  it "should return nil for file that doesn't exist" do
-    node = @repository.nodes.find('shikakablala4', 'a8b39838302f')
-    node.must_equal nil
   end
   
   it "should find deleted file" do
@@ -81,8 +80,8 @@ describe Mercurial::NodeFactory do
   it "should find entries for tip revision" do
     node = @repository.nodes.find('new-directory/subdirectory')
     entries = node.entries
-    entries.size.must_equal 2
-    entries.map{|e| e.file?}.must_equal [true, true]
+    entries.size.must_equal 3
+    entries.map{|e| e.file?}.must_equal [true, true, true]
   end
   
   it "should find entries for node without trailing slash" do
@@ -103,6 +102,18 @@ describe Mercurial::NodeFactory do
     entries = node.entries
     entries.size.must_equal 14
     entries.map(&:name).sort.must_equal %w(.DotFile .hgignore .hgtags LICENSE3.txt LICENSE4.txt README.markup Rakefile3 empty-file goose.png new-directory/ riot_mixin.rb style superman.txt testspec_mixin_new.rb).sort
+  end
+  
+  it "should work fine with files with whitespace in their name" do
+    node = @repository.nodes.find('File With Whitespace.pdf', '8ddac5f6380e')
+    node.name.must_equal 'File With Whitespace.pdf'
+    
+    root = @repository.nodes.find('/', '8ddac5f6380e')
+    node2 = root.entries.find{|f| f.name == 'File With Whitespace.pdf'}
+    node2.must_be_kind_of Mercurial::Node
+    
+    node3 = @repository.nodes.find('new-directory/subdirectory/File With Whitespace.pdf', 'bb9cc2a2c920')
+    node3.name.must_equal 'File With Whitespace.pdf'
   end
 
 end

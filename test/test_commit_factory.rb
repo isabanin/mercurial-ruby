@@ -13,7 +13,7 @@ describe Mercurial::CommitFactory do
     commit.hash_id.must_equal 'bc729b15e2b556065dd4f32c161f54be5dd92776'
     commit.message.must_equal 'Directory added'
   end
-=begin
+
   it "should not find inexistent commit by hash" do
     lambda { @repository.commits.by_hash_id('dfio9sdf78sdfh') }.must_raise Mercurial::CommandError
   end
@@ -60,7 +60,7 @@ describe Mercurial::CommitFactory do
   
   it "should count commits" do
     count = @repository.commits.count
-    count.must_equal 33
+    count.must_equal 35
   end
   
   it "should iterate through commits" do
@@ -78,7 +78,7 @@ describe Mercurial::CommitFactory do
     FileUtils.rm_rf('/tmp/new-crazy-repo')
     Mercurial::Repository.create('/tmp/new-crazy-repo').commits.latest.must_equal nil
   end
-=end
+
 private
 
   def really_long_commit_message

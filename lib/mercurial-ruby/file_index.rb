@@ -37,9 +37,12 @@ module Mercurial
     # updates file index
     def update(oldrev=nil, newrev=nil)
       if index_file_exists? && oldrev != "0"*40
-        hg("log --debug -r #{ oldrev }:#{ newrev } --style #{ Style.file_index } >> #{ path }")
+        hg([
+            "log --debug -r ?:? --style ? >> ?",
+            oldrev, newrev, Style.file_index, path
+          ])
       else
-        hg("log --debug -r : --style #{ Style.file_index } > #{ path }")
+        hg(["log --debug -r : --style ? > ?", Style.file_index, path])
       end
     end
 

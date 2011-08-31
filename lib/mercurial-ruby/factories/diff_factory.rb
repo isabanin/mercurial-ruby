@@ -11,7 +11,7 @@ module Mercurial
     
     def for_commit(commit)
       [].tap do |returning|
-        data = hg("diff -c#{ commit.hash_id }")
+        data = hg(["diff -c ?", commit.hash_id])
         chunks = data.split(/^diff/)[1..-1]
         unless chunks.nil?
           chunks.map do |piece| 

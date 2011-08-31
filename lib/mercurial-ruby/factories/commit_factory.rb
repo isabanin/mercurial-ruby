@@ -10,7 +10,7 @@ module Mercurial
     end
     
     def all
-      hg_to_array "log --style #{ style }", changeset_separator do |line|
+      hg_to_array ["log --style ?", style], changeset_separator do |line|
         build(line)
       end
     end
@@ -22,20 +22,20 @@ module Mercurial
     end
     
     def count
-      hg_to_array "log --template \"{node}\n\"", "\n" do |line|
+      hg_to_array %Q[log --template "{node}\n"], "\n" do |line|
         line
       end.size
     end
     
     def by_branch(branch)
-      hg_to_array "log -b #{ branch} --style #{ style }", changeset_separator do |line|
+      hg_to_array ["log -b ? --style ?", branch, style], changeset_separator do |line|
         build(line)
       end
     end
     
     def by_hash_id(hash)
       build do
-        hg("log -r#{ hash } --style #{ style }")
+        hg(["log -r ? --style ?", hash, style])
       end
     end
     
@@ -48,20 +48,20 @@ module Mercurial
       return [] if array.empty?
 
       args = array.map{|hash| " -r#{ hash }"}
-      hg_to_array "log#{ args } --style #{ style }", changeset_separator do |line|
+      hg_to_array ["log#{ args } --style ?", style], changeset_separator do |line|
         build(line)
       end
     end
     
     def for_range(hash_a, hash_b)
-      hg_to_array "log -r #{ hash_a }:#{ hash_b } --style #{ style }", changeset_separator do |line|
+      hg_to_array ["log -r ?:? --style ?", hash_a, hash_b, style], changeset_separator do |line|
         build(line)
       end
     end
     
     def tip
       build do
-        hg("tip --style #{ style }")
+        hg(["tip --style ?", style])
       end
     end
     alias :latest :tip

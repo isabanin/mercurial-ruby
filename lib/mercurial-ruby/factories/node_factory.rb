@@ -15,7 +15,7 @@ module Mercurial
       return RootNode.new(:repository => repository, :revision => revision) if path == '/'
       entry = repository.manifest.scan_for_path(path, revision).first
       return unless entry
-      if exact_path = entry[3].scan(/^(#{ Regexp.escape(path.gsub(/\/$/, '')) }\/)/).flatten.first
+      if exact_path = entry[3].scan(/^(#{ Regexp.escape(path.without_trailing_slash) }\/)/).flatten.first
         name = exact_path.split('/').last + '/'
         build(
           :path     => exact_path,
@@ -43,7 +43,7 @@ module Mercurial
       entries = []
       manifest_entries = repository.manifest.scan_for_path(path, revision)
       manifest_entries.each do |me|
-        path_without_source = me[3].gsub(/^#{ Regexp.escape(path.gsub(/\/$/, '')) }\//, '')
+        path_without_source = me[3].gsub(/^#{ Regexp.escape(path.without_trailing_slash) }\//, '')
         entry_name = path_without_source.split('/').first
         entry_path = File.join(path, entry_name).gsub(/^\//, '')
         dir = me[3].scan(/^(#{ Regexp.escape(entry_path) }\/)/).flatten.first ? true : false

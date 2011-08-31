@@ -16,7 +16,7 @@ module Mercurial
     
     def scan_for_path(path, revision=nil)
       revision ||= 'tip'
-      path = path.gsub(/\/$/, '')
+      path = path.without_trailing_slash
       if path == '/' || path == ''
         search_for = ".*"
       else
@@ -28,7 +28,7 @@ module Mercurial
   private
   
     def manifest_cmd(revision)
-      "manifest -r #{ revision } --debug"
+      ["manifest -r ? --debug", revision]
     end
   end
     

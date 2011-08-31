@@ -26,4 +26,9 @@ describe Mercurial::Node do
     node.contents.strip.must_equal 'Here will be some new kind of CSV.'
   end
   
+  it "should fetch contents of a node with whitespace in it's name" do
+    node = @repository.nodes.find('File With Whitespace.pdf', '8ddac5f6380e')
+    node.contents.must_equal ''
+  end
+  
 end

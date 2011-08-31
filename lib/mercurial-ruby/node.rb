@@ -63,7 +63,7 @@ module Mercurial
     end
     
     def contents
-      hg("cat #{ path } -r #{ revision }")
+      hg(["cat ? -r ?", path, revision])
     end
     
     def size
