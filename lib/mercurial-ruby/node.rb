@@ -1,9 +1,34 @@
 module Mercurial
   
+  #
+  # The class represents Mercurial file or directory. Data obtained by scanning +hg manifest+ output.
+  #
+  # The class represents Node object itself, {Mercurial::NodeFactory NodeFactory} is responsible
+  # for assembling instances of Node. For the list of all possible branch-related operations please 
+  # look documentation for {Mercurial::NodeFactory NodeFactory}.
+  #
+  # Additionally {Mercurial::Manifest Manifest} is responsible for reading and scanning the manifest.
+  #
   class Node
     include Mercurial::Helper
     
-    attr_reader :repository, :path, :fmode, :executable, :nodeid, :parent
+    # Instance of {Mercurial::Repository Repository}.
+    attr_reader :repository
+    
+    # Absolute path to the node.
+    attr_reader :path
+    
+    # File mode of the node (if file) in HEX format.
+    attr_reader :fmode
+    
+    # Executable flag of the node (if file).
+    attr_reader :executable
+    
+    # nodeid value for the node (if file).
+    attr_reader :nodeid
+    
+    # Node's parent, instance of {Mercurial::Node Node}.
+    attr_reader :parent
     
     def initialize(opts={})
       @repository = opts[:repository]

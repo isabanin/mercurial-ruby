@@ -1,14 +1,25 @@
 module Mercurial
   
+  #
+  # This class represents a factory for {Mercurial::Diff Diff} instances.
+  #
   class DiffFactory
     include Mercurial::Helper
     
+    # Instance of {Mercurial::Repository Repository}.
     attr_reader :repository
     
     def initialize(repository)
       @repository = repository
     end
     
+    # Returns an array of {Mercurial::Diff Diff} instances for a specified
+    # instance of {Mercurial::Commit Commit}. Represents changeset's diffs.
+    #
+    # == Example:
+    #  commit = repository.commits.by_hash_id('291a498f04e9')
+    #  repository.diffs.for_commit(commit)
+    #
     def for_commit(commit)
       [].tap do |returning|
         data = hg(["diff -c ?", commit.hash_id])

@@ -1,15 +1,53 @@
 module Mercurial
   
+  #
+  # The class represents Mercurial changeset. Obtained by running an +hg log+ command.
+  # Contains a lot of information, including it's hash ID, author name and email, list of changed files, etc.
+  #
+  # The class represents Commit object itself, {Mercurial::CommitFactory CommitFactory} is responsible
+  # for assembling instances of Commit. For the list of all possible commit-related operations please 
+  # look documentation for {Mercurial::CommitFactory CommitFactory}.
+  #
+  # Read more about Mercurial commits:
+  #
+  # http://mercurial.selenic.com/wiki/Commit
+  #
   class Commit
     include Mercurial::Helper
     
-    attr_reader :repository, :hash_id, :author, :author_email,
-                :date, :message, :changed_files,
-                :branches_names, :tags_names, :parents_ids
+    # Instance of {Mercurial::Repository Repository}.
+    attr_reader :repository
+    
+    # Mercurial changeset ID. 40-chars long SHA1 hash.
+    attr_reader :hash_id
+    
+    # Name of the user committed the change.
+    attr_reader :author
+    
+    # Email of the user committed the change.
+    attr_reader :author_email
+    
+    # Exact date and time of the commit. Contains Ruby Time object.
+    attr_reader :date
+    
+    # Full commit message, with line breaks and other stuff.
+    attr_reader :message
+    
+    # Array of {Mercurial::ChangedFile ChangedFile} objects.
+    attr_reader :changed_files
+    
+    # Array of commit's branches.
+    attr_reader :branches_names
+    
+    # Array of commit's tags.
+    attr_reader :tags_names
+    
+    # Array of commit's parents.
+    attr_reader :parents_ids
     
     alias :id :hash_id
     
-    def initialize(repository, opts={})
+    def initialize(repository, opts={}) #:nodoc:
       @repository     = repository
       @hash_id        = opts[:hash_id]
       @author         = opts[:author]

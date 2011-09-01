@@ -1,6 +1,6 @@
 = mercurial-ruby
 
-Ruby API for Mercurial DVCS. Implemented via a command line interface.
+Ruby API for Mercurial DVCS. Uses command line interface to communicate with Mercurial repositories.
 
 == Installation
 
@@ -8,128 +8,66 @@ Ruby API for Mercurial DVCS. Implemented via a command line interface.
  
 == Compatibility
 
-Tested with Mercurial 1.9 and 1.9.1.
+Tested with Mercurial 1.9 and 1.9.1 and Ruby 1.8.7.
 
 == Configuration
 
-Right now there's only one setting that can be configured: 
+There are several settings you can configure. Do it like this:
 
  Mercurial.configure do |conf|
-   conf.hg_binary_path = "/usr/bin/hg" 
+   conf.hg_binary_path = "/usr/bin/hg"
  end
  
-Default for hg_binary_path is /usr/local/bin/hg.
+See {Mercurial::Configuration Configuration} class for details.
  
 == Usage
 
-All actions are performed through Mercurial::Repository object,
-so first thing you should do is to initialize one. Either by creating a new repository:
+All actions are performed through {Mercurial::Repository Repository} object.
+So before you can start doing anything you need to initialize one. Either by creating a new repository:
 
  repository = Mercurial::Repository.create("/path/to/new_repository")
 
 or opening an existing one:
 
  repository = Mercurial::Repository.open("/path/to/existing_repository")
-
-== Updating Repository Configs
-
-Now when you have your repository object you can do various cool things with it.
-For example change settings in it's .hg/hgrc config file:
-
- repository.config.exists? # => false
- repository.config.contents # => nil
  
-The config doesn't exist when you create a new repo. That shouldn't bother you though
-if you want to add some settings to it:
+Now feel free to invoke various methods to get changesets, branches, nodes, etc:
 
- repository.config.add_setting('ui', 'settingname', 'value')
- 
-Now if you look at contents now:
-
- repository.config.contents
- 
-You will see your setting is in place:
- 
- [ui]
- settingname = value
- 
-You can also delete it as easily:
- 
- repository.config.delete_setting!('ui', 'settingname')
- repository.config.contents # => ""
- 
-You can read more about hgrc configuration here:
-
-http://www.selenic.com/mercurial/hgrc.5.html
- 
-== Hooks
-
-Mercurial store hooks in the hgrc file, so you can use the config factory describe above
-to setup hooks in your repository. However there's also a nice little helper to do just that.
-You can find existing hooks:
-
- repository.hooks.all
- repository.hooks.by_name('commit')
- 
-Or you can add your own:
-
- repository.hooks.add('changegroup', 'hg update')
- 
-And of course remove:
-
- repository.hooks.remove('changegroup')
- 
-You can read more about hooks here:
-
-http://www.selenic.com/mercurial/hgrc.5.html#hooks 
- 
-== Commits
-
-Of course one of the main reasons to use the API us to get info about commits.
-There are several methods you can use to find commits in your repository. All of them
-are straightforward enough and don't require explanation:
-
- repository.commits.all
- repository.commits.each {|c| ... }
- repository.commits.count
- repository.commits.by_branch('brancname')
- repository.commits.by_hash_id('291a498f04e9')
  repository.commits.by_hash_ids('291a498f04e9', '63f70b2314ed')
- repository.commits.for_range('bf6386c0a0cc', '63f70b2314ed')
- repository.commits.tip
- 
-Each method will return either a single Commit object or an array of those.
-Here's how the object looks like:
-
- commit = repostiory.commits.tip # => #<Mercurial::Commit:0x10597f8a0>
- commit.repository # => #<Mercurial::Repository:0x109db65f0>
- commit.hash_id # => '291a498f04e9'
- commit.author # => 'Ilya Sabanin'
- commit.author_email # => 'ilya@example.com'
- commit.date # => Sat Aug 06 17:22:56 +0800 2011
- commit.message # => 'Fancy commit message here.'
- commit.changed_files # => [#<Mercurial::ChangedFile:0x105db65f0>, #<Mercurial::ChangedFile:0x102db65f0>]
- commit.branches_names # => ['default']
- commit.tags_names # => []
- commit.parents_ids # => ['63f70b2314ed']
- 
-There are also several fancy methods you can use on it:
-
- commit.merge? # true if has several parents
- commit.blank? # true if hash_id is all zeroes
- commit.diffs
-
-== Tags
-
- repository.tags.all
- repository.tags.by_name('tagname')
- 
-== Branch
-
  repository.branches.all
- repository.branches.active
- repository.branches.closed
- repository.branches.by_name('branchname')
+ repository.hooks.by_name('commit')
+ ...
+ 
+See Features section below for a full list of entities and their methods.
+ 
+== Features
+
+=== Mercurial Entities
+
+* {Mercurial::Commit Changesets}
+* {Mercurial::Node Nodes (files and directories)}
+* {Mercurial::Branch Branches}
+* {Mercurial::Tag Tags}
+* {Mercurial::Diff Diffs}
+* {Mercurial::Manifest Manifest}
+* {Mercurial::FileIndex File Index}
+* {Mercurial::ConfigFile Repository configs (hooks and various settings)}
+
+=== Built-in Caching
+
+There's a simple caching mechanism built into the gem. If you pass Rails CacheStore compatible
+caching store to the Configuration block, mercurial-ruby will cache output of all hg commands
+it's executing. Then if you execute same method again and it will run the same command,
+the gem will return the output from cache.
+
+Here's how you configure it:
+
+ Mercurial.configure do |conf|
+   conf.cache_store = Rails.cache
+ end
+ 
+The gem is using a single method of the CacheStore called +fetch+.
+Cache expires automatically when repository's mtime changes, and it's your job to update it.
 
 == Contributing to mercurial-ruby
  

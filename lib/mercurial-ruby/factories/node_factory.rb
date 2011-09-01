@@ -1,15 +1,30 @@
 module Mercurial
   class NodeMissing < Error; end
-  
+
+  #
+  # This class represents a factory for {Mercurial::Node Node} instances.
+  #
   class NodeFactory
     include Mercurial::Helper
     
+    # Instance of {Mercurial::Repository Repository}.
     attr_reader :repository
     
     def initialize(repository)
       @repository = repository
-    end    
+    end
     
+    # Finds a specified file or a directory in the repository at a specified revision.
+    # Returns an instance of {Mercurial::Node Node}.
+    #
+    # Will find node in the latest version of repo if revision is ommitted.
+    # Will return nil if node wasn't found.
+    #
+    # == Example:
+    #  repository.nodes.find('/')
+    #  repository.nodes.find('some-fancy-directory/Weird File Name.pdf', '291a498f04e9')
+    #  repository.nodes.find('some-fancy-directory/subdirectory/', '291a498f04e9')
+    #
     def find(path, revision=nil)
       revision ||= 'tip'
       return RootNode.new(:repository => repository, :revision => revision) if path == '/'
@@ -34,10 +49,20 @@ module Mercurial
       end
     end
     
+    # Same as +find+ but will raise a NodeMissing exception if node wasn't found.
     def find!(path, revision=nil)
       find(path, revision) || raise(NodeMissing, "#{ path } at revision #{ revision }")
     end
     
+    # Find all entries (files and directories) inside a specified path and revision.
+    # Returns an array of {Mercurial::Node Node} instances.
+    #
+    # Will find node in the latest version of repo if revision is ommitted.
+    #
+    # == Example:
+    #  repository.nodes.entries_for('/')
+    #  repository.nodes.entries_for('some-fancy-directory/subdirectory/', '291a498f04e9')
+    #
     def entries_for(path, revision=nil, parent=nil)
       revision ||= 'tip'
       entries = []

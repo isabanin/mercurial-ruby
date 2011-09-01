@@ -1,19 +1,41 @@
 module Mercurial
   
+  #
+  # Represents Mercurial manifest file. Use this class to get manifest's contents
+  # and scan it for file paths at specific revisions.
+  #
+  # Read more about Mercurial manifest:
+  #
+  # http://mercurial.selenic.com/wiki/Manifest
+  #
   class Manifest
     include Mercurial::Helper
     
+    # Instance of {Mercurial::Repository Repository}.
     attr_reader :repository
     
     def initialize(repository)
       @repository = repository
     end
     
+    # Returns contents of the manifest as a String at a specified revision.
+    # Latest version of the manifest is used if +revision+ is ommitted.
+    #
+    # == Example:
+    #  repository.manifest.contents
+    #
     def contents(revision=nil)
       revision ||= 'tip'
       hg(manifest_cmd(revision))
     end
     
+    # Returns an array of file paths from manifest that start with the specified +path+ at a specified +revision+.
+    # Latest version of the manifest is used if +revision+ is ommitted.
+    #
+    # == Example:
+    #  repository.manifest.scan_for_path('/')
+    #  repository.manifest.scan_for_path('some-interesting-directory/', '2d32410d9629')
+    #
     def scan_for_path(path, revision=nil)
       revision ||= 'tip'
       path = path.without_trailing_slash
