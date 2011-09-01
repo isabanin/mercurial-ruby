@@ -19,9 +19,15 @@ describe Mercurial::Shell do
     @shell.run(["ls ?", "file with nasty 'quote"])
   end
   
-  it "hg method should with string and array commands" do
+  it "should work with string and array commands" do
     @shell.hg('tip')
     @shell.hg(['tip ?', '-g'])
+  end
+  
+  it "should execute commands without cache" do
+    command_mock = mock('command', :execute => true)
+    Mercurial::Command.expects(:new).with('ls -l /', :repository => nil, :cache => false).returns(command_mock).once
+    Mercurial::Shell.run('ls -l /', :cache => false)
   end
   
 end

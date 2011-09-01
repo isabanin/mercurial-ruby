@@ -42,6 +42,12 @@ describe Mercurial::FileIndex do
     files.sort.must_equal ["new-directory/subdirectory/EULA5seat_Chin_Sim02.03.04.pdf", "new-directory/subdirectory/beansprout.png"].sort
   end
   
+  it "should work with files with white-spaces in names" do
+    files = @file_index.files('8ddac5f6380ec3094e6c6bb161d7d90e2de16cb0')
+    files.size.must_equal 1
+    files.sort.must_equal ["File With Whitespace.pdf"].sort
+  end
+  
   it "should not return files for commit that doesn't exist" do
     files = @file_index.files('f63dvf38302fc5aad12bb6b043331b9ef50149ed')
     files.must_equal []

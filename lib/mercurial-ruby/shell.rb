@@ -5,7 +5,7 @@ module Mercurial
     attr_reader :repository
     
     def self.run(cmd, options={})
-      options[:cache] ||= true
+      options[:cache] = true if options[:cache].nil?
       build = []
 
       if options[:in]
@@ -28,15 +28,8 @@ module Mercurial
     def hg(cmd, options={})
       options[:in] ||= repository.path
       options[:repository] = repository
-      
-      if cmd.kind_of?(Array)
-        cmd[0].insert(0, "#{ hg_binary_path } ")
-        to_run = cmd
-      else
-        to_run = "#{ hg_binary_path } #{ cmd }"
-      end
-
-      run(to_run, options)
+      cmd = append_command_with(hg_binary_path, cmd)
+      run(cmd, options)
     end
     
     def run(cmd, options={})
@@ -54,6 +47,15 @@ module Mercurial
         cmd.gsub!(/\?/) do
           cmd_with_args.shift.to_s.enclose_in_single_quotes
         end
+      end
+    end
+    
+    def append_command_with(append, cmd)
+      if cmd.kind_of?(Array)
+        cmd[0].insert(0, "#{ append } ")
+        cmd
+      else
+        "#{ append } #{ cmd }"
       end
     end
     
