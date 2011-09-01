@@ -115,5 +115,11 @@ describe Mercurial::NodeFactory do
     node3 = @repository.nodes.find('new-directory/subdirectory/File With Whitespace.pdf', 'bb9cc2a2c920')
     node3.name.must_equal 'File With Whitespace.pdf'
   end
+  
+  it "should find file with weird characters in it's name" do
+    node = @repository.nodes.find('check \ this \ out " now', '2d32410d9629')
+    node.name.must_equal 'check \ this \ out " now'
+    node.file?.must_equal true
+  end
 
 end

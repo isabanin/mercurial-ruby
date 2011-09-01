@@ -20,7 +20,8 @@ module Mercurial
       if path == '/' || path == ''
         search_for = ".*"
       else
-        search_for = "#{ path }$|#{ path }\/.*"
+        path_re = Regexp.escape(path)
+        search_for = "#{ path_re }$|#{ path_re }\/.*"
       end
       contents(revision).scan(/^(\w{40}) (\d{3}) (\*?) +(#{ search_for })/)
     end

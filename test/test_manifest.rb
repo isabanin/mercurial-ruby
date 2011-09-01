@@ -31,4 +31,9 @@ describe Mercurial::Manifest do
     paths.size.must_equal 17
   end
   
+  it "should scan for path with weird characters" do
+    paths = @manifest.scan_for_path('check \ this \ out " now', '2d32410d9629')
+    paths.size.must_equal 1
+  end
+  
 end
