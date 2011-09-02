@@ -2,7 +2,9 @@ module Mercurial
   
   #
   # Represents +.hg/hgrc+ configuration file stored in the repository.
-  # Useful for adding/removing various settings. You can read more about it here:
+  # Useful for adding/removing various settings.
+  #
+  # You can read more about hgrc here:
   #
   # http://www.selenic.com/mercurial/hgrc.5.html
   #

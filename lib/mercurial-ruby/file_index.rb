@@ -1,13 +1,13 @@
-# This class is basically a copy of the same one from grit.
-#
-# this implements a file-based 'file index', an simple index of
-# all of the reachable commits in a repo, along with the parents
-# and which files were modified during each commit
-#
-# this class looks for a file named '[.hg]/file-index'
-#
 module Mercurial
 
+  # This class was ported from grit.
+  #
+  # This implements a file-based 'file index', an simple index of
+  # all of the reachable commits in a repo, along with the parents
+  # and which files were modified during each commit.
+  #
+  # This class creates and reads a file named '[.hg]/file-index'.
+  #
   class FileIndex
     include Mercurial::Helper
 
@@ -23,7 +23,7 @@ module Mercurial
 
     self.max_file_size = 10_000_000 # ~10M
 
-    attr_reader :repository, :files
+    attr_reader :repository
 
     # initializes index given repository
     def initialize(repository)
