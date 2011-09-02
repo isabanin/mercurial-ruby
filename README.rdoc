@@ -44,14 +44,14 @@ See Features section below for a full list of entities and their methods.
 
 === Mercurial Entities
 
-* {Mercurial::Commit Changesets}
-* {Mercurial::Node Nodes (files and directories)}
+* {Mercurial::Commit Commits}
+* {Mercurial::Node Nodes} — files and directories
 * {Mercurial::Branch Branches}
 * {Mercurial::Tag Tags}
 * {Mercurial::Diff Diffs}
 * {Mercurial::Manifest Manifest}
 * {Mercurial::FileIndex File Index}
-* {Mercurial::ConfigFile Repository configs (hooks and various settings)}
+* {Mercurial::ConfigFile Repository config} — hooks and various settings
 
 === Built-in Caching
 
