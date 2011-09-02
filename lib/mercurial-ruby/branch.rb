@@ -16,7 +16,7 @@ module Mercurial
     # Instance of {Mercurial::Repository Repository}.
     attr_reader :repository
     
-    # Name of the tag.
+    # Name of the branch.
     attr_reader :name
     
     # State of the branch: closed or active.
