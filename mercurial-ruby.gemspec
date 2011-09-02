@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{mercurial-ruby}
-  s.version = "0.2.0"
+  s.version = "0.3.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Ilya Sabanin"]
-  s.date = %q{2011-08-30}
+  s.date = %q{2011-09-02}
   s.description = %q{Ruby API for Mercurial DVCS.}
   s.email = %q{ilya.sabanin@gmail.com}
   s.extra_rdoc_files = [
@@ -49,6 +49,7 @@ Gem::Specification.new do |s|
     "lib/mercurial-ruby/shell.rb",
     "lib/mercurial-ruby/style.rb",
     "lib/mercurial-ruby/tag.rb",
+    "lib/stdlib_exts/string.rb",
     "lib/styles/changeset.style",
     "lib/styles/file_index.style",
     "mercurial-ruby.gemspec",
@@ -64,6 +65,7 @@ Gem::Specification.new do |s|
     "test/fixtures/test-repo/.hg/requires",
     "test/fixtures/test-repo/.hg/store/00changelog.i",
     "test/fixtures/test-repo/.hg/store/00manifest.i",
+    "test/fixtures/test-repo/.hg/store/data/_file _with _whitespace.pdf.i",
     "test/fixtures/test-repo/.hg/store/data/_l_i_c_e_n_s_e.txt.i",
     "test/fixtures/test-repo/.hg/store/data/_l_i_c_e_n_s_e2.txt.i",
     "test/fixtures/test-repo/.hg/store/data/_l_i_c_e_n_s_e3.txt.i",
@@ -73,6 +75,7 @@ Gem::Specification.new do |s|
     "test/fixtures/test-repo/.hg/store/data/_rakefile.i",
     "test/fixtures/test-repo/.hg/store/data/_rakefile2.i",
     "test/fixtures/test-repo/.hg/store/data/_rakefile3.i",
+    "test/fixtures/test-repo/.hg/store/data/check ~5c this ~5c out ~22 now.i",
     "test/fixtures/test-repo/.hg/store/data/directory two/minitest__mixin.rb.i",
     "test/fixtures/test-repo/.hg/store/data/directory two/options.rb.i",
     "test/fixtures/test-repo/.hg/store/data/directory two/rdoc__mixin.rb.i",
@@ -122,6 +125,7 @@ Gem::Specification.new do |s|
     "test/fixtures/test-repo/.hg/store/data/new-directory/something.csv.i",
     "test/fixtures/test-repo/.hg/store/data/new-directory/subdirectory/_e_u_l_a5seat___chin___sim02.03.04.pdf.d",
     "test/fixtures/test-repo/.hg/store/data/new-directory/subdirectory/_e_u_l_a5seat___chin___sim02.03.04.pdf.i",
+    "test/fixtures/test-repo/.hg/store/data/new-directory/subdirectory/_file _with _whitespace.pdf.i",
     "test/fixtures/test-repo/.hg/store/data/new-directory/subdirectory/beansprout.png.i",
     "test/fixtures/test-repo/.hg/store/data/new-file.i",
     "test/fixtures/test-repo/.hg/store/data/old-directory/minitest__mixin.rb.i",
@@ -152,12 +156,14 @@ Gem::Specification.new do |s|
     "test/fixtures/test-repo/LICENSE4.txt",
     "test/fixtures/test-repo/README.markup",
     "test/fixtures/test-repo/Rakefile3",
+    "test/fixtures/test-repo/check \\ this \\ out \" now",
     "test/fixtures/test-repo/empty-file",
     "test/fixtures/test-repo/goose.png",
     "test/fixtures/test-repo/goose/pretty-thing.txt",
     "test/fixtures/test-repo/new-directory/another-boring-file",
     "test/fixtures/test-repo/new-directory/something.csv",
     "test/fixtures/test-repo/new-directory/subdirectory/EULA5seat_Chin_Sim02.03.04.pdf",
+    "test/fixtures/test-repo/new-directory/subdirectory/File With Whitespace.pdf",
     "test/fixtures/test-repo/new-directory/subdirectory/beansprout.png",
     "test/fixtures/test-repo/riot_mixin.rb",
     "test/fixtures/test-repo/style",
