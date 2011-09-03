@@ -18,7 +18,7 @@ module Mercurial
     # Absolute path to the node.
     attr_reader :path
     
-    # File mode of the node (if file) in HEX format.
+    # File mode of the node in Octal notation (if file).
     attr_reader :fmode
     
     # Executable flag of the node (if file).
