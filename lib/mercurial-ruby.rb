@@ -56,6 +56,7 @@ require_local 'mercurial-ruby/manifest'
 require_local 'mercurial-ruby/node'
 require_local 'mercurial-ruby/root_node'
 require_local 'mercurial-ruby/blame'
+require_local 'mercurial-ruby/blame_line'
 require_local 'mercurial-ruby/file_index'
 
 require_local 'mercurial-ruby/factories/hook_factory'

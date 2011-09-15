@@ -9,9 +9,10 @@ module Mercurial
       @repository = repository
     end
     
-    def for_path(path)
+    def for_path(path, revision=nil)
+      revision ||= 'tip'
       build do
-        hg(["blame ? -uc", path])
+        hg(["blame ? -ucl -r ?", path, revision])
       end
     end
   

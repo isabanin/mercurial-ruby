@@ -16,11 +16,20 @@ require "minitest/autorun"
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 
+$stderr.reopen('/dev/null')
+
 require 'mercurial-ruby'
 require 'fixtures'
 
-$stderr.reopen('/dev/null')
-`unzip #{File.join(File.dirname(__FILE__), 'fixtures', 'test-repo.zip')} -d #{File.join(File.dirname(__FILE__), 'fixtures')}`
+def erase_fixture_repository
+  `rm -Rf #{File.join(File.dirname(__FILE__), 'fixtures', 'test-repo')}`
+end
+
+def unpack_fixture_repository
+  `unzip #{File.join(File.dirname(__FILE__), 'fixtures', 'test-repo.zip')} -d #{File.join(File.dirname(__FILE__), 'fixtures')}`
+end
+erase_fixture_repository
+unpack_fixture_repository
 
 class MiniTest::Unit::TestCase
   include Mocha::API
@@ -39,6 +48,6 @@ private
   
 end
 
-MiniTest::Unit.after_tests { `rm -Rf #{File.join(File.dirname(__FILE__), 'fixtures', 'test-repo')}` }
+MiniTest::Unit.after_tests { erase_fixture_repository }
 
 MiniTest::Unit.autorun
