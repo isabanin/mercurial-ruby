@@ -2,6 +2,14 @@
 
 Ruby API for Mercurial DVCS. Uses command line interface to communicate with Mercurial repositories.
 
+== Documentation
+
+Please refer to YARD documentation here:
+
+http://rubydoc.info/gems/mercurial-ruby/file/README.rdoc
+
+Github doesn't support some YARd-specific syntax so this README can look broken.
+
 == Installation
 
  gem install mercurial-ruby
