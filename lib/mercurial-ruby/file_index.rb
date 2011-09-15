@@ -11,11 +11,9 @@ module Mercurial
   class FileIndex
     include Mercurial::Helper
 
-    class IndexFileNotFound < StandardError
-    end
-
-    class UnsupportedRef < StandardError
-    end
+    class IndexFileNotFound < StandardError;end
+    class IndexFileTooBig < StandardError;end
+    class UnsupportedRef < StandardError;end
 
     class << self
       attr_accessor :max_file_size
@@ -169,9 +167,19 @@ module Mercurial
         end
       end
     end
+    
+    def validate_index_file
+      if File.file?(path)
+        if File.size(path) > Mercurial::FileIndex.max_file_size
+          raise IndexFileTooBig, "#{ path } is bigger than #{ Mercurial::FileIndex.max_file_size }"
+        end
+      else
+        raise IndexFileNotFound, path unless index_file_valid?
+      end      
+    end
 
     def read_index
-      raise IndexFileNotFound unless index_file_valid?
+      validate_index_file      
       f = File.new(path)
       @sha_count = 0
       @commit_index = {}
