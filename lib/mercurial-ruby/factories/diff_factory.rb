@@ -27,15 +27,19 @@ module Mercurial
         unless chunks.nil?
           chunks.map do |piece| 
             piece = "diff" << piece
-            returning << build(commit, piece)
+            returning << build(piece)
           end
         end
       end
     end
     
+    def for_path(path, revision_a, revision_b)
+      build(hg(["diff ? -r ? -r ?", path, revision_a, revision_b]))
+    end
+    
   private
   
-    def build(commit, data)
+    def build(data)
       return if data.empty?      
       hash_a, hash_b = *data.scan(/^diff -r (\w+) -r (\w+)/).first
 
@@ -48,7 +52,7 @@ module Mercurial
         body = data[data.index("\n")+1..-1]
       end
 
-      Mercurial::Diff.new(commit,
+      Mercurial::Diff.new(
         :hash_a => hash_a,
         :hash_b => hash_b,
         :file_a => file_a,

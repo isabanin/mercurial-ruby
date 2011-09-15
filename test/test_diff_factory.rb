@@ -35,4 +35,44 @@ describe Mercurial::DiffFactory do
     commit.diffs.size.must_equal 0
   end
   
+  it "should find diffs for path" do
+    diff = @repository.diffs.for_path('diff-test.rb', '57a6efe309bf', '9f76ea916c51')
+    diff.must_be_kind_of Mercurial::Diff
+    diff.hash_a.must_equal '57a6efe309bf'
+    diff.hash_b.must_equal'9f76ea916c51'
+    diff.file_a.must_equal 'diff-test.rb'
+    diff.file_b.must_equal 'diff-test.rb'
+    diff.body.must_equal diff_sample
+  end
+  
+private
+
+  def diff_sample
+    %Q[--- a/diff-test.rb	Thu Sep 15 23:43:02 2011 +0800
++++ b/diff-test.rb	Thu Sep 15 23:43:52 2011 +0800
+@@ -5,19 +5,17 @@
+ 
+   before_filter :repository_detected?, :except => :index
+   before_filter :welcome_screen,       :only => :index
+-  before_filter :prepare_to_show,      :only => [:show, :differences, :message]
+   before_filter :setup_page,           :only => [:index, :repository]
+ 
+   caches_action :message, :differences
+ 
++  helper_method :current_branch
+   helper_method :repository_scope?
+-  helper_method :quick_changeset
+   helper_method :changesets_changes_limit
+-  helper_method :current_branch
+   helper_method :diff_taking_too_much_time_msg
+ 
+   def repository
+-    if current_repository.import_in_progress?
++    unless current_repository.import_in_progress?
+       return render(:template => "changesets/import_in_progress")
+     end
+     @changesets         = find_changesets_for_current_scope
+]
+  end
+  
 end

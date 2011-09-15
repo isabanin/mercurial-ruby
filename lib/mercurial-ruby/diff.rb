@@ -9,9 +9,6 @@ module Mercurial
   #
   class Diff
     
-    # Instance of {Mercurial::Commit Commit}.
-    attr_reader :commit
-    
     # SHA1 hash of version a of the file.
     attr_reader :hash_a
     
@@ -27,8 +24,7 @@ module Mercurial
     # Diff body.
     attr_reader :body
     
-    def initialize(commit, opts={})
-      @commit = commit
+    def initialize(opts={})
       @hash_a = opts[:hash_a]
       @hash_b = opts[:hash_b]
       @file_a = opts[:file_a]
