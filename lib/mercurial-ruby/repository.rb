@@ -51,6 +51,10 @@ module Mercurial
       @_nodes ||= Mercurial::NodeFactory.new(self)
     end
     
+    def blames
+      @_blames ||= Mercurial::BlameFactory.new(self)
+    end
+    
     def manifest
       @_manifest ||= Mercurial::Manifest.new(self)
     end
