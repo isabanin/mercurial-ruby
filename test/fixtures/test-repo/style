@@ -1,4 +1,0 @@
-changeset = "{node}\n{file_mods}{file_adds}{file_dels}"
-file_add  = "A {file_add}\n"
-file_mod  = "M {file_mod}\n"
-file_del  = "D {file_del}\n"

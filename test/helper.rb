@@ -20,6 +20,7 @@ require 'mercurial-ruby'
 require 'fixtures'
 
 $stderr.reopen('/dev/null')
+`unzip #{File.join(File.dirname(__FILE__), 'fixtures', 'test-repo.zip')} -d #{File.join(File.dirname(__FILE__), 'fixtures')}`
 
 class MiniTest::Unit::TestCase
   include Mocha::API
@@ -37,5 +38,7 @@ private
   end
   
 end
+
+MiniTest::Unit.after_tests { `rm -Rf #{File.join(File.dirname(__FILE__), 'fixtures', 'test-repo')}` }
 
 MiniTest::Unit.autorun
