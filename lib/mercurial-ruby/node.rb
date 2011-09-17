@@ -65,6 +65,14 @@ module Mercurial
       @_entries ||= repository.nodes.entries_for(path, revision, self)
     end
     
+    def diff_to(revision_b)
+      repository.diffs.for_path(path, revision, revision_b)
+    end
+    
+    def blame
+      repository.blames.for_path(path, revision)
+    end
+    
     def has_entry?(name)
       entries.find do |e|
         e.name == name
