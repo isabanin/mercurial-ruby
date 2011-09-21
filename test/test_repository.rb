@@ -6,7 +6,7 @@ describe Mercurial::Repository do
     lambda{ Mercurial::Repository.open('/shikaka/bambucha') }.must_raise Mercurial::RepositoryNotFound
   end
   
-  describe "creating" do
+  describe "when created" do
     before do
       @repository = Mercurial::Repository.create('/tmp/test-hg-repo')
     end
@@ -41,6 +41,17 @@ describe Mercurial::Repository do
     
     it "should respond to diffs" do
       @repository.must_respond_to :diffs
+    end
+    
+    it "should have file system url" do
+      @repository.file_system_url.must_equal "file:///tmp/test-hg-repo"
+    end
+    
+    it "should clone" do
+      result = @repository.clone('/tmp/test-hg-repo-clone')
+      assert_equal '/tmp/test-hg-repo-clone', result
+      assert FileTest.directory?('/tmp/test-hg-repo-clone/.hg')
+      FileUtils.rm_rf('/tmp/test-hg-repo-clone')
     end
   end
   

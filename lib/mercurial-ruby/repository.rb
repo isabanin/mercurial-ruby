@@ -67,8 +67,17 @@ module Mercurial
       nodes.find(name, hash_id)
     end
     
+    def clone(destination_path)
+      shell.hg(["clone ? ?", file_system_url, destination_path])
+      destination_path
+    end
+    
     def destroy!
       FileUtils.rm_rf(path)
+    end
+    
+    def file_system_url
+      %Q[file://#{ path }]
     end
     
     def path
