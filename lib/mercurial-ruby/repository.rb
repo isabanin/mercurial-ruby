@@ -92,6 +92,16 @@ module Mercurial
       File.mtime(dothg_path).to_i
     end
     
+    def no_cache
+      @cache_disabled_by_override = true
+      yield
+      @cache_disabled_by_override = false
+    end
+    
+    def cache_disabled_by_override?
+      @cache_disabled_by_override || false
+    end
+    
   protected
   
     def self.init_repository(destination)

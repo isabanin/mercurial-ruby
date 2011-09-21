@@ -5,7 +5,6 @@ module Mercurial
     attr_reader :repository
     
     def self.run(cmd, options={})
-      options[:cache] = true if options[:cache].nil?
       build = []
 
       if options[:in]

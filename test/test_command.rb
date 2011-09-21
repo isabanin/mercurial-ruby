@@ -59,4 +59,14 @@ describe Mercurial::Command do
     command.execute
   end
   
+  it "should not use caching it it was overridden by repository" do
+    command = Mercurial::Command.new("cd #{ @repository.path } && hg log -v", :repository => @repository)
+    cache_store = mock('cache_store')
+    cache_store.expects(:fetch).never
+    Mercurial.configuration.stubs(:cache_store).returns(cache_store)
+    @repository.no_cache do
+      command.execute
+    end
+  end
+  
 end

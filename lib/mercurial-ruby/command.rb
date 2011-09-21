@@ -10,7 +10,7 @@ module Mercurial
     def initialize(cmd, options={})
       @command    = cmd
       @repository = options[:repository]
-      @use_cache  = options[:cache]
+      @use_cache  = options[:cache] || true
     end
 
     def execute
@@ -24,7 +24,7 @@ module Mercurial
   private
   
     def cache_commands?
-      repository && use_cache && cache_store
+      repository && !repository.cache_disabled_by_override? && use_cache && cache_store
     end
     
     def cache_store
