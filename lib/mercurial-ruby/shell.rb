@@ -7,8 +7,8 @@ module Mercurial
     def self.run(cmd, options={})
       build = []
 
-      if options[:in]
-        build << "cd #{ options[:in] }"
+      if dir = options.delete(:in)
+        build << "cd #{ dir }"
       end
       
       if cmd.kind_of?(Array)
@@ -17,7 +17,7 @@ module Mercurial
 
       build << cmd
       to_run = build.join(' && ')
-      Mercurial::Command.new(to_run, :repository => options[:repository], :cache => options[:cache]).execute
+      Mercurial::Command.new(to_run, options).execute
     end
     
     def initialize(repository)

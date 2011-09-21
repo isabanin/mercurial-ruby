@@ -2,11 +2,11 @@ module Mercurial
   
   module Helper
     
-    def hg(cmd)
+    def hg(cmd, options={})
       repository.shell.hg(cmd)
     end
     
-    def shell(cmd)
+    def shell(cmd, options={})
       repository.shell.run(cmd)
     end
     

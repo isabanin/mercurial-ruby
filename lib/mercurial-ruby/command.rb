@@ -5,12 +5,13 @@ module Mercurial
   class CommandError < Error; end
   
   class Command
-    attr_accessor :command, :repository, :use_cache
+    attr_accessor :command, :repository, :use_cache, :timeout
     
     def initialize(cmd, options={})
       @command    = cmd
       @repository = options[:repository]
       @use_cache  = options[:cache] || true
+      @timeout    = options[:timeout] || global_execution_timeout
     end
 
     def execute
@@ -31,7 +32,7 @@ module Mercurial
       Mercurial.configuration.cache_store
     end
   
-    def execution_timeout
+    def global_execution_timeout
       Mercurial.configuration.shell_timeout
     end
     
@@ -47,7 +48,7 @@ module Mercurial
       Proc.new do
         result, error = '', ''
         Open3.popen3(command) do |_, stdout, stderr|
-          Timeout.timeout(execution_timeout) do
+          Timeout.timeout(timeout) do
             while tmp = stdout.read(102400)
               result += tmp
             end

@@ -20,7 +20,13 @@ describe Mercurial::Command do
   it "should execute commands with timeout" do
     Mercurial.configuration.stubs(:shell_timeout).returns(1)
     lambda{
-      Mercurial::Command.new("sleep 5").execute
+      Mercurial::Command.new("sleep 6").execute
+    }.must_raise Timeout::Error
+  end
+  
+  it "should support custom timeout settings" do
+    lambda{
+      Mercurial::Command.new("sleep 3", :timeout => 1).execute
     }.must_raise Timeout::Error
   end
   

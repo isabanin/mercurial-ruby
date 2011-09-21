@@ -67,8 +67,9 @@ module Mercurial
       nodes.find(name, hash_id)
     end
     
-    def clone(destination_path)
-      shell.hg(["clone ? ?", file_system_url, destination_path])
+    def clone(destination_path, url=nil, cmd_options={})
+      url ||= file_system_url
+      shell.hg(["clone ? ?", url, destination_path], cmd_options)
       destination_path
     end
     
