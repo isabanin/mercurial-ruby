@@ -5,7 +5,6 @@ module Mercurial
   # This class represents a factory for {Mercurial::Node Node} instances.
   #
   class NodeFactory
-    include Mercurial::Helper
     
     # Instance of {Mercurial::Repository Repository}.
     attr_reader :repository

@@ -18,8 +18,8 @@ module Mercurial
     # == Example:
     #  repository.branches.all 
     #
-    def all
-      hg_to_array "branches -c" do |line|
+    def all(cmd_options={})
+      hg_to_array("branches -c", {}, cmd_options) do |line|
         build(line)
       end
     end
@@ -63,8 +63,8 @@ module Mercurial
     # == Example:
     #  repository.branches.for_commit('291a498f04e9')
     #
-    def for_commit(hash_id)
-      hg_to_array ["log -r 'descendants(?) and head()' --template '\n{branches}'", hash_id] do |line|
+    def for_commit(hash_id, cmd_options={})
+      hg_to_array(["log -r 'descendants(?) and head()' --template '\n{branches}'", hash_id], {}, cmd_options) do |line|
         build_with_name_only(line)
       end.compact.uniq
     end

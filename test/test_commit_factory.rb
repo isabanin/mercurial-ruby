@@ -62,13 +62,13 @@ describe Mercurial::CommitFactory do
     count = @repository.commits.count
     count.must_equal 40
   end
-  
+
   it "should iterate through commits" do
     @repository.commits.each do |c|
       c.must_be_kind_of Mercurial::Commit
     end
   end
-  
+
   it "should find commits for range" do
     commits = @repository.commits.for_range('bc729b15e2b5', 'a07263ded072')
     commits.map(&:hash_id).sort.must_equal ['bc729b15e2b556065dd4f32c161f54be5dd92776', '63f70b2314ede1e12813cae87f6f303ee8d5c09a', '6157254a442343181939c7af1a744cf2a16afcce', 'a07263ded0729d146062e6ec076cf1e6af214218'].sort

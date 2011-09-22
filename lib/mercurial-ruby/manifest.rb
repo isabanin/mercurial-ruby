@@ -24,9 +24,9 @@ module Mercurial
     # == Example:
     #  repository.manifest.contents
     #
-    def contents(revision=nil)
+    def contents(revision=nil, cmd_options={})
       revision ||= 'tip'
-      hg(manifest_cmd(revision))
+      hg(manifest_cmd(revision), cmd_options)
     end
     
     # Returns an array of file paths from manifest that start with the specified +path+ at a specified +revision+.

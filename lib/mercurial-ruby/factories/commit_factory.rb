@@ -18,8 +18,8 @@ module Mercurial
     # == Example:
     #  repository.commits.all 
     #
-    def all
-      hg_to_array ["log --style ?", style], changeset_separator do |line|
+    def all(cmd_options={})
+      hg_to_array(["log --style ?", style], {:separator => changeset_separator}, cmd_options) do |line|
         build(line)
       end
     end
@@ -40,8 +40,8 @@ module Mercurial
     # == Example:
     #  repository.commits.count
     #
-    def count
-      hg_to_array %Q[log --template "{node}\n"], "\n" do |line|
+    def count(cmd_options={})
+      hg_to_array(%Q[log --template "{node}\n"], {}, cmd_options) do |line|
         line
       end.size
     end
@@ -51,8 +51,8 @@ module Mercurial
     # == Example:
     #  repository.commits.by_branch('brancname')
     #
-    def by_branch(branch)
-      hg_to_array ["log -b ? --style ?", branch, style], changeset_separator do |line|
+    def by_branch(branch, cmd_options={})
+      hg_to_array(["log -b ? --style ?", branch, style], {:separator => changeset_separator}, cmd_options) do |line|
         build(line)
       end
     end
@@ -62,9 +62,9 @@ module Mercurial
     # == Example:
     #  repository.commits.by_hash_id('291a498f04e9')
     #
-    def by_hash_id(hash)
+    def by_hash_id(hash, cmd_options={})
       build do
-        hg(["log -r ? --style ?", hash, style])
+        hg(["log -r ? --style ?", hash, style], cmd_options)
       end
     end
     
@@ -74,6 +74,8 @@ module Mercurial
     #  repository.commits.by_hash_ids('291a498f04e9', '63f70b2314ed')
     #
     def by_hash_ids(*args)
+      cmd_options = args.last.kind_of?(Hash) ? args.last : {}
+      
       if args.size == 1 && args.first.kind_of?(Array)
         array = args.first
       else
@@ -82,7 +84,7 @@ module Mercurial
       return [] if array.empty?
 
       args = array.map{|hash| " -r#{ hash }"}
-      hg_to_array ["log#{ args } --style ?", style], changeset_separator do |line|
+      hg_to_array ["log#{ args } --style ?", style], {:separator => changeset_separator}, cmd_options do |line|
         build(line)
       end
     end
@@ -92,8 +94,8 @@ module Mercurial
     # == Example:
     #  repository.commits.for_range('bf6386c0a0cc', '63f70b2314ed')
     #
-    def for_range(hash_a, hash_b)
-      hg_to_array ["log -r ?:? --style ?", hash_a, hash_b, style], changeset_separator do |line|
+    def for_range(hash_a, hash_b, cmd_options={})
+      hg_to_array(["log -r ?:? --style ?", hash_a, hash_b, style], {:separator => changeset_separator}, cmd_options) do |line|
         build(line)
       end
     end
@@ -103,9 +105,9 @@ module Mercurial
     # == Example:
     #  repository.commits.tip
     #
-    def tip
+    def tip(cmd_options={})
       build do
-        hg(["tip --style ?", style])
+        hg(["tip --style ?", style], cmd_options)
       end
     end
     alias :latest :tip

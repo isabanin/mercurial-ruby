@@ -20,9 +20,9 @@ module Mercurial
     #  commit = repository.commits.by_hash_id('291a498f04e9')
     #  repository.diffs.for_commit(commit)
     #
-    def for_commit(commit)
+    def for_commit(commit, cmd_options={})
       [].tap do |returning|
-        data = hg(["diff -c ?", commit.hash_id])
+        data = hg(["diff -c ?", commit.hash_id], cmd_options)
         chunks = data.split(/^diff/)[1..-1]
         unless chunks.nil?
           chunks.map do |piece| 
@@ -33,8 +33,8 @@ module Mercurial
       end
     end
     
-    def for_path(path, revision_a, revision_b)
-      build(hg(["diff ? -r ? -r ?", path, revision_a, revision_b]))
+    def for_path(path, revision_a, revision_b, cmd_options={})
+      build(hg(["diff ? -r ? -r ?", path, revision_a, revision_b], cmd_options))
     end
     
   private

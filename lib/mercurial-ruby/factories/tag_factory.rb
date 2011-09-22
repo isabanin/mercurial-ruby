@@ -18,8 +18,8 @@ module Mercurial
     # == Example:
     #  repository.tags.all 
     #
-    def all
-      hg_to_array "tags" do |line|
+    def all(cmd_options={})
+      hg_to_array("tags", {}, cmd_options) do |line|
         build(line)
       end
     end
