@@ -73,6 +73,26 @@ module Mercurial
       destination_path
     end
     
+    def pull(origin='default', cmd_options={})
+      shell.hg(['pull ?', origin], cmd_options={})
+    end
+    
+    def verify
+      shell.hg('verify')
+      true
+    rescue Mercurial::CommandError
+      false
+    end
+    
+    def paths
+      {}.tap do |result|
+        shell.hg('paths').each do |line|
+          path, url = *line.strip.split(" = ")
+          result[path] = url
+        end
+      end
+    end
+    
     def destroy!
       FileUtils.rm_rf(path)
     end

@@ -9,6 +9,10 @@ describe Mercurial::Repository do
   describe "when created" do
     before do
       @repository = Mercurial::Repository.create('/tmp/test-hg-repo')
+      File.open(File.join(@repository.dothg_path, 'hgrc'), 'w') do |f|
+        f << "[paths]
+default = #{@repository.file_system_url}"
+      end
     end
     
     after do
@@ -52,6 +56,23 @@ describe Mercurial::Repository do
       assert_equal '/tmp/test-hg-repo-clone', result
       assert FileTest.directory?('/tmp/test-hg-repo-clone/.hg')
       FileUtils.rm_rf('/tmp/test-hg-repo-clone')
+    end
+    
+    it "should pull" do
+      assert @repository.pull
+    end
+    
+    it "should return paths" do
+      assert_equal({'default' => 'file:///tmp/test-hg-repo'}, @repository.paths)
+    end
+    
+    it "should treat working repository as verified" do
+      assert @repository.verify
+    end
+    
+    it "should treat broken repository as not verified" do
+      FileUtils.rm_rf("#{@repository.dothg_path}/store")
+      assert !@repository.verify
     end
   end
   
