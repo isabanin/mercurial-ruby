@@ -53,7 +53,8 @@ default = #{@repository.file_system_url}"
     
     it "should clone" do
       result = @repository.clone('/tmp/test-hg-repo-clone')
-      assert_equal '/tmp/test-hg-repo-clone', result
+      assert_kind_of Mercurial::Repository, result
+      assert_equal '/tmp/test-hg-repo-clone', result.path
       assert FileTest.directory?('/tmp/test-hg-repo-clone/.hg')
       FileUtils.rm_rf('/tmp/test-hg-repo-clone')
     end

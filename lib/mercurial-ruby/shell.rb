@@ -7,6 +7,10 @@ module Mercurial
     def self.run(cmd, options={})
       build = []
 
+      if options[:append_hg]
+        cmd = append_command_with(hg_binary_path, cmd)
+      end
+
       if dir = options.delete(:in)
         build << "cd #{ dir }"
       end
@@ -27,7 +31,7 @@ module Mercurial
     def hg(cmd, options={})
       options[:in] ||= repository.path
       options[:repository] = repository
-      cmd = append_command_with(hg_binary_path, cmd)
+      options[:append_hg] = true
       run(cmd, options)
     end
     
@@ -37,7 +41,7 @@ module Mercurial
     
   private
   
-    def hg_binary_path
+    def self.hg_binary_path
       Mercurial.configuration.hg_binary_path
     end
     
@@ -49,7 +53,7 @@ module Mercurial
       end
     end
     
-    def append_command_with(append, cmd)
+    def self.append_command_with(append, cmd)
       if cmd.kind_of?(Array)
         cmd[0].insert(0, "#{ append } ")
         cmd

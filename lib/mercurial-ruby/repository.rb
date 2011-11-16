@@ -14,6 +14,13 @@ module Mercurial
         raise Mercurial::RepositoryNotFound.new(destination)
       end
     end
+
+    def self.clone(url, destination, cmd_options)
+      create_destination(destination)
+      opts = cmd_options.merge(:append_hg => true)
+      Mercurial::Shell.run(["clone ? ?", url, destination], opts)
+      open(destination)      
+    end
     
     def initialize(source)
       @path = source
@@ -67,14 +74,12 @@ module Mercurial
       nodes.find(name, hash_id)
     end
     
-    def clone(destination_path, url=nil, cmd_options={})
-      url ||= file_system_url
-      shell.hg(["clone ? ?", url, destination_path], cmd_options)
-      destination_path
+    def clone(destination_path, cmd_options={})
+      self.class.clone(file_system_url, destination_path, cmd_options)
     end
     
     def pull(origin='default', cmd_options={})
-      shell.hg(['pull ?', origin], cmd_options={})
+      shell.hg(['pull ?', origin], cmd_options)
     end
     
     def verify
@@ -124,9 +129,13 @@ module Mercurial
     end
     
   protected
+
+    def self.create_destination(path)
+      Mercurial::Shell.run("mkdir -p #{ path }")
+    end
   
     def self.init_repository(destination)
-      Mercurial::Shell.run("mkdir -p #{ destination }")
+      create_destination(destination)
       open(destination).tap do |repo|
         repo.shell.hg('init', :cache => false)
         repo.shell.hg('update null', :cache => false)
