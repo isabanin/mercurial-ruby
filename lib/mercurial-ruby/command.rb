@@ -11,7 +11,7 @@ module Mercurial
       @command    = cmd
       @repository = options[:repository]
       @use_cache  = options[:cache] || true
-      @timeout    = options[:timeout].to_i || global_execution_timeout.to_i
+      @timeout    = options[:timeout] ? options[:timeout].to_i : global_execution_timeout.to_i
     end
 
     def execute
