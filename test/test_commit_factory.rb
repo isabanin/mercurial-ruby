@@ -6,6 +6,11 @@ describe Mercurial::CommitFactory do
     @repository = Mercurial::Repository.open(Fixtures.test_repo)
   end
 
+  it "should find parent commit" do
+    commit = @repository.commits.parent
+    commit.must_be_kind_of Mercurial::Commit
+  end
+
   it "should find commit by hash" do
     commit = @repository.commits.by_hash_id('bc729b15e2b5')
     commit.author.must_equal 'Ilya Sabanin'

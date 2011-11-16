@@ -12,6 +12,17 @@ module Mercurial
     def initialize(repository) #:nodoc:
       @repository = repository
     end
+
+    # Return a parent commit for this working copy.
+    #
+    # == Example:
+    #  repository.commits.parent
+    #
+    def parent(cmd_options={})
+      build do
+        hg(["parent --style ?", style], cmd_options)
+      end
+    end
     
     # Return an array of {Mercurial::Commit Commit} instances for all changesets in the repository.
     #
