@@ -83,6 +83,10 @@ module Mercurial
     def exist_in_branches
       repository.branches.for_commit(hash_id)
     end
+
+    def short_hash_id
+      hash_id.to_s[0,12]
+    end
     
     def to_hash
       {
