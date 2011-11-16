@@ -46,7 +46,8 @@ module Mercurial
     
     def execution_proc
       Proc.new do
-        result, error = '', ''
+        debug(command)
+        result, error = '', ''        
         Open3.popen3(command) do |_, stdout, stderr|
           Timeout.timeout(timeout) do
             while tmp = stdout.read(102400)
@@ -71,6 +72,12 @@ module Mercurial
     
     def cache_key
       "hg.#{ repository.mtime }." + Digest::MD5.hexdigest(command)
+    end
+
+    def debug(msg)
+      if Mercurial.configuration.debug_mode
+        puts msg
+      end 
     end
     
   end
