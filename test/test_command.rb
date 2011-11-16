@@ -64,6 +64,14 @@ describe Mercurial::Command do
     cache_store.expects(:fetch).never
     command.execute
   end
+
+  it "should not cache command when caching was specifically disabled" do
+    command = Mercurial::Command.new("hg version", :cache => false, :repository => @repository)
+    cache_store = mock('cache_store')
+    Mercurial.configuration.stubs(:cache_store).returns(cache_store)
+    cache_store.expects(:fetch).never
+    command.execute
+  end
   
   it "should not use caching it it was overridden by repository" do
     command = Mercurial::Command.new("cd #{ @repository.path } && hg log -v", :repository => @repository)
