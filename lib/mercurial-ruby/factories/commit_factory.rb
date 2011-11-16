@@ -25,12 +25,16 @@ module Mercurial
     end
     
     # Return an array of {Mercurial::Commit Commit} instances for all changesets in the repository.
+    # Accept a :limit setting.
     #
     # == Example:
-    #  repository.commits.all 
+    #  repository.commits.all
+    #  repository.commits.all(:limit => 15)
     #
-    def all(cmd_options={})
-      hg_to_array(["log --style ?", style], {:separator => changeset_separator}, cmd_options) do |line|
+    def all(options={}, cmd_options={})
+      cmd = command_with_limit(["log --style ?", style], options[:limit])
+
+      hg_to_array(cmd, {:separator => changeset_separator}, cmd_options) do |line|
         build(line)
       end
     end
@@ -53,6 +57,17 @@ module Mercurial
     #
     def count(cmd_options={})
       hg_to_array(%Q[log --template "{node}\n"], {}, cmd_options) do |line|
+        line
+      end.size
+    end
+
+    # Count changesets in the range from hash_a to hash_b in the repository.
+    #
+    # == Example:
+    #  repository.commits.count_range(hash_a, hash_b)
+    #
+    def count_range(hash_a, hash_b, cmd_options={})
+      hg_to_array([%Q[log -r ?:? --template "{node}\n"], hash_a, hash_b], {}, cmd_options) do |line|
         line
       end.size
     end
@@ -105,10 +120,29 @@ module Mercurial
     # == Example:
     #  repository.commits.for_range('bf6386c0a0cc', '63f70b2314ed')
     #
-    def for_range(hash_a, hash_b, cmd_options={})
-      hg_to_array(["log -r ?:? --style ?", hash_a, hash_b, style], {:separator => changeset_separator}, cmd_options) do |line|
+    def for_range(hash_a, hash_b, options={}, cmd_options={})
+      cmd = command_with_limit(["log -r ?:? --style ?", hash_a, hash_b, style], options[:limit])
+      hg_to_array(cmd, {:separator => changeset_separator}, cmd_options) do |line|
         build(line)
       end
+    end
+
+    # Return an array of {Mercurial::Commit Commit} instances that appear in hg log before the specified revision id.
+    #
+    # == Example:
+    #  repository.commits.before('bf6386c0a0cc')
+    #
+    def before(hash_id, options={}, cmd_options={})
+      in_direction(:before, hash_id, options, cmd_options)
+    end
+
+    # Return an array of {Mercurial::Commit Commit} instances that appear in hg log after the specified revision id.
+    #
+    # == Example:
+    #  repository.commits.after('bf6386c0a0cc')
+    #
+    def after(hash_id, options={}, cmd_options={})
+      in_direction(:after, hash_id, options, cmd_options)
     end
     
     # Return an instance of {Mercurial::Commit Commit} for a repository's tip changeset (latest).
@@ -124,6 +158,16 @@ module Mercurial
     alias :latest :tip
     
   protected
+
+    def in_direction(direction, hash_id, options={}, cmd_options={})
+      query = direction.to_sym == :before ? '"reverse(:?)"' : '?:'
+      cmd = command_with_limit(["log -r #{ query } --style ?", hash_id, style], options[:limit])
+
+      hg_to_array(cmd, {:separator => changeset_separator}, cmd_options) do |line|
+        c = build(line)
+        c.short_hash_id == hash_id[0,12] ? next : c
+      end
+    end
   
     def changeset_separator
       Mercurial::Style::CHANGESET_SEPARATOR
@@ -160,6 +204,14 @@ module Mercurial
   
     def style
       Mercurial::Style.changeset
+    end
+
+    def command_with_limit(cmd, limit)
+      if limit
+        cmd[0] << ' --limit ?'
+        cmd << limit
+      end
+      cmd
     end
     
   end

@@ -6,6 +6,23 @@ describe Mercurial::CommitFactory do
     @repository = Mercurial::Repository.open(Fixtures.test_repo)
   end
 
+  it "should find commits after specific revision" do
+    commits = @repository.commits.after('2d32410d9629')
+    commits.size.must_equal 4
+    commits.map(&:hash_id).must_equal %w(88b5cc7860153671b0d3aa3c16d01ecad987490e 57a6efe309bfa6c8054084de8c26490fca8a6104 f67625ea8586cd5c4d43c883a273db3ef7f38716 9f76ea916c5100bf61f533c33a6aa9f22532d526)
+  end
+
+  it "should find commits before specific revision" do
+    commits = @repository.commits.before('63f70b2314ed')
+    commits.size.must_equal 2
+    commits.map(&:hash_id).must_equal %w(bc729b15e2b556065dd4f32c161f54be5dd92776 bf6386c0a0ccd1282dbbe51888f52fe82b1806e3)
+  end
+
+  it "should find commits with limit" do
+    commits = @repository.commits.all(:limit => 1)
+    commits.size.must_equal 1
+  end
+
   it "should find parent commit" do
     commit = @repository.commits.parent
     commit.must_be_kind_of Mercurial::Commit
@@ -66,6 +83,11 @@ describe Mercurial::CommitFactory do
   it "should count commits" do
     count = @repository.commits.count
     count.must_equal 40
+  end
+
+  it "should count range of commits" do
+    count = @repository.commits.count_range('63f70b2314ed', '3cdad3d3ca00')
+    count.must_equal 4
   end
 
   it "should iterate through commits" do

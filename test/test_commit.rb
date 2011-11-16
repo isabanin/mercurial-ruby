@@ -6,6 +6,10 @@ describe Mercurial::Commit do
     @repository = Mercurial::Repository.open(Fixtures.test_repo)
     @commit = @repository.commits.by_hash_id('34f85a44acf1')
   end
+
+  it "should have short version of it's id" do
+    @commit.short_hash_id.must_equal '34f85a44acf1'
+  end
   
   it "should parse date to Ruby format" do 
     @commit.date.must_be_kind_of Time
