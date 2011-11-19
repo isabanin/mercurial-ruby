@@ -18,7 +18,7 @@ module Mercurial
     
     def by_name(name)
       all.find do |h|
-        h.name == name
+        h.name == name.to_s
       end
     end
     
