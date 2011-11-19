@@ -1,5 +1,5 @@
 module Mercurial
-  
+
   #
   # Represents +.hg/hgrc+ configuration file stored in the repository.
   # Useful for adding/removing various settings.
@@ -9,6 +9,8 @@ module Mercurial
   # http://www.selenic.com/mercurial/hgrc.5.html
   #
   class ConfigFile
+
+    class DuplicateSetting < Error; end
     
     attr_reader :repository
     
@@ -51,6 +53,8 @@ module Mercurial
     #  kdiff3.executable = ~/bin/kdiff3
     #
     def add_setting(header, name, value)
+      raise DuplicateSetting if setting_exists?(header, name)
+
       new_setting = %Q{[#{ header }]\n#{ name } = #{ value }\n}
       write do
         if contents.nil?
@@ -73,6 +77,15 @@ module Mercurial
         contents.gsub(find_setting(header, name), '')
       end
     end
+
+    #
+    # Returns true if specified setting exists in specified group.
+    #
+    #  config.setting_exists?('hooks', 'changegroup')
+    #
+    def setting_exists?(header, name)
+      !!find_setting(header, name)
+    end
     
     #
     # Returns content of the specified section of hgrc.
@@ -90,6 +103,7 @@ module Mercurial
     # Returns content of the specified setting from a section.
     #
     def find_setting(header, setting) #:nodoc:
+      return nil if contents.nil?
       contents.scan(setting_regexp(header, setting)).flatten.first
     end
     

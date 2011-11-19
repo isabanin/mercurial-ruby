@@ -48,6 +48,25 @@ describe Mercurial::ConfigFile do
     repository.config.add_setting("something", "super", "True")
     repository.config.contents.must_equal "[something]\nsuper = True\n"
   end
+
+  it "should detect if setting was already added" do
+    @config.add_setting('hooks', 'incoming', 'hg update')
+    @config.add_setting('somethingelse', 'shikaka', 'True')
+    @config.add_setting('somethingelse', 'monster', 'False')
+    @config.delete_setting!('somethingelse', 'shikaka')
+
+    assert @config.setting_exists?('hooks', 'incoming')
+    assert @config.setting_exists?('somethingelse', 'monster')
+    assert !@config.setting_exists?('somethingelse', 'shikaka')
+    assert !@config.setting_exists?('merge-tools', 'kdiff')
+  end
+
+  it "should raise an error when trying to add a duplicating setting" do
+    @config.add_setting('hooks', 'incoming', 'hg update')
+    assert_raises Mercurial::ConfigFile::DuplicateSetting do
+      @config.add_setting('hooks', 'incoming', 'hg update')
+    end
+  end
   
 private
 
