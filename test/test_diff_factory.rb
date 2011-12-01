@@ -5,7 +5,7 @@ describe Mercurial::DiffFactory do
   before do
     @repository = Mercurial::Repository.open(Fixtures.test_repo)
   end
-  
+
   it "should find diffs for commit" do
     commit = @repository.commits.by_hash_id('54d96f4b1a26')
     diffs = @repository.diffs.for_commit(commit)
@@ -44,6 +44,11 @@ describe Mercurial::DiffFactory do
     diff.file_b.must_equal 'diff-test.rb'
     diff.body.must_equal diff_sample
   end
+
+  it "should ignore whitespace" do
+    diff = @repository.diffs.for_path('superman.txt', 'b6f6f764b939', 'e47455b9a238', :ignore_whitespace => true)
+    diff.body.must_equal diff_sample_2
+  end
   
 private
 
@@ -72,6 +77,17 @@ private
        return render(:template => "changesets/import_in_progress")
      end
      @changesets         = find_changesets_for_current_scope
+]
+  end
+
+  def diff_sample_2
+    %Q[--- a/superman.txt	Thu Dec 01 15:52:30 2011 -0500
++++ b/superman.txt	Thu Dec 01 15:57:43 2011 -0500
+@@ -1,3 +1,3 @@
+ 
+-^ whitespace change above
++^ whitespace change above and below
+ This is a superman file.
 ]
   end
   

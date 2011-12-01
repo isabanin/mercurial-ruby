@@ -33,8 +33,10 @@ module Mercurial
       end
     end
     
-    def for_path(path, revision_a, revision_b, cmd_options={})
-      build(hg(["diff ? -r ? -r ?", path, revision_a, revision_b], cmd_options))
+    def for_path(path, revision_a, revision_b, options={}, cmd_options={})
+      cmd = "diff ? -r ? -r ?"
+      cmd << ' -w' if options[:ignore_whitespace]
+      build(hg([cmd, path, revision_a, revision_b], cmd_options))
     end
     
   private

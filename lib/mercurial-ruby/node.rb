@@ -65,8 +65,8 @@ module Mercurial
       @_entries ||= repository.nodes.entries_for(path, revision, self)
     end
     
-    def diff_to(revision_b)
-      repository.diffs.for_path(path, revision, revision_b)
+    def diff_to(revision_b, options={})
+      repository.diffs.for_path(path, revision, revision_b, options)
     end
     
     def blame
