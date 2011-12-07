@@ -21,6 +21,11 @@ module Mercurial
 
       build << cmd
       to_run = build.join(' && ')
+
+      if pipe_cmd = options[:pipe]
+        to_run << " | #{ pipe_cmd }"
+      end
+
       Mercurial::Command.new(to_run, options).execute
     end
     
