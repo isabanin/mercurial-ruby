@@ -68,8 +68,8 @@ module Mercurial
       hash_id == '0'*40
     end
     
-    def diffs
-      repository.diffs.for_commit(self)
+    def diffs(cmd_options={})
+      repository.diffs.for_commit(self, cmd_options)
     end
     
     def parents
