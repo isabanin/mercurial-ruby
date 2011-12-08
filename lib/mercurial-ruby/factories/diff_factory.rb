@@ -49,8 +49,8 @@ module Mercurial
         file_a = binary_file
         body = 'Binary files differ'
       else
-        file_a = data.scan(/^--- (?:a\/(.+)|\/dev\/null)\t/).flatten.first
-        file_b = data.scan(/^\+\+\+ (?:b\/(.+)|\/dev\/null)\t/).flatten.first
+        file_a = data.scan(/^\[?--- (?:a\/([^\+]+)|\/dev\/null)-?\]?\t/).flatten.first
+        file_b = data.scan(/^\{?\+\+\+ (?:b\/([^\+]+)|\/dev\/null)\+?\}?\t/).flatten.first
         body = data[data.index("\n")+1..-1]
       end
 
