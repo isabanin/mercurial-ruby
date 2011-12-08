@@ -6,6 +6,10 @@ describe Mercurial::Shell do
     @repository = Mercurial::Repository.open(Fixtures.test_repo)
     @shell = @repository.shell
   end
+
+  it "should accept piping" do
+    assert_equal '1', @shell.hg('log', :pipe => "grep '9:0f41dd2ec166' -wc").strip
+  end
   
   it "should compile commands" do    
     command_mock = mock('command', :execute => true)
