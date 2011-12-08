@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{mercurial-ruby}
-  s.version = "0.6.0"
+  s.version = "0.6.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Ilya Sabanin"]
-  s.date = %q{2011-11-25}
+  s.date = %q{2011-12-08}
   s.description = %q{Ruby API for Mercurial DVCS.}
   s.email = %q{ilya.sabanin@gmail.com}
   s.extra_rdoc_files = [
