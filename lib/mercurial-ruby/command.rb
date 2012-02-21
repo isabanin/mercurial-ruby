@@ -47,8 +47,8 @@ module Mercurial
     def execution_proc
       Proc.new do
         debug(command)
-        result, error = '', ''        
-        Open3.popen3(command) do |_, stdout, stderr|
+        result, error, status = '', '', nil
+        Open3.popen3(command) do |_, stdout, stderr, wait_thr|
           Timeout.timeout(timeout) do
             while tmp = stdout.read(102400)
               result += tmp
@@ -58,8 +58,9 @@ module Mercurial
           while tmp = stderr.read(1024)
             error += tmp
           end
+          status = wait_thr.value
         end
-        raise_error_if_needed(error)
+        raise_error_if_needed(error) if status.nil? || status.exitstatus != 0
         result
       end
     end
