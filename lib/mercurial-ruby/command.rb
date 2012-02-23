@@ -60,13 +60,13 @@ module Mercurial
           end
           status = wait_thr.value
         end
-        raise_error_if_needed(error, status)
+        raise_error_if_needed(error) if status.nil? || status.exitstatus != 0
         result
       end
     end
     
-    def raise_error_if_needed(error, status = nil)
-      if (status.nil? || status.exitstatus != 0) && error && error != ''
+    def raise_error_if_needed(error)
+      if error && error != ''
         raise CommandError, error
       end
     end
