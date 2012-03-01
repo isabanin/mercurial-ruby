@@ -16,7 +16,7 @@ Github doesn't support some YARd-specific syntax so this README can look broken.
  
 == Compatibility
 
-Tested with Mercurial 1.9 and 1.9.1 and Ruby 1.8.7.
+Tested with Mercurial versions 1.9, 1.9.1 and 2.1; Ruby version 1.8.7.
 
 == Configuration
 
@@ -89,6 +89,6 @@ Cache expires automatically when repository's mtime changes, and it's your job t
 
 == Copyright
 
-Copyright (c) 2011 Ilya Sabanin. See LICENSE.txt for
+Copyright (c) 2012 Ilya Sabanin. See LICENSE.txt for
 further details.
 
