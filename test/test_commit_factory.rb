@@ -106,6 +106,11 @@ describe Mercurial::CommitFactory do
     Mercurial::Repository.create('/tmp/new-crazy-repo').commits.latest.must_equal nil
   end
 
+  it "should return array of commit's ancestors" do
+    expected_ancestors = %w(bf6386c0a0ccd1282dbbe51888f52fe82b1806e3 bc729b15e2b556065dd4f32c161f54be5dd92776 63f70b2314ede1e12813cae87f6f303ee8d5c09a 6157254a442343181939c7af1a744cf2a16afcce 25bb5c51fd613b8b58d88ef1caf99da559af51f3 63e18640e83af60196334f16cc31f4f99c419918 34f85a44acf11c3386f771a65445d6c39e5261d6 4474d1ddaf653cb7fbf18bb62ff1e39a4e571969 cd9fa0c59c7f189fa1d70edea564e534ac9478d0 611407bf9b369e061eaf0bee1a261c9e62ad713d d14b0c16b21d9d3e08101ef264959a7d91a8b5db 3e1ea66bdd04dbfb8d91e4f2de3baca218cd4cca)
+    @repository.commits.ancestors_of('3e1ea66bdd04').map(&:hash_id).must_equal(expected_ancestors)
+  end
+
 private
 
   def really_long_commit_message

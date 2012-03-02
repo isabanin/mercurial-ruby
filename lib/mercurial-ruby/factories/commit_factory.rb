@@ -156,6 +156,18 @@ module Mercurial
       end
     end
     alias :latest :tip
+
+    # Return an array of {Mercurial::Commit Commit} instances that appear in hg log as ancestors of the specified commit ID.
+    #
+    # == Example:
+    #  repository.commits.ancestors_of('bf6386c0a0cc')
+    #
+    def ancestors_of(hash_id, options={}, cmd_options={})
+      cmd = command_with_limit(["log -r \"ancestors(?)\" --style ?", hash_id, style], options[:limit])
+      hg_to_array(cmd, {:separator => changeset_separator}, cmd_options) do |line|
+        build(line)
+      end
+    end
     
   protected
 

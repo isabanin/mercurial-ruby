@@ -75,6 +75,10 @@ module Mercurial
     def parents
       repository.commits.by_hash_ids(parents_ids)
     end
+
+    def ancestors
+      repository.commits.ancestors_of(hash_id)
+    end
     
     def parent_id
       parents_ids.first
