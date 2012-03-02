@@ -22,14 +22,18 @@ module Mercurial
     # State of the branch: closed or active.
     attr_reader :status
     
-    # Mercurial changeset ID of the latest commit in the branch. 40-chars long SHA1 hash.
-    attr_reader :latest_commit
+    # ID of a commit associated with the branch. 40-chars long SHA1 hash.
+    attr_reader :hash_id
     
     def initialize(repository, name, options={})
       @repository    = repository
       @name          = name
       @status        = options[:status] == 'closed' ? 'closed' : 'active'
-      @latest_commit = options[:commit]
+      @hash_id       = options[:commit]
+    end
+
+    def commit
+      repository.commits.by_hash_id(hash_id)
     end
     
     def active?
