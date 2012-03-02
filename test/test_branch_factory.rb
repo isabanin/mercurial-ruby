@@ -12,6 +12,13 @@ describe Mercurial::BranchFactory do
     branches.map(&:name).sort.must_equal %w(branch-from-remote another-branch new-branch old-branch default).sort
     branches.map(&:status).sort.must_equal %w(active active closed active active).sort
   end
+
+  it "should iterate through branches" do
+    names = []
+    @repository.branches.each{|b| names << b.name }
+    names.size.must_equal 5
+    names.must_equal %w(default another-branch branch-from-remote new-branch old-branch)
+  end
   
   it "should find active branches" do
     branches = @repository.branches.active

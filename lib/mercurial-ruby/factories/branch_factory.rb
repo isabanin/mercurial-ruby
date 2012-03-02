@@ -23,6 +23,17 @@ module Mercurial
         build(line)
       end
     end
+
+    # Run a block for every {Mercurial::Branch Branch} instance of all branches in the repository.
+    #
+    # == Example:
+    #  repository.branches.each {|commit| ... }
+    #
+    def each(&block)
+      all.each do |branch|
+        block.call(branch)
+      end
+    end
     
     # Return an array of {Mercurial::Branch Branch} instances for all active branches in the repository.
     #
