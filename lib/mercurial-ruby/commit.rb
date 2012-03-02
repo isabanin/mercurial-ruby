@@ -36,8 +36,8 @@ module Mercurial
     # Array of {Mercurial::ChangedFile ChangedFile} objects.
     attr_reader :changed_files
     
-    # Array of commit's branches.
-    attr_reader :branches_names
+    # Name of a branch associated with the commit.
+    attr_reader :branch_name
     
     # Array of commit's tags.
     attr_reader :tags_names
@@ -55,8 +55,8 @@ module Mercurial
       @date           = Time.iso8601(opts[:date])
       @message        = opts[:message]
       @changed_files  = files_to_array(opts[:changed_files])
-      @branches_names = branches_or_tags_to_array(opts[:branches_names])
-      @tags_names     = branches_or_tags_to_array(opts[:tags_names])
+      @branch_name    = opts[:branch_name]
+      @tags_names     = tags_to_array(opts[:tags_names])
       @parents_ids    = parents_to_array(opts[:parents])
     end
     
@@ -92,7 +92,7 @@ module Mercurial
       {
         'id'       => hash_id,
         'parents'  => parents_ids.map { |p| { 'id' => p.id } },
-        'branches' => branches_names,
+        'branch'   => branch_name,
         'tags'     => tags_names,
         'message'  => message,
         'date'     => date,
@@ -123,9 +123,9 @@ module Mercurial
       Mercurial::ChangedFileFactory.delete_hg_artefacts(files)
     end
     
-    def branches_or_tags_to_array(branches_str)
-      string_to_array(branches_str) do |returning|
-        returning << branches_str
+    def tags_to_array(tags_str)
+      string_to_array(tags_str) do |returning|
+        returning << tags_str
       end
     end
     

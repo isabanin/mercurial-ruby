@@ -190,7 +190,7 @@ module Mercurial
         :date            => data[3],
         :message         => data[4],
         :changed_files   => [data[5], data[6], data[7], data[8]],
-        :branches_names  => data[9],
+        :branch_name     => data[9],
         :tags_names      => data[10],
         :parents         => data[11]
       )

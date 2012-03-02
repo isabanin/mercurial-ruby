@@ -15,13 +15,9 @@ describe Mercurial::Commit do
     @commit.date.must_be_kind_of Time
   end
   
-  it "should represent branches as Array" do
-    @commit.branches_names.must_be_kind_of Array
-  end
-  
-  it "branches array should be empty if there are no branches" do
+  it "branch name should be 'default' by default" do
     @commit = @repository.commits.by_hash_id('4474d1ddaf65')
-    @commit.branches_names.must_equal []
+    @commit.branch_name.must_equal 'default'
   end
   
   it "should represent tags as Array" do
