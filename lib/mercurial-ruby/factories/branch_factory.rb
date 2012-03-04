@@ -29,8 +29,8 @@ module Mercurial
     # == Example:
     #  repository.branches.each {|commit| ... }
     #
-    def each(&block)
-      all.each do |branch|
+    def each(cmd_options={}, &block)
+      all(cmd_options).each do |branch|
         block.call(branch)
       end
     end
@@ -40,8 +40,8 @@ module Mercurial
     # == Example:
     #  repository.branches.active
     #
-    def active
-      all.find_all do |b|
+    def active(cmd_options={})
+      all(cmd_options).find_all do |b|
         b.active?
       end
     end
@@ -51,8 +51,8 @@ module Mercurial
     # == Example:
     #  repository.branches.closed
     #
-    def closed
-      all.find_all do |b|
+    def closed(cmd_options={})
+      all(cmd_options).find_all do |b|
         b.closed?
       end
     end
@@ -62,8 +62,8 @@ module Mercurial
     # == Example:
     #  repository.branches.by_name('branchname')
     #
-    def by_name(name)
-      all.find do |b|
+    def by_name(name, cmd_options={})
+      all(cmd_options).find do |b|
         b.name == name
       end
     end
