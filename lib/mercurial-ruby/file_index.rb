@@ -2,7 +2,7 @@ module Mercurial
 
   # This class was ported from grit.
   #
-  # It implements a file-based 'file index', an simple index of
+  # It implements a file-based 'file index', a simple index of
   # all of the reachable commits in a repo, along with the parents
   # and which files were modified during each commit.
   #

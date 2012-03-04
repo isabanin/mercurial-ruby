@@ -52,14 +52,21 @@ See Features section below for a full list of entities and their methods.
 
 === Mercurial Entities
 
+* {Mercurial::Repository Repository}
+* {Mercurial::ConfigFile .hgrc} — hooks and various settings
 * {Mercurial::Commit Commits}
 * {Mercurial::Node Nodes} — files and directories
 * {Mercurial::Branch Branches}
 * {Mercurial::Tag Tags}
 * {Mercurial::Diff Diffs}
+* {Mercurial::Blame Blame}
 * {Mercurial::Manifest Manifest}
 * {Mercurial::FileIndex File Index}
-* {Mercurial::ConfigFile Repository config} — hooks and various settings
+
+=== Custom Commands
+
+You can use {Mercurial::Shell Shell} class to execute custom shell commands that
+weren't added to the gem as first-class citizens yet.
 
 === Built-in Caching
 
@@ -76,6 +83,12 @@ Here's how you configure it:
  
 The gem is using a single method of the CacheStore called +fetch+.
 Cache expires automatically when repository's mtime changes, and it's your job to update it.
+
+=== Built-in Timeouts 
+
+You can provide a timeout for pretty much any command you are running. Do it like this:
+
+ repository.commits.all(:timeout => 5)
 
 == Contributing to mercurial-ruby
  
