@@ -37,6 +37,20 @@ module Mercurial
     #
     # Same as running +hg log | grep '9:0f41dd2ec166' -wc+
     #
+    # ==== :timeout
+    #
+    # Specify a timeout in seconds for your command:
+    #
+    #  Shell.run("/usr/bin/long-running-task", :timeout => 5)
+    #
+    # +Timeout::Error+ will be raised on timeout.
+    #
+    # ==== :cache
+    #
+    # Caching is enabled by default for all commands. Use this setting to avoid it:
+    #
+    #  Shell.run("init", :append_hg => true, :cache => false)
+    # 
     def self.run(cmd, options={})
       build = []
 
