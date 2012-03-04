@@ -19,7 +19,7 @@ module Mercurial
     # Will find node in the latest version of repo if revision is ommitted.
     # Will return nil if node wasn't found.
     #
-    # == Example:
+    # === Example:
     #  repository.nodes.find('/')
     #  repository.nodes.find('some-fancy-directory/Weird File Name.pdf', '291a498f04e9')
     #  repository.nodes.find('some-fancy-directory/subdirectory/', '291a498f04e9')
@@ -58,7 +58,7 @@ module Mercurial
     #
     # Will find node in the latest version of repo if revision is ommitted.
     #
-    # == Example:
+    # === Example:
     #  repository.nodes.entries_for('/')
     #  repository.nodes.entries_for('some-fancy-directory/subdirectory/', '291a498f04e9')
     #

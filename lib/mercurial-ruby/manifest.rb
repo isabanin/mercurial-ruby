@@ -21,7 +21,7 @@ module Mercurial
     # Returns contents of the manifest as a String at a specified revision.
     # Latest version of the manifest is used if +revision+ is ommitted.
     #
-    # == Example:
+    # === Example:
     #  repository.manifest.contents
     #
     def contents(revision=nil, cmd_options={})
@@ -32,7 +32,7 @@ module Mercurial
     # Returns an array of file paths from manifest that start with the specified +path+ at a specified +revision+.
     # Latest version of the manifest is used if +revision+ is ommitted.
     #
-    # == Example:
+    # === Example:
     #  repository.manifest.scan_for_path('/')
     #  repository.manifest.scan_for_path('some-interesting-directory/', '2d32410d9629')
     #

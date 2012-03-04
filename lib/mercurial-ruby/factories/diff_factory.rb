@@ -16,7 +16,7 @@ module Mercurial
     # Returns an array of {Mercurial::Diff Diff} instances for a specified
     # instance of {Mercurial::Commit Commit}. Represents changeset's diffs.
     #
-    # == Example:
+    # === Example:
     #  commit = repository.commits.by_hash_id('291a498f04e9')
     #  repository.diffs.for_commit(commit)
     #

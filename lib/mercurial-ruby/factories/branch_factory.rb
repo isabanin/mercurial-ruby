@@ -15,7 +15,7 @@ module Mercurial
     
     # Return an array of {Mercurial::Branch Branch} instances for all branches in the repository.
     #
-    # == Example:
+    # === Example:
     #  repository.branches.all 
     #
     def all(cmd_options={})
@@ -26,7 +26,7 @@ module Mercurial
 
     # Run a block for every {Mercurial::Branch Branch} instance of all branches in the repository.
     #
-    # == Example:
+    # === Example:
     #  repository.branches.each {|commit| ... }
     #
     def each(cmd_options={}, &block)
@@ -37,7 +37,7 @@ module Mercurial
     
     # Return an array of {Mercurial::Branch Branch} instances for all active branches in the repository.
     #
-    # == Example:
+    # === Example:
     #  repository.branches.active
     #
     def active(cmd_options={})
@@ -48,7 +48,7 @@ module Mercurial
     
     # Return an array of {Mercurial::Branch Branch} instances for all closed branches in the repository.
     #
-    # == Example:
+    # === Example:
     #  repository.branches.closed
     #
     def closed(cmd_options={})
@@ -59,7 +59,7 @@ module Mercurial
     
     # Return a {Mercurial::Branch Branch} instance for a branch with a specified name.
     #
-    # == Example:
+    # === Example:
     #  repository.branches.by_name('branchname')
     #
     def by_name(name, cmd_options={})
@@ -71,7 +71,7 @@ module Mercurial
     # Return an array of {Mercurial::Branch Branch} instances where a specified commit exists.
     # Experimental, doesn't always return a correct list of branches.
     #
-    # == Example:
+    # === Example:
     #  repository.branches.for_commit('291a498f04e9')
     #
     def for_commit(hash_id, cmd_options={})

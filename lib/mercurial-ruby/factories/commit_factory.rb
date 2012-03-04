@@ -15,7 +15,7 @@ module Mercurial
 
     # Return a parent commit for this working copy.
     #
-    # == Example:
+    # === Example:
     #  repository.commits.parent
     #
     def parent(cmd_options={})
@@ -27,7 +27,7 @@ module Mercurial
     # Return an array of {Mercurial::Commit Commit} instances for all changesets in the repository.
     # Accept a :limit setting.
     #
-    # == Example:
+    # === Example:
     #  repository.commits.all
     #  repository.commits.all(:limit => 15)
     #
@@ -41,18 +41,18 @@ module Mercurial
     
     # Run a block for every {Mercurial::Commit Commit} instance of all changesets in the repository.
     #
-    # == Example:
+    # === Example:
     #  repository.commits.each {|commit| ... }
     #
-    def each(&block)
-      all.each do |commit|
+    def each(cmd_options={}, &block)
+      all(cmd_options).each do |commit|
         block.call(commit)
       end
     end
     
     # Count all changesets in the repository.
     #
-    # == Example:
+    # === Example:
     #  repository.commits.count
     #
     def count(cmd_options={})
@@ -63,7 +63,7 @@ module Mercurial
 
     # Count changesets in the range from hash_a to hash_b in the repository.
     #
-    # == Example:
+    # === Example:
     #  repository.commits.count_range(hash_a, hash_b)
     #
     def count_range(hash_a, hash_b, cmd_options={})
@@ -74,7 +74,7 @@ module Mercurial
     
     # Return an array of {Mercurial::Commit Commit} instances for changesets in a specific branch.
     #
-    # == Example:
+    # === Example:
     #  repository.commits.by_branch('brancname')
     #
     def by_branch(branch, cmd_options={})
@@ -85,7 +85,7 @@ module Mercurial
     
     # Return an instance of {Mercurial::Commit Commit} for a changeset with a specified id.
     #
-    # == Example:
+    # === Example:
     #  repository.commits.by_hash_id('291a498f04e9')
     #
     def by_hash_id(hash, cmd_options={})
@@ -96,7 +96,7 @@ module Mercurial
     
     # Return an array of {Mercurial::Commit Commit} instances for changesets with specified ids.
     #
-    # == Example:
+    # === Example:
     #  repository.commits.by_hash_ids('291a498f04e9', '63f70b2314ed')
     #
     def by_hash_ids(*args)
@@ -117,7 +117,7 @@ module Mercurial
     
     # Return an array of {Mercurial::Commit Commit} instances for a specified range of changeset ids.
     #
-    # == Example:
+    # === Example:
     #  repository.commits.for_range('bf6386c0a0cc', '63f70b2314ed')
     #
     def for_range(hash_a, hash_b, options={}, cmd_options={})
@@ -129,7 +129,7 @@ module Mercurial
 
     # Return an array of {Mercurial::Commit Commit} instances that appear in hg log before the specified revision id.
     #
-    # == Example:
+    # === Example:
     #  repository.commits.before('bf6386c0a0cc')
     #
     def before(hash_id, options={}, cmd_options={})
@@ -138,7 +138,7 @@ module Mercurial
 
     # Return an array of {Mercurial::Commit Commit} instances that appear in hg log after the specified revision id.
     #
-    # == Example:
+    # === Example:
     #  repository.commits.after('bf6386c0a0cc')
     #
     def after(hash_id, options={}, cmd_options={})
@@ -147,7 +147,7 @@ module Mercurial
     
     # Return an instance of {Mercurial::Commit Commit} for a repository's tip changeset (latest).
     #
-    # == Example:
+    # === Example:
     #  repository.commits.tip
     #
     def tip(cmd_options={})
@@ -159,7 +159,7 @@ module Mercurial
 
     # Return an array of {Mercurial::Commit Commit} instances that appear in hg log as ancestors of the specified commit ID.
     #
-    # == Example:
+    # === Example:
     #  repository.commits.ancestors_of('bf6386c0a0cc')
     #
     def ancestors_of(hash_id, options={}, cmd_options={})

@@ -15,7 +15,7 @@ module Mercurial
     
     # Return an array of {Mercurial::Tag Tag} instances for all tags in the repository.
     #
-    # == Example:
+    # === Example:
     #  repository.tags.all 
     #
     def all(cmd_options={})
@@ -26,11 +26,11 @@ module Mercurial
     
     # Return a {Mercurial::Tag Tag} instance for a tag with a specified name.
     #
-    # == Example:
+    # === Example:
     #  repository.tags.by_name('tagname')
     #
-    def by_name(name)
-      all.find do |b|
+    def by_name(name, cmd_options={})
+      all(cmd_options).find do |b|
         b.name == name
       end
     end

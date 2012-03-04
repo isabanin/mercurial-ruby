@@ -18,7 +18,7 @@ module Mercurial
     #
     # Omit +revision+ if you want the latest blame.
     #
-    # == Example:
+    # === Example:
     #  repository.blames.for_path('some-fancy-directory/all-blame-is-on-me.rb')
     #
     def for_path(path, revision=nil, cmd_options={})
