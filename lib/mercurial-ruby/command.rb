@@ -4,6 +4,10 @@ require 'digest/md5'
 module Mercurial
   class CommandError < Error; end
   
+  #
+  # This class represents a command that will be executed in a shell. You probably don't want to deal with this yourself, 
+  # use the {Mercurial::Shell Shell} class instead.
+  #
   class Command
     attr_accessor :command, :repository, :use_cache, :timeout
     

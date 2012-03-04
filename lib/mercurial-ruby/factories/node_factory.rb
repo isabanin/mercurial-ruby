@@ -6,7 +6,7 @@ module Mercurial
   #
   class NodeFactory
     
-    # Instance of {Mercurial::Repository Repository}.
+    # Instance of a {Mercurial::Repository Repository}.
     attr_reader :repository
     
     def initialize(repository)

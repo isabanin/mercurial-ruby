@@ -1,5 +1,12 @@
 module Mercurial
   
+  #
+  # The class represents Mercurial blame output. Obtained by running an +hg blame+ command.
+  #
+  # This is for the Blame object itself, {Mercurial::BlameFactory BlameFactory} is responsible
+  # for assembling instances of the Blame. For the list of all possible blame-related operations please 
+  # look documentation for {Mercurial::BlameFactory BlameFactory}.
+  #
   class Blame
     
     attr_reader :repository
@@ -9,7 +16,10 @@ module Mercurial
       @repository = repository
       @contents = data
     end
-    
+
+    #
+    # Returns an array of {Mercurial::BlameLine BlameLine} instances.
+    #
     def lines
       [].tap do |result|
         contents.each do |line|

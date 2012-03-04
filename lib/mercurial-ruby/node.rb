@@ -1,13 +1,9 @@
 module Mercurial
   
   #
-  # The class represents Mercurial file or directory. Data obtained by scanning +hg manifest+ output.
+  # This class represents a file or a directory stored inside a repository. The data is provided by {Mercurial::Manifest Manifest}.
   #
-  # The class represents Node object itself, {Mercurial::NodeFactory NodeFactory} is responsible
-  # for assembling instances of Node. For the list of all possible branch-related operations please 
-  # look documentation for {Mercurial::NodeFactory NodeFactory}.
-  #
-  # Additionally {Mercurial::Manifest Manifest} is responsible for reading and scanning the manifest.
+  # To see how Node instances are assembled, check the {Mercurial::NodeFactory NodeFactory}.
   #
   class Node
     include Mercurial::Helper

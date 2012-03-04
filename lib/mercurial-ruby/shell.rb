@@ -1,9 +1,42 @@
 module Mercurial
   
+  #
+  # This is a tiny helper class that makes it simple for you to execute shell commands.
+  # Use it to execute hg commands that don't have a proper wrappers yet. 
+  #
   class Shell
     
     attr_reader :repository
     
+    #
+    # Creates a {Mercurial::Command Command} instance and executes it. Supports a few neat options:
+    #
+    # ==== :append_hg
+    #
+    # You don't have to worry about specifying a correct path to your hg binary every time you want to execute a command:
+    #
+    #   Shell.run("help", :append_hg => true)
+    #
+    # ==== Arguments interpolation
+    #
+    # Interpolation make your commands secure by escaping dangerous characters and wrapping everything in quotes:
+    #
+    #  Shell.run(["clone ? ?", url, destination], :append_hg => true)
+    #
+    # ==== :in
+    #
+    # Allows you to execute commands in a specific directory:
+    #
+    #  Shell.run('log', :in => repository_path)
+    #
+    # ==== :pipe
+    #
+    # Gives you piping flexibility:
+    #
+    #  Shell.run('log', :pipe => "grep '9:0f41dd2ec166' -wc", :in => repository_path)
+    #
+    # Same as running +hg log | grep '9:0f41dd2ec166' -wc+
+    #
     def self.run(cmd, options={})
       build = []
 
@@ -33,13 +66,16 @@ module Mercurial
       @repository = repository
     end
     
+    #
+    # This method is a shortcut to +Shell.run(cmd, :append_hg => true, :in => repository.path)+.
+    #
     def hg(cmd, options={})
       options[:in] ||= repository.path
       options[:repository] = repository
       options[:append_hg] = true
       run(cmd, options)
     end
-    
+
     def run(cmd, options={})
       self.class.run(cmd, options)
     end
