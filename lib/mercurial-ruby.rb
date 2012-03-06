@@ -1,3 +1,5 @@
+require 'time'
+
 #
 # Wrapper module. Nothing interesting here except that you can 
 # specify global configs with the +configure+ method.
