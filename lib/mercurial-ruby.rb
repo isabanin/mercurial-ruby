@@ -4,7 +4,7 @@
 #
 module Mercurial
   
-  VERSION = '0.7.0'
+  VERSION = '0.7.1'
   
   class Error < RuntimeError; end
   

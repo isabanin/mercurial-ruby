@@ -16,6 +16,16 @@ describe Mercurial::Command do
       Mercurial::Command.new("cd #{ @repository.path } && hg shikaka").execute
     }.must_raise Mercurial::CommandError
   end
+
+  it "should not translate exit status of zero with shell errors to ruby exceptions" do
+    Mercurial::Command.new("echo stderr >&2 && echo stdout && exit 0").execute.strip.must_equal "stdout"
+  end
+
+  it "should translate exit status of non-zero with shell errors to ruby exceptions" do
+    lambda{
+      Mercurial::Command.new("echo stderr >&2 && echo stdout && exit 1").execute
+    }.must_raise Mercurial::CommandError
+  end
   
   it "should execute commands with timeout" do
     Mercurial.configuration.stubs(:shell_timeout).returns(1)

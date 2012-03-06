@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{mercurial-ruby}
-  s.version = "0.7.0"
+  s.version = "0.7.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Ilya Sabanin"]
-  s.date = %q{2012-03-02}
+  s.date = %q{2012-03-05}
   s.description = %q{Ruby API for Mercurial DVCS.}
   s.email = %q{ilya.sabanin@gmail.com}
   s.extra_rdoc_files = [
@@ -92,6 +92,7 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
+      s.add_runtime_dependency(%q<open4>, ["~> 1.3.0"])
       s.add_development_dependency(%q<minitest>, [">= 0"])
       s.add_development_dependency(%q<bundler>, ["~> 1.0.0"])
       s.add_development_dependency(%q<jeweler>, ["~> 1.6.4"])
@@ -99,6 +100,7 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<mocha>, ["~> 0.9"])
       s.add_development_dependency(%q<ruby-debug>, ["~> 0.10"])
     else
+      s.add_dependency(%q<open4>, ["~> 1.3.0"])
       s.add_dependency(%q<minitest>, [">= 0"])
       s.add_dependency(%q<bundler>, ["~> 1.0.0"])
       s.add_dependency(%q<jeweler>, ["~> 1.6.4"])
@@ -107,6 +109,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<ruby-debug>, ["~> 0.10"])
     end
   else
+    s.add_dependency(%q<open4>, ["~> 1.3.0"])
     s.add_dependency(%q<minitest>, [">= 0"])
     s.add_dependency(%q<bundler>, ["~> 1.0.0"])
     s.add_dependency(%q<jeweler>, ["~> 1.6.4"])

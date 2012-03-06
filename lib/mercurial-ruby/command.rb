@@ -1,5 +1,6 @@
 require 'timeout'
 require 'digest/md5'
+require 'open4'
 
 module Mercurial
   class CommandError < Error; end
@@ -51,8 +52,8 @@ module Mercurial
     def execution_proc
       Proc.new do
         debug(command)
-        result, error = '', ''        
-        Open3.popen3(command) do |_, stdout, stderr|
+        result, error, = '', ''
+        status = Open4.popen4(command) do |pid, stdin, stdout, stderr|
           Timeout.timeout(timeout) do
             while tmp = stdout.read(102400)
               result += tmp
@@ -63,12 +64,13 @@ module Mercurial
             error += tmp
           end
         end
-        raise_error_if_needed(error)
+        raise_error_if_needed(status, error)
         result
       end
     end
     
-    def raise_error_if_needed(error)
+    def raise_error_if_needed(status, error)
+      return if status.exitstatus == 0
       if error && error != ''
         raise CommandError, error
       end
@@ -81,7 +83,7 @@ module Mercurial
     def debug(msg)
       if Mercurial.configuration.debug_mode
         puts msg
-      end 
+      end
     end
     
   end
