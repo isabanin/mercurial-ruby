@@ -62,5 +62,14 @@ describe Mercurial::Commit do
     commit = @repository.commits.by_hash_id('cd9fa0c59c7f')
     commit.exist_in_branches.map(&:name).sort.must_equal %w(default another-branch).sort
   end
+
+  it "should fetch stats" do
+    commit = @repository.commits.by_hash_id('cd9fa0c59c7f')
+    stats = commit.stats
+    stats['files'].must_equal 3
+    stats['additions'].must_equal 85
+    stats['deletions'].must_equal 6
+    stats['total'].must_equal 91
+  end
   
 end

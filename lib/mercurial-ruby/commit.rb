@@ -91,6 +91,20 @@ module Mercurial
     def short_hash_id
       hash_id.to_s[0,12]
     end
+
+    #
+    # Returns a Hash of diffstat-style summary of changes for the commit.
+    #
+    def stats(cmd_options={})
+      raw = hg(["log -r ? --stat --template '{node}\n'", hash_id], cmd_options)
+      result = raw.scan(/(\d+) files changed, (\d+) insertions\(\+\), (\d+) deletions\(\-\)$/).flatten.map{|r| r.to_i}
+      {
+        'files'     => result[0],
+        'additions' => result[1],
+        'deletions' => result[2],
+        'total'     => result[1] + result[2]
+      }
+    end
     
     def to_hash
       {
