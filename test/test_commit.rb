@@ -71,5 +71,10 @@ describe Mercurial::Commit do
     stats['deletions'].must_equal 6
     stats['total'].must_equal 91
   end
+
+  it "should return IDs of it's trivial parents" do
+    commit = @repository.commits.by_hash_id('bc729b15e2b5')
+    commit.trivial_parents_ids.must_equal %w(bf6386c0a0ccd1282dbbe51888f52fe82b1806e3)
+  end
   
 end

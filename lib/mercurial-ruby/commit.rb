@@ -76,6 +76,10 @@ module Mercurial
       repository.commits.by_hash_ids(parents_ids)
     end
 
+    def trivial_parents_ids
+      hg(["parents -r ? --template '{node}\n'", hash_id]).split("\n")
+    end
+
     def ancestors
       repository.commits.ancestors_of(hash_id)
     end
