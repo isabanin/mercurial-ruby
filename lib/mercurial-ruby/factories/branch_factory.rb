@@ -19,7 +19,7 @@ module Mercurial
     #  repository.branches.all 
     #
     def all(cmd_options={})
-      hg_to_array("branches -c", {}, cmd_options) do |line|
+      hg_to_array("branches -c --debug", {}, cmd_options) do |line|
         build(line)
       end
     end

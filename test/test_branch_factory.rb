@@ -49,5 +49,10 @@ describe Mercurial::BranchFactory do
     branches.size.must_equal 5
     branches.map(&:name).sort.must_equal %w(old-branch new-branch branch-from-remote another-branch default).sort
   end
+
+  it "should find branch's full hash_id" do
+    branch = @repository.branches.all.first
+    branch.hash_id.must_equal 'e47455b9a2383085b400d649af4360b943c6d3cf'
+  end
   
 end
