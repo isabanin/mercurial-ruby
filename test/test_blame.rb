@@ -24,5 +24,17 @@ describe Mercurial::Blame do
     lines[3].num.must_equal 4
     lines[3].contents.must_equal ''
   end
+
+  it "should return metadata separately from code" do
+    blame = @factory.for_path('diff-test.rb')
+    blame.raw_metadata.size.must_equal 26
+    blame.raw_metadata[6].must_equal(['ilya', '88b5cc786015', '7'])
+  end
+
+  it "should return code separately from metadata" do
+    blame = @factory.for_path('diff-test.rb')
+    blame.contents_without_metadata.split("\n").size.must_equal 26
+    blame.contents_without_metadata.split("\n")[12].must_equal "  helper_method :repository_scope?"
+  end
   
 end
