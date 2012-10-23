@@ -102,6 +102,7 @@ module Mercurial
     def stats(cmd_options={})
       raw = hg(["log -r ? --stat --template '{node}\n'", hash_id], cmd_options)
       result = raw.scan(/(\d+) files changed, (\d+) insertions\(\+\), (\d+) deletions\(\-\)$/).flatten.map{|r| r.to_i}
+      return {} if result.empty? # that commit has no stats
       {
         'files'     => result[0],
         'additions' => result[1],

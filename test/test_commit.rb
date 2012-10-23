@@ -72,9 +72,14 @@ describe Mercurial::Commit do
     stats['total'].must_equal 91
   end
 
+  it "should not die when trying to return stats for a commit without stats" do
+    commit = @repository.commits.by_hash_id('8173f122b0d0')
+    commit.stats.must_equal {}
+  end
+
   it "should return IDs of it's trivial parents" do
     commit = @repository.commits.by_hash_id('bc729b15e2b5')
     commit.trivial_parents_ids.must_equal %w(bf6386c0a0ccd1282dbbe51888f52fe82b1806e3)
   end
-  
+
 end
