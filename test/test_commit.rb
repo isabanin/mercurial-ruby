@@ -74,7 +74,7 @@ describe Mercurial::Commit do
 
   it "should not die when trying to return stats for a commit without stats" do
     commit = @repository.commits.by_hash_id('8173f122b0d0')
-    commit.stats.must_equal {}
+    commit.stats.must_equal Hash.new
   end
 
   it "should return IDs of it's trivial parents" do
