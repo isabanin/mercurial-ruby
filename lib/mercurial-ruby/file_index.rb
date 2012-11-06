@@ -1,5 +1,6 @@
 module Mercurial
 
+  #
   # This class was ported from grit.
   #
   # It implements a file-based 'file index', a simple index of

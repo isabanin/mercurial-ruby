@@ -1,10 +1,10 @@
 module Mercurial
 
   #
-  # Represents +.hg/hgrc+ configuration file stored in the repository.
+  # Represents +.hg/hgrc+ configuration from the repository.
   # Useful for adding/removing various settings.
   #
-  # You can read more about hgrc here:
+  # For general information on hgrc:
   #
   # http://www.selenic.com/mercurial/hgrc.5.html
   #
@@ -19,7 +19,7 @@ module Mercurial
     end
     
     #
-    # Returns absolute path to the config file:
+    # Returns an absolute path to the config file:
     #
     #  config.path # => /home/ilya/repos/fancyrepo/.hg/hgrc
     #
@@ -29,7 +29,7 @@ module Mercurial
     
     #
     # Returns true if the config file actually exists on disk.
-    # For new repositories it's missing by default.
+    # The file is usually missing in new repositories.
     #
     def exists?
       File.exists?(path)
@@ -47,7 +47,7 @@ module Mercurial
     #
     #  config.add_setting('merge-tools', 'kdiff3.executable', '~/bin/kdiff3')
     # 
-    # It will write the following content to the +hgrc+:
+    # will write the following content to hgrc:
     #
     #  [merge-tools]
     #  kdiff3.executable = ~/bin/kdiff3
@@ -68,7 +68,7 @@ module Mercurial
     end
     
     #
-    # Removes specified setting from the hgrc:
+    # Removes specified setting from hgrc:
     #
     #  config.delete_setting!('merge-tools', 'kdiff3.executable')
     #
@@ -79,7 +79,7 @@ module Mercurial
     end
 
     #
-    # Returns true if specified setting exists in specified group.
+    # Returns true if a specified setting exists in specified group.
     #
     #  config.setting_exists?('hooks', 'changegroup')
     #

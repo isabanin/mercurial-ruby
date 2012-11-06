@@ -5,9 +5,9 @@ module Mercurial
   #
   # The class represents Tag object itself, {Mercurial::TagFactory TagFactory} is responsible
   # for assembling instances of Tag. For the list of all possible tag-related operations please 
-  # look documentation for {Mercurial::TagFactory TagFactory}.
+  # check {Mercurial::TagFactory TagFactory}.
   #
-  # Read more about Mercurial tags:
+  # For general information on Mercurial tags:
   #
   # http://mercurial.selenic.com/wiki/Tag
   #

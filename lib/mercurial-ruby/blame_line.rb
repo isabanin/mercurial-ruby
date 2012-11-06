@@ -1,7 +1,7 @@
 module Mercurial
 
   #
-  # The class represents a single line of the Mercurial blame output.
+  # The class represents a single line of the blame output.
   #  
   class BlameLine
     

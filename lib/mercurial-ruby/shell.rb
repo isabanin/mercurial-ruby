@@ -1,8 +1,8 @@
 module Mercurial
   
   #
-  # This is a tiny helper class that makes it simple for you to execute shell commands.
-  # Use it to execute hg commands that don't have a proper wrappers yet. 
+  # This class makes it easy for you to execute shell commands.
+  # Use it to execute hg commands that don't have proper wrappers yet. 
   #
   class Shell
     
@@ -19,7 +19,7 @@ module Mercurial
     #
     # ==== Arguments interpolation
     #
-    # Interpolation make your commands secure by escaping dangerous characters and wrapping everything in quotes:
+    # Interpolation make your commands secure by wrapping everything in single quotes and sanitizing them:
     #
     #  Shell.run(["clone ? ?", url, destination], :append_hg => true)
     #
@@ -33,13 +33,13 @@ module Mercurial
     #
     # Gives you piping flexibility:
     #
-    #  Shell.run('log', :pipe => "grep '9:0f41dd2ec166' -wc", :in => repository_path)
+    #  Shell.run('log', :pipe => "grep '9:0f41dd2ec166' -wc", :in => repository_path, :append_hg => true)
     #
     # Same as running +hg log | grep '9:0f41dd2ec166' -wc+
     #
     # ==== :timeout
     #
-    # Specify a timeout in seconds for your command:
+    # Specify execution timeout in seconds for your command:
     #
     #  Shell.run("/usr/bin/long-running-task", :timeout => 5)
     #

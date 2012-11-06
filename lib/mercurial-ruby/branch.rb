@@ -4,10 +4,10 @@ module Mercurial
   # The class represents Mercurial branch. Obtained by running an +hg branches+ command.
   #
   # The class represents Branch object itself, {Mercurial::BranchFactory BranchFactory} is responsible
-  # for assembling instances of Branch. For the list of all possible branch-related operations please 
-  # look documentation for {Mercurial::BranchFactory BranchFactory}.
+  # for assembling instances of Branch. For the list of all possible branch-related operations 
+  # check {Mercurial::BranchFactory BranchFactory}.
   #
-  # Read more about Mercurial branches:
+  # For general information on Mercurial branches:
   #
   # http://mercurial.selenic.com/wiki/Branch
   #

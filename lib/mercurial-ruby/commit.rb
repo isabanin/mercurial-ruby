@@ -2,13 +2,13 @@ module Mercurial
   
   #
   # The class represents Mercurial changeset. Obtained by running an +hg log+ command.
-  # Contains a lot of information, including it's hash ID, author name and email, list of changed files, etc.
+  # Contains a lot of information, including commit's ID, author name, email, list of changed files, etc.
   #
   # The class represents Commit object itself, {Mercurial::CommitFactory CommitFactory} is responsible
-  # for assembling instances of Commit. For the list of all possible commit-related operations please 
-  # look documentation for {Mercurial::CommitFactory CommitFactory}.
+  # for assembling instances of Commit. For the list of all possible commit-related operations 
+  # check {Mercurial::CommitFactory CommitFactory}.
   #
-  # Read more about Mercurial commits:
+  # For general information on Mercurial commits:
   #
   # http://mercurial.selenic.com/wiki/Commit
   #

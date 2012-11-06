@@ -4,8 +4,8 @@ module Mercurial
   # The class represents Mercurial diff. Obtained by running an +hg diff+ command.
   #
   # The class represents Diff object itself, {Mercurial::DiffFactory DiffFactory} is responsible
-  # for assembling instances of Diff. For the list of all possible diff-related operations please 
-  # look documentation for {Mercurial::DiffFactory DiffFactory}.
+  # for assembling instances of Diff. For the list of all possible diff-related operations 
+  # check {Mercurial::DiffFactory DiffFactory}.
   #
   class Diff
     
@@ -15,7 +15,7 @@ module Mercurial
     # SHA1 hash of version b of the file.
     attr_reader :hash_b
     
-    # Version a if the file name.
+    # Version a of the file name.
     attr_reader :file_a
     
     # Version b of the file name.

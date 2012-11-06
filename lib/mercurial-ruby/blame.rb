@@ -1,11 +1,11 @@
 module Mercurial
   
   #
-  # The class represents Mercurial blame output. Obtained by running an +hg blame+ command.
+  # The class represents Mercurial blame output (+hg blame+ command).
   #
-  # This is for the Blame object itself, {Mercurial::BlameFactory BlameFactory} is responsible
-  # for assembling instances of the Blame. For the list of all possible blame-related operations please 
-  # look documentation for {Mercurial::BlameFactory BlameFactory}.
+  # This class is for Blame object itself, {Mercurial::BlameFactory BlameFactory} is responsible
+  # for assembling instances of Blame. For the list of all possible blame-related operations 
+  # check {Mercurial::BlameFactory BlameFactory}.
   #
   class Blame
 

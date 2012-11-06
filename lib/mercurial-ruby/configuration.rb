@@ -10,12 +10,12 @@ module Mercurial
   #   conf.debug_mode = true
   #  end
   #
-  # Currently only the following settings are supported:
+  # Only the following settings are supported:
   #
-  # * hg_binary_path — path to hg binary in your system. Default is /usr/local/bin/hg.
-  # * shell_timeout — default execution timeout for all hg shell commands. Default is 3000.
-  # * cache_store — Rails's CacheStore compatible class for caching results of successful hg commands. Default is nil.
-  # * debug_mode — send all hg commands to stdout before execution. Default is false.
+  # * hg_binary_path — path to hg binary in your system. Defaults to /usr/local/bin/hg.
+  # * shell_timeout — default execution timeout for all hg shell commands. Defaults to 3000.
+  # * cache_store — Rails's CacheStore compatible class for caching results of successful hg commands. Defaults to nil.
+  # * debug_mode — send all hg commands to stdout before execution. Defaults to false.
   #  
   class Configuration
     
