@@ -1,6 +1,6 @@
 = mercurial-ruby
 
-Ruby API for Mercurial DVCS. Uses command line interface to communicate with Mercurial repositories.
+Ruby API for Mercurial DVCS. Powers Mercurial on http://beanstalkapp.com
 
 == Documentation
 
@@ -89,16 +89,6 @@ Cache expires automatically when repository's mtime changes, and it's your job t
 You can provide a timeout for pretty much any command you are running. Do it like this:
 
  repository.commits.all(:timeout => 5)
-
-== Contributing to mercurial-ruby
- 
-* Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
-* Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it
-* Fork the project
-* Start a feature/bugfix branch
-* Commit and push until you are happy with your contribution
-* Make sure to add tests for it. This is important so I don't break it in a future version unintentionally.
-* Please try not to mess with the Rakefile, version, or history. If you want to have your own version, or is otherwise necessary, that is fine, but please isolate to its own commit so I can cherry-pick around it.
 
 == Copyright
 
