@@ -17,6 +17,10 @@ module Mercurial
     def binary?
       false
     end
+
+    def name
+      ''
+    end
     
     def path
       ''
