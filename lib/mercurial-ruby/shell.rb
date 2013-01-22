@@ -59,7 +59,7 @@ module Mercurial
       end
 
       if dir = options.delete(:in)
-        build << "cd #{ dir }"
+        build << interpolate_arguments(["cd ?", dir])
       end
       
       if cmd.kind_of?(Array)

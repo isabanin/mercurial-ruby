@@ -13,7 +13,7 @@ describe Mercurial::Shell do
   
   it "should compile commands" do    
     command_mock = mock('command', :execute => true)
-    Mercurial::Command.expects(:new).with("cd #{ @repository.path } && /usr/local/bin/hg log", :repository => @repository, :append_hg => true).returns(command_mock).once
+    Mercurial::Command.expects(:new).with("cd '#{ @repository.path }' && /usr/local/bin/hg log", :repository => @repository, :append_hg => true).returns(command_mock).once
     @shell.hg('log')
   end
   
