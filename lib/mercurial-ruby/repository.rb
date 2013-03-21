@@ -209,6 +209,7 @@ module Mercurial
     def no_cache
       @cache_disabled_by_override = true
       yield
+    ensure
       @cache_disabled_by_override = false
     end
     
