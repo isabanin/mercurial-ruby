@@ -110,7 +110,7 @@ module Mercurial
       return [] if array.empty?
 
       args = array.map{|hash| " -r#{ hash }"}
-      hg_to_array ["log#{ args } --style ?", style], {:separator => changeset_separator}, cmd_options do |line|
+      hg_to_array ["log#{ args.join('') } --style ?", style], {:separator => changeset_separator}, cmd_options do |line|
         build(line)
       end
     end
