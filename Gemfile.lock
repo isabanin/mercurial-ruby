@@ -22,5 +22,5 @@ DEPENDENCIES
   bundler
   jeweler
   minitest
-  mocha (~> 0.9)
+  mocha
   open4 (~> 1.3.0)

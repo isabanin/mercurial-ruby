@@ -6,5 +6,5 @@ group :development do
   gem "minitest"
   gem "bundler"
   gem "jeweler"
-  gem "mocha", "~>0.9"
+  gem "mocha"
 end
