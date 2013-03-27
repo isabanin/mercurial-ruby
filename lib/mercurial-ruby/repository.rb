@@ -161,7 +161,7 @@ module Mercurial
     #
     def paths
       {}.tap do |result|
-        shell.hg('paths').each do |line|
+        shell.hg('paths').each_line do |line|
           path, url = *line.strip.split(" = ")
           result[path] = url
         end

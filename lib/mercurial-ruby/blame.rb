@@ -41,7 +41,7 @@ module Mercurial
     #
     def lines
       [].tap do |result|
-        contents.each do |line|
+        contents.each_line do |line|
           author, revision, linenum, text = line.scan(METADATA_AND_CODE_RE).first
           result << BlameLine.new(
             :author   => author,
