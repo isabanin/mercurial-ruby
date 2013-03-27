@@ -114,7 +114,7 @@ module Mercurial
     def to_hash
       {
         'id'       => hash_id,
-        'parents'  => parents_ids.map { |p| { 'id' => p.id } },
+        'parents'  => parents_ids,
         'branch'   => branch_name,
         'tags'     => tags_names,
         'message'  => message,
