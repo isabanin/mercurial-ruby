@@ -14,8 +14,8 @@ describe Mercurial::HookFactory do
   it "should find all hooks" do
     hooks = @repository.hooks.all
     hooks.size.must_equal 2
-    hooks.map(&:name).must_equal ['commit', 'changegroup']
-    hooks.map(&:value).must_equal ['/Users/ilya/work/beanstalk/script/mercurial/commit.rb', '/Users/ilya/work/beanstalk/script/mercurial/changegroup.rb']
+    hooks.map(&:name).sort.must_equal ['commit', 'changegroup'].sort
+    hooks.map(&:value).sort.must_equal ['/Users/ilya/work/beanstalk/script/mercurial/commit.rb', '/Users/ilya/work/beanstalk/script/mercurial/changegroup.rb'].sort
     hooks.first.must_be_kind_of Mercurial::Hook
   end
   
