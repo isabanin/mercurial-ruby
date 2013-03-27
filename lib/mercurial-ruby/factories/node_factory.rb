@@ -64,30 +64,28 @@ module Mercurial
     #
     def entries_for(path, revision=nil, parent=nil)
       revision ||= 'tip'
-      entries = []
-      manifest_entries = repository.manifest.scan_for_path(path, revision)
-      manifest_entries.each do |me|
-        path_without_source = me[3].gsub(/^#{ Regexp.escape(path.without_trailing_slash) }\//, '')
-        entry_name = path_without_source.split('/').first
-        entry_path = File.join(path, entry_name).gsub(/^\//, '')
-        dir = me[3].scan(/^(#{ Regexp.escape(entry_path) }\/)/).flatten.first ? true : false
-        entry_name << '/' if dir
-        
-        entries << build(
-          :path     => entry_path,
-          :name     => entry_name,
-          :revision => revision,
-          :nodeid   => (me[0] unless dir),
-          :fmode    => dir ? nil : me[1],
-          :exec     => dir ? nil : me[2],
-          :parent   => parent
-        )
+      [].tap do |entries|
+        manifest_entries = repository.manifest.scan_for_path(path, revision)
+        manifest_entries.each do |me|
+          path_without_source = me[3].gsub(/^#{ Regexp.escape(path.without_trailing_slash) }\//, '')
+          entry_name = path_without_source.split('/').first
+          entry_path = File.join(path, entry_name).gsub(/^\//, '')
+          dir = me[3].scan(/^(#{ Regexp.escape(entry_path) }\/)/).flatten.first ? true : false
+          entry_name << '/' if dir
+          
+          if entries.select{|item| item.name == entry_name}.size == 0
+            entries << build(
+              :path     => entry_path,
+              :name     => entry_name,
+              :revision => revision,
+              :nodeid   => (me[0] unless dir),
+              :fmode    => dir ? nil : me[1],
+              :exec     => dir ? nil : me[2],
+              :parent   => parent
+            )
+          end
+        end
       end
-      
-      entries = entries.inject({}) do |hash,item|
-        hash[item.name] ||= item
-        hash 
-      end.values
     end
     
   private

@@ -67,14 +67,14 @@ describe Mercurial::NodeFactory do
     entries.map(&:name).sort.must_equal %w(another-boring-file something.csv subdirectory/).sort
     entries.map(&:parent).uniq.must_equal [node]
     
-    entries[0].directory?.must_equal true
-    entries[0].file?.must_equal false
-    
+    entries[0].file?.must_equal true
+    entries[0].directory?.must_equal false
+
     entries[1].file?.must_equal true
     entries[1].directory?.must_equal false
 
-    entries[2].file?.must_equal true
-    entries[2].directory?.must_equal false
+    entries[2].directory?.must_equal true
+    entries[2].file?.must_equal false
   end
   
   it "should find entries for tip revision" do
