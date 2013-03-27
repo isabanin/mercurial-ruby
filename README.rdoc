@@ -16,11 +16,11 @@ Github doesn't support some YARd-specific syntax so this README can look broken.
  
 == Compatibility
 
-Tested with Mercurial versions 1.9, 1.9.1 and 2.1; Ruby version 1.8.7.
+Tested with Mercurial versions 1.9, 1.9.1, 2.1, 2.5.2; Ruby versions 1.8.7, 1.9.3 and 2.0.0.
 
 == Configuration
 
-There are several settings you can configure. Do it like this:
+There are several settings you can configure:
 
  Mercurial.configure do |conf|
    conf.hg_binary_path = "/usr/bin/hg"
@@ -70,7 +70,7 @@ weren't added to the gem as first-class citizens yet.
 
 === Built-in Caching
 
-There's a simple caching mechanism built into the gem. If you pass Rails CacheStore compatible
+There's a simple caching mechanism built into the gem. If you pass Rails CacheStore-compatible
 caching store to the Configuration block, mercurial-ruby will cache output of all hg commands
 it's executing. Then if you execute same method again and it will run the same command,
 the gem will return the output from cache.
@@ -92,6 +92,6 @@ You can provide a timeout for pretty much any command you are running. Do it lik
 
 == Copyright
 
-Copyright (c) 2012 Ilya Sabanin. See LICENSE.txt for
+Copyright (c) 2013 Ilya Sabanin. See LICENSE.txt for
 further details.
 
