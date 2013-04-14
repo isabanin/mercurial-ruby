@@ -31,6 +31,11 @@ module Mercurial
       @file_b = opts[:file_b]
       @body   = opts[:body]
       @binary = opts[:binary]
+
+      if RUBY_VERSION >= '1.9.1'
+        @file_a.force_encoding('utf-8') if @file_a
+        @file_b.force_encoding('utf-8') if @file_b
+      end
     end
     
     def file_name
