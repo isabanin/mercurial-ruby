@@ -9,8 +9,8 @@ rescue Bundler::BundlerError => e
   exit e.status_code
 end
 
-require "mocha"
 require "minitest/autorun"
+require "mocha/api"
 
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
