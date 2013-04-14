@@ -26,7 +26,11 @@ module Mercurial
     #
     def contents(revision=nil, cmd_options={})
       revision ||= 'tip'
-      hg(manifest_cmd(revision), cmd_options)
+      hg(manifest_cmd(revision), cmd_options).tap do |res|
+        if RUBY_VERSION >= '1.9.1'
+          res.force_encoding('utf-8')
+        end
+      end
     end
     
     # Returns an array of file paths from manifest that start with the specified +path+ at a specified +revision+.
