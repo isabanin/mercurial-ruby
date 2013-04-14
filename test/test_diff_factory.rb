@@ -49,6 +49,11 @@ describe Mercurial::DiffFactory do
     diff = @repository.diffs.for_path('superman.txt', 'b6f6f764b939', 'e47455b9a238', :ignore_whitespace => true)
     diff.body.must_equal diff_sample_2
   end
+
+  it "should handle files with unicode names" do
+    diff = @repository.diffs.for_path('кодировки/виндоуз-cp1251-lf', 'fe021a290ba1', '2b03a87dbf4c')
+    diff.body.must_equal diff_sample3
+  end
   
 private
 
@@ -89,6 +94,10 @@ private
 +^ whitespace change above and below
  This is a superman file.
 ]
+  end
+
+  def diff_sample3
+    File.open(File.join(File.dirname(__FILE__), '', 'fixtures', 'diff_sample3.diff'), 'rb'){|f| f.read}
   end
   
 end

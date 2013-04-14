@@ -21,6 +21,14 @@ describe Mercurial::Diff do
   it "should have body" do
     @diff.body.strip.must_equal expected_diff.strip
   end
+
+  if RUBY_VERSION >= '1.9.1'
+    it "should return file names in UTF-8 encoding in Ruby 1.9.1 and higher" do 
+      diff = @repository.diffs.for_path('кодировки/виндоуз-cp1251-lf', 'fe021a290ba1', '2b03a87dbf4c')
+      diff.file_a.encoding.to_s.downcase.must_equal 'utf-8'
+      diff.file_b.encoding.to_s.downcase.must_equal 'utf-8'
+    end
+  end
   
 private
 

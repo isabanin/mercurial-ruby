@@ -35,5 +35,17 @@ describe Mercurial::Manifest do
     paths = @manifest.scan_for_path('check \ this \ out " now', '2d32410d9629')
     paths.size.must_equal 1
   end
+
+  it "should find unicode paths" do
+    paths = @manifest.scan_for_path('кодировки/виндоуз-cp1251-lf', 'fe021a290ba1')
+    paths.size.must_equal 1
+    paths[0].last.must_equal 'кодировки/виндоуз-cp1251-lf'
+  end
+
+  if RUBY_VERSION >= '1.9.1'
+    it "should return contents in UTF-8 encoding on Ruby 1.9.1 and higher" do
+      @manifest.contents.encoding.to_s.downcase.must_equal('utf-8')
+    end
+  end
   
 end

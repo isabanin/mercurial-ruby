@@ -24,7 +24,7 @@ describe Mercurial::FileIndex do
   end
   
   it "should count all commits" do
-    @file_index.count_all.must_equal 43
+    @file_index.count_all.must_equal 44
   end
   
   it "should count commits reachable by specific hash id" do

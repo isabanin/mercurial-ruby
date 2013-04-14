@@ -52,7 +52,7 @@ describe Mercurial::BranchFactory do
 
   it "should find branch's full hash_id" do
     branch = @repository.branches.all.first
-    branch.hash_id.must_equal 'fe021a290ba17217a083a8059db9a4f3568ee619'
+    branch.hash_id.must_equal '2b03a87dbf4cb1a95b2417d8e2eac801c450b624'
   end
   
 end

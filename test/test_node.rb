@@ -30,5 +30,12 @@ describe Mercurial::Node do
     node = @repository.nodes.find('File With Whitespace.pdf', '8ddac5f6380e')
     node.contents.must_equal ''
   end
+
+  if RUBY_VERSION >= '1.9.1'
+    it "should return name in UTF-8 encoding on Ruby 1.9.1 and higher" do
+      node = @repository.nodes.find('кодировки/виндоуз-cp1251-lf', 'fe021a290ba1')
+      node.name.encoding.to_s.downcase.must_equal 'utf-8'
+    end
+  end
   
 end
