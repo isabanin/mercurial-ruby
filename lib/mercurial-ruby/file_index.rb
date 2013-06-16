@@ -181,7 +181,7 @@ module Mercurial
 
     def read_index
       validate_index_file      
-      f = File.new(path)
+      f = File.new(path, 'rb')
       @sha_count = 0
       @commit_index = {}
       @commit_order = {}
