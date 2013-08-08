@@ -6,7 +6,7 @@ require 'time'
 #
 module Mercurial
   
-  VERSION = '0.7.10'
+  VERSION = '0.7.11'
   
   class Error < RuntimeError; end
   
