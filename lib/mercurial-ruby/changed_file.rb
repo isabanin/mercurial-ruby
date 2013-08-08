@@ -7,7 +7,7 @@ module Mercurial
     
     def initialize(opts={})
       @initial_name = opts[:initial_name]
-      @name         = opts[:name]
+      @name         = enforce_unicode(opts[:name])
       @mode_letter  = opts[:mode]
     end
     
@@ -45,7 +45,13 @@ module Mercurial
         :edit
       end
     end
-    
+
+  private
+
+    def enforce_unicode(str)
+      str.encode('utf-8', {:invalid => :replace, :undef => :replace, :replace => '?'})
+    end
+
   end
   
 end
