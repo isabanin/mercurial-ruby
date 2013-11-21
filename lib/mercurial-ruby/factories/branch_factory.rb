@@ -94,7 +94,7 @@ module Mercurial
   private
   
     def build(data)
-      name, last_commit, status = *data.scan(/([\w-]+)\s+\d+:(\w+)\s*\(*(\w*)\)*/).first
+      name, last_commit, status = *data.scan(/([\w\- ]+)\s+\d+:(\w+)\s*\(*(\w*)\)*/).first
       Mercurial::Branch.new(
         repository,
         name,
