@@ -45,7 +45,18 @@ module Mercurial
         b.active?
       end
     end
-    
+
+    # Return an array of {Mercurial::Branch Branch} instances for all inactive branches in the repository.
+    #
+    # === Example:
+    #  repository.branches.inactive
+    #
+    def inactive(cmd_options={})
+      all(cmd_options).find_all do |b|
+        b.inactive?
+      end
+    end
+
     # Return an array of {Mercurial::Branch Branch} instances for all closed branches in the repository.
     #
     # === Example:
