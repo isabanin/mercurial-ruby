@@ -8,23 +8,23 @@ describe Mercurial::BranchFactory do
 
   it "should find all branches" do
     branches = @repository.branches.all
-    branches.size.must_equal 5
-    branches.map(&:name).sort.must_equal %w(branch-from-remote another-branch new-branch old-branch default).sort
-    branches.map(&:status).sort.must_equal %w(active active closed active inactive).sort
+    branches.size.must_equal 6
+    branches.map(&:name).sort.must_equal ['another-branch', 'branch-from-remote', 'default', 'my branch', 'new-branch', 'old-branch']
+    branches.map(&:status).sort.must_equal %w(active active active active closed inactive)
   end
 
   it "should iterate through branches" do
     names = []
     @repository.branches.each{|b| names << b.name }
-    names.size.must_equal 5
-    names.must_equal %w(default another-branch branch-from-remote new-branch old-branch)
+    names.size.must_equal 6
+    names.must_equal ['default', 'my branch', 'another-branch', 'branch-from-remote', 'new-branch', 'old-branch']
   end
 
   it "should find active branches" do
     branches = @repository.branches.active
-    branches.size.must_equal 3
-    branches.map(&:name).sort.must_equal %w(another-branch default branch-from-remote).sort
-    branches.map(&:status).must_equal %w(active active active)
+    branches.size.must_equal 4
+    branches.map(&:name).sort.must_equal ['another-branch', 'default', 'branch-from-remote', 'my branch'].sort
+    branches.map(&:status).must_equal %w(active active active active)
   end
 
   it "should find inactive branches" do
@@ -57,13 +57,13 @@ describe Mercurial::BranchFactory do
 
   it "should return branches for commit" do
     branches = @repository.branches.for_commit('bf6386c0a0cc')
-    branches.size.must_equal 5
-    branches.map(&:name).sort.must_equal %w(old-branch new-branch branch-from-remote another-branch default).sort
+    branches.size.must_equal 6
+    branches.map(&:name).sort.must_equal ['old-branch', 'new-branch', 'branch-from-remote', 'another-branch', 'default', 'my branch'].sort
   end
 
   it "should find branch's full hash_id" do
     branch = @repository.branches.all.first
-    branch.hash_id.must_equal '2b03a87dbf4cb1a95b2417d8e2eac801c450b624'
+    branch.hash_id.must_equal '7ac2dcb09643805a97549210e5d0e5511d091c31'
   end
 
 end
