@@ -27,7 +27,7 @@ module Mercurial
     
     def initialize(repository, name, options={})
       @repository    = repository
-      @name          = name
+      @name          = name.strip
       @status        = ['closed', 'inactive'].include?(options[:status]) ? options[:status] : 'active'
       @hash_id       = options[:commit]
     end
