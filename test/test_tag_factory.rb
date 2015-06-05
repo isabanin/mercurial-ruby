@@ -8,9 +8,9 @@ describe Mercurial::TagFactory do
   
   it "should find all tags" do
     tags = @repository.tags.all
-    tags.size.must_equal 2
-    tags.map(&:name).sort.must_equal %w(new-tag new-branch-tag).sort
-    tags.map(&:hash_id).sort.must_equal %w(63f70b2314ed bf6386c0a0cc).sort
+    tags.size.must_equal 4
+    tags.map(&:name).sort.must_equal ['new-tag', 'new-branch-tag', 'tag with space', 'tag.with.dot'].sort
+    tags.map(&:hash_id).sort.must_equal %w(63f70b2314ed 9f76ea916c51 bb9cc2a2c920 bf6386c0a0cc).sort
   end
   
   it "should find tag by name" do

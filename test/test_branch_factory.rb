@@ -8,23 +8,23 @@ describe Mercurial::BranchFactory do
 
   it "should find all branches" do
     branches = @repository.branches.all
-    branches.size.must_equal 6
-    branches.map(&:name).sort.must_equal ['another-branch', 'branch-from-remote', 'default', 'my branch', 'new-branch', 'old-branch']
-    branches.map(&:status).sort.must_equal %w(active active active active closed inactive)
+    branches.size.must_equal 7
+    branches.map(&:name).sort.must_equal ['another-branch', 'branch-from-remote', 'branch.with.dot', 'default', 'my branch', 'new-branch', 'old-branch']
+    branches.map(&:status).sort.must_equal %w(active active active active active closed inactive)
   end
 
   it "should iterate through branches" do
     names = []
     @repository.branches.each{|b| names << b.name }
-    names.size.must_equal 6
-    names.must_equal ['default', 'my branch', 'another-branch', 'branch-from-remote', 'new-branch', 'old-branch']
+    names.size.must_equal 7
+    names.must_equal ['default', "branch.with.dot", 'my branch', 'another-branch', 'branch-from-remote', 'new-branch', 'old-branch']
   end
 
   it "should find active branches" do
     branches = @repository.branches.active
-    branches.size.must_equal 4
-    branches.map(&:name).sort.must_equal ['another-branch', 'default', 'branch-from-remote', 'my branch'].sort
-    branches.map(&:status).must_equal %w(active active active active)
+    branches.size.must_equal 5
+    branches.map(&:name).sort.must_equal ['another-branch', 'default', 'branch-from-remote', 'branch.with.dot', 'my branch'].sort
+    branches.map(&:status).must_equal %w(active active active active active)
   end
 
   it "should find inactive branches" do
@@ -57,13 +57,13 @@ describe Mercurial::BranchFactory do
 
   it "should return branches for commit" do
     branches = @repository.branches.for_commit('bf6386c0a0cc')
-    branches.size.must_equal 6
-    branches.map(&:name).sort.must_equal ['old-branch', 'new-branch', 'branch-from-remote', 'another-branch', 'default', 'my branch'].sort
+    branches.size.must_equal 7
+    branches.map(&:name).sort.must_equal ['old-branch', 'new-branch', 'branch-from-remote', 'branch.with.dot', 'another-branch', 'default', 'my branch'].sort
   end
 
   it "should find branch's full hash_id" do
     branch = @repository.branches.all.first
-    branch.hash_id.must_equal '7ac2dcb09643805a97549210e5d0e5511d091c31'
+    branch.hash_id.must_equal 'de63144c4fb76afcbd9a05c6429de0a7337fcbc9'
   end
 
 end

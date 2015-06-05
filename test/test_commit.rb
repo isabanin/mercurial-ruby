@@ -60,7 +60,7 @@ describe Mercurial::Commit do
   
   it "should return an array of branches where it exists" do
     commit = @repository.commits.by_hash_id('cd9fa0c59c7f')
-    commit.exist_in_branches.map(&:name).sort.must_equal ['default', 'another-branch', 'my branch'].sort
+    commit.exist_in_branches.map(&:name).sort.must_equal ['default', "branch.with.dot", 'another-branch', 'my branch'].sort
   end
 
   it "should fetch stats" do
