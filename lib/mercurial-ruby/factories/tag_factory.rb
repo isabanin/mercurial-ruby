@@ -38,7 +38,10 @@ module Mercurial
   private
   
     def build(data)
-      name, hash_id = *data.scan(/([\w-]+)\s+\d+:(\w+)\s*/).first
+      # tag name should support space and dot
+      name, hash_id = *data.scan(/([\w\- .]+)\s+\d+:(\w+)\s*/).first
+      name.strip!
+
       return if name == 'tip'
       Mercurial::Tag.new(repository, name, hash_id)
     end
