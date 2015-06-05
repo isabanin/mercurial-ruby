@@ -8,8 +8,8 @@ describe Mercurial::CommitFactory do
 
   it "should find commits after specific revision" do
     commits = @repository.commits.after('2d32410d9629')
-    commits.size.must_equal 8
-    commits.map(&:hash_id).must_equal %w(88b5cc7860153671b0d3aa3c16d01ecad987490e 57a6efe309bfa6c8054084de8c26490fca8a6104 f67625ea8586cd5c4d43c883a273db3ef7f38716 9f76ea916c5100bf61f533c33a6aa9f22532d526 b6f6f764b939fc4be234574010247d40c683c322 e47455b9a2383085b400d649af4360b943c6d3cf fe021a290ba17217a083a8059db9a4f3568ee619 2b03a87dbf4cb1a95b2417d8e2eac801c450b624)
+    commits.size.must_equal 10
+    commits.map(&:hash_id).must_equal %w(88b5cc7860153671b0d3aa3c16d01ecad987490e 57a6efe309bfa6c8054084de8c26490fca8a6104 f67625ea8586cd5c4d43c883a273db3ef7f38716 9f76ea916c5100bf61f533c33a6aa9f22532d526 b6f6f764b939fc4be234574010247d40c683c322 e47455b9a2383085b400d649af4360b943c6d3cf fe021a290ba17217a083a8059db9a4f3568ee619 2b03a87dbf4cb1a95b2417d8e2eac801c450b624 1695e75c32a90cbe038d1e145e1e6df3cecb9f0a 7ac2dcb09643805a97549210e5d0e5511d091c31)
   end
 
   it "should find commits before specific revision" do
@@ -82,7 +82,7 @@ describe Mercurial::CommitFactory do
   
   it "should count commits" do
     count = @repository.commits.count
-    count.must_equal 44
+    count.must_equal 46
   end
 
   it "should count range of commits" do
