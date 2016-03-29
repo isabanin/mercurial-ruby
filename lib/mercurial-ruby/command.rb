@@ -1,6 +1,6 @@
 require 'timeout'
 require 'digest/md5'
-require 'open4'
+require 'systemu'
 
 module Mercurial
   class CommandError < Error; end
@@ -52,20 +52,13 @@ module Mercurial
     def execution_proc
       Proc.new do
         debug(command)
-        result, error, = '', ''
-        status = Open4.popen4(command) do |pid, stdin, stdout, stderr|
-          Timeout.timeout(timeout) do
-            while tmp = stdout.read(102400)
-              result += tmp
-            end
-          end
 
-          while tmp = stderr.read(1024)
-            error += tmp
-          end
+        status, stdout, stderr = Timeout.timeout(timeout) do
+          systemu command
         end
-        raise_error_if_needed(status, error)
-        result
+
+        raise_error_if_needed(status, stderr)
+        stdout
       end
     end
     

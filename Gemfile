@@ -1,6 +1,6 @@
 source "http://rubygems.org"
 
-gem "open4", "~>1.3.0"
+gem "systemu"
 
 group :development do
   gem "minitest"
