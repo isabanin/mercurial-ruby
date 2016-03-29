@@ -55,11 +55,11 @@ module Mercurial
       build = []
 
       if options[:append_hg]
-        cmd = append_command_with(hg_binary_path, cmd)
+        cmd = append_command_with(interpolate_directory_path(hg_binary_path), cmd)
       end
 
       if dir = options.delete(:in)
-        build << interpolate_arguments(["cd ?", dir])
+        build << "cd #{interpolate_directory_path(dir)}"
       end
       
       if cmd.kind_of?(Array)
@@ -115,6 +115,10 @@ module Mercurial
       else
         "#{ append } #{ cmd }"
       end
+    end
+
+    def self.interpolate_directory_path(dir_path)
+      '"' + dir_path.gsub(/\?/, '/') + '"'
     end
     
   end
