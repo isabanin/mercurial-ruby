@@ -103,7 +103,11 @@ module Mercurial
     def self.interpolate_arguments(cmd_with_args)
       cmd_with_args.shift.tap do |cmd|
         cmd.gsub!(/\?/) do
-          cmd_with_args.shift.to_s.enclose_in_single_quotes
+          if ENV['OS'] == 'Windows_NT'
+            cmd_with_args.shift.to_s.enclose_in_double_quotes
+          else
+            cmd_with_args.shift.to_s.enclose_in_single_quotes
+          end
         end
       end
     end
