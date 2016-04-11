@@ -1,6 +1,10 @@
 require 'timeout'
 require 'digest/md5'
-require 'open4'
+if ENV['OS'] == 'Windows_NT'
+  require 'open3'
+else
+  require 'open4'
+end
 
 module Mercurial
   class CommandError < Error; end
@@ -48,29 +52,48 @@ module Mercurial
     def execute_without_caching
       execution_proc.call
     end
+
+    def read_output_error (stdout, stderr, timeout)
+      result, error = '', ''
+      Timeout.timeout(timeout) do
+        while tmp = stdout.read(102400)
+          result += tmp
+        end
+      end
+
+      while tmp = stderr.read(1024)
+        error += tmp
+      end
+      return result, error
+    end
     
     def execution_proc
       Proc.new do
         debug(command)
         result, error, = '', ''
-        status = Open4.popen4(command) do |pid, stdin, stdout, stderr|
-          Timeout.timeout(timeout) do
-            while tmp = stdout.read(102400)
-              result += tmp
-            end
+        exitstatus = -1
+        if ENV['OS'] == 'Windows_NT'
+          # popen4 uses fork, need popen3 here
+          Open3.popen3(command) do |stdin, stdout, stderr, wait_thread|
+            result, error = read_output_error(stdout, stderr, timeout)
+            exitstatus = if RUBY_VERSION =~ /^1\.8/
+                           error.empty? ? 0 : 1
+                         else
+                           wait_thread.value.exitstatus
+                         end
           end
-
-          while tmp = stderr.read(1024)
-            error += tmp
-          end
+        else
+          exitstatus = Open4.popen4(command) do |pid, stdin, stdout, stderr|
+            result, error = read_output_error(stdout, stderr, timeout)
+          end.exitstatus
         end
-        raise_error_if_needed(status, error)
+        raise_error_if_needed(exitstatus, error)
         result
       end
     end
     
-    def raise_error_if_needed(status, error)
-      return if status.exitstatus == 0
+    def raise_error_if_needed(exitstatus, error)
+      return if exitstatus == 0
       if error && error != ''
         raise CommandError, error
       end
