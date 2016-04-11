@@ -8,5 +8,10 @@ class String
     return "''" if nil? || empty?
     split(/'/, -1).map{|e| "'#{e}'"}.join("\\'")
   end
-  
+
+  def enclose_in_double_quotes
+    return '""' if nil? || empty?
+    split(/"/, -1).map{|e| "\"#{e}\""}.join("\\\"")
+  end
+
 end
